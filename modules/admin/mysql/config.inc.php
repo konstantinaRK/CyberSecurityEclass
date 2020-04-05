@@ -37,4 +37,6 @@ $cfg['Servers'][$i]['bs_temp_log_threshold'] = '32M';
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
 
+$cfg['CheckConfigurationPermissions'] = false
+
 ?>

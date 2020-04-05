@@ -1,0 +1,7 @@
+https://thephp.cc/news/2017/08/why-magic-quotes-are-gone-in-php7
+
+https://stackoverflow.com/questions/17740918/get-magic-quotes-gpc-and-mysql-real-escape-string-security
+
+https://hotexamples.com/examples/-/-/quote_smart/php-quote_smart-function-examples.html
+
+

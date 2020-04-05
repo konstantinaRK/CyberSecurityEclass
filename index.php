@@ -88,7 +88,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 	} else {
 		$uname = '';
 	}
-	
+
 	$pass = isset($_POST['pass'])?$_POST['pass']:'';
 	$submit = isset($_POST['submit'])?$_POST['submit']:'';
 	$auth = get_auth_active_methods();
@@ -115,7 +115,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 				if(!empty($auth)) {
 					if(!in_array($myrow["password"],$check_passwords)) {
 						// eclass login
-						include "include/login.php"; 
+						include "include/login.php";
 					} else {
 						// alternate methods login
 						include "include/alt_login.php";
@@ -130,15 +130,15 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 		}
 		if (!isset($uid)) {
 			switch($auth_allow) {
-				case 1 : $warning .= ""; 
+				case 1 : $warning .= "";
 					break;
-				case 2 : $warning .= "<br /><font color='red'>".$langInvalidId ."</font><br />"; 
+				case 2 : $warning .= "<br /><font color='red'>".$langInvalidId ."</font><br />";
 					break;
-				case 3 : $warning .= "<br />".$langAccountInactive1." <a href='modules/auth/contactadmin.php?userid=".$user."'>".$langAccountInactive2."</a><br /><br />"; 
+				case 3 : $warning .= "<br />".$langAccountInactive1." <a href='modules/auth/contactadmin.php?userid=".$user."'>".$langAccountInactive2."</a><br /><br />";
 					break;
-				case 4 : $warning .= "<br /><font color='red'>". $langInvalidId . "</font><br />"; 
+				case 4 : $warning .= "<br /><font color='red'>". $langInvalidId . "</font><br />";
 					break;
-				case 5 : $warning .= "<br /><font color='red'>". $langNoCookies . "</font><br />"; 
+				case 5 : $warning .= "<br /><font color='red'>". $langNoCookies . "</font><br />";
 					break;
 				default:
 					break;
@@ -155,7 +155,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 			mysql_query("INSERT INTO loginout (loginout.idLog, loginout.id_user, loginout.ip, loginout.when, loginout.action)
 			VALUES ('', '$uid', '$_SERVER[REMOTE_ADDR]', NOW(), 'LOGIN')");
 		}
-	
+
 		##[BEGIN personalisation modification]############
 		//if user has activated the personalised interface
 		//register a control session for it
@@ -164,11 +164,11 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 		}
 		##[END personalisation modification]############
 	}  // end of user authentication
-} 
-	
-if (isset($_SESSION['uid'])) { 
+}
+
+if (isset($_SESSION['uid'])) {
 	$uid = $_SESSION['uid'];
-} else { 
+} else {
 	unset($uid);
 }
 // if the user logged in include the correct language files
@@ -189,7 +189,7 @@ if (isset($language)) {
 
 }
 $nameTools = $langWelcomeToEclass;
-	
+
 //----------------------------------------------------------------
 // if login succesful display courses lists
 // --------------------------------------------------------------
