@@ -34,6 +34,7 @@
  *
  */
 
+
 $require_current_course = TRUE;
 $require_help = TRUE;
 $helpTopic = 'Agenda';
@@ -107,11 +108,11 @@ $start_cal = $jscalendar->make_input_field(
 
 if ($is_adminOfCourse) {
 	// change visibility
-	if (isset($mkInvisibl) or isset($mkVisibl)) { 
+	if (isset($mkInvisibl) or isset($mkVisibl)) {
 		if (@$mkInvisibl == true) {
 			$sql = "UPDATE agenda SET visibility = 'i'
                 		WHERE id='".mysql_real_escape_string($id)."'";
-			$p_sql= "DELETE FROM agenda WHERE lesson_code = '$currentCourseID' 
+			$p_sql= "DELETE FROM agenda WHERE lesson_code = '$currentCourseID'
 				AND lesson_event_id ='".mysql_real_escape_string($id)."'";
 		} elseif (@$mkVisibl == true) {
 			$sql = "UPDATE agenda SET visibility = 'v' WHERE id='".mysql_real_escape_string($id)."'";
@@ -164,7 +165,7 @@ if ($is_adminOfCourse) {
 		} else {
 			$sql = "INSERT INTO agenda (id, titre, contenu, day, hour, lasting)
         		VALUES (NULL,'".mysql_real_escape_string(trim($titre))."',
-				'".mysql_real_escape_string(trim($contenu))."', 
+				'".mysql_real_escape_string(trim($contenu))."',
 				'".mysql_real_escape_string($date_selection)."',
 				'".mysql_real_escape_string($hour)."',
 				'".mysql_real_escape_string($lasting)."')";
@@ -173,7 +174,7 @@ if ($is_adminOfCourse) {
 			unset($titre);
 		}
 		$result = db_query($sql, $currentCourseID);
-		
+
 			##[BEGIN personalisation modification]############
 			if (substr_count($sql,"INSERT") == 1) {
 				$perso_sql = "SELECT id, titre, contenu, DAY, HOUR , lasting
@@ -185,7 +186,7 @@ if ($is_adminOfCourse) {
 				$perso_matrix['date_selection'] = $perso_query_result[3];
 				$perso_matrix['hour'] = $perso_query_result[4];
 				$perso_matrix['lasting'] = $perso_query_result[5];
-	
+
 				// Add all data to the main table.
 				$perso_sql = "INSERT INTO $mysqlMainDb.agenda
 				(lesson_event_id, titre, contenu, day, hour, lasting, lesson_code)
@@ -194,9 +195,9 @@ if ($is_adminOfCourse) {
 				'".$perso_query_result[4]."','".$perso_query_result[5]."',
 				'".$currentCourseID."')";
 			}
-	
+
 			db_query($perso_sql, $mysqlMainDb);
-	
+
 			unset($perso_matrix);
 			unset($perso_sql_delete);
 			unset($id);
@@ -337,10 +338,10 @@ function confirmation (name)
 *-------------------------------------------*/
 if (!isset($sens)) $sens =" ASC";
 
-if ($is_adminOfCourse) { 
+if ($is_adminOfCourse) {
 	$result = db_query("SELECT id, titre, contenu, day, hour, lasting, visibility FROM agenda ORDER BY day ".$sens.", hour ".$sens,$currentCourseID);
 } else {
-	$result = db_query("SELECT id, titre, contenu, day, hour, lasting, visibility FROM agenda WHERE visibility = 'v' 
+	$result = db_query("SELECT id, titre, contenu, day, hour, lasting, visibility FROM agenda WHERE visibility = 'v'
 		ORDER BY day ".$sens.", hour ".$sens,$currentCourseID);
 }
 

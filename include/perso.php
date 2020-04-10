@@ -53,7 +53,7 @@ if ($result2 and mysql_num_rows($result2) > 0) {
 	while ($mycours = mysql_fetch_array($result2)) {
 		$status[$mycours['code']] = $mycours['statut'];
 	}
-} 
+}
 
 $_SESSION['status'] = $status;
 
@@ -62,7 +62,7 @@ include "$webDir/modules/perso/lessons.php";
 include "$webDir/modules/perso/assignments.php";
 include "$webDir/modules/perso/announcements.php";
 include "$webDir/modules/perso/documents.php";
-include "$webDir/modules/perso/agenda.php";
+// include "$webDir/modules/perso/agenda.php";
 include "$webDir/modules/perso/forumPosts.php";
 
 $_user['persoLastLogin'] = last_login($uid);

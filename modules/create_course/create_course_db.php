@@ -288,15 +288,15 @@ mysql_query("CREATE TABLE accueil (
         ENGINE=MyISAM $charset_spec");
 
 // Content accueil (homepage) Table
-    mysql_query("INSERT INTO accueil VALUES (
-                '1',
-                '$langAgenda',
-                '../../modules/agenda/agenda.php',
-                'calendar',
-                '".$sbsystems[1]."',
-                '0',
-                '',
-                'MODULE_ID_AGENDA')");
+//     mysql_query("INSERT INTO accueil VALUES (
+//                 '1',
+//                 '$langAgenda',
+//                 '../../modules/agenda/agenda.php',
+//                 'calendar',
+//                 '".$sbsystems[1]."',
+//                 '0',
+//                 '',
+//                 'MODULE_ID_AGENDA')");
 
     mysql_query("INSERT INTO accueil VALUES (
                '2',
@@ -721,9 +721,9 @@ mysql_query("CREATE TABLE `group_documents` (
 	`id` INT(4) NOT NULL AUTO_INCREMENT,
 	`path` VARCHAR(255) default NULL ,
 	`filename` VARCHAR(255) default NULL,
- 	PRIMARY KEY(id)) 
+ 	PRIMARY KEY(id))
 	ENGINE=MyISAM $charset_spec");
- 
+
 mysql_query("CREATE TABLE group_properties (
     id tinyint(4) NOT NULL auto_increment,
     self_registration tinyint(4) default '1',
@@ -939,8 +939,8 @@ mysql_query("ALTER TABLE `liens` ADD FULLTEXT `liens` (`url` ,`titre` ,`descript
 mysql_query("ALTER TABLE `video` ADD FULLTEXT `video` (`url` ,`titre` ,`description`)");
 mysql_query("ALTER TABLE `videolinks` ADD FULLTEXT `videolinks` (`url` ,`titre` ,`description`)");
 
-// creation of indexes 
+// creation of indexes
 mysql_query("ALTER TABLE `lp_user_module_progress` ADD INDEX `optimize` (`user_id` , `learnPath_module_id`)");
-mysql_query("ALTER TABLE `actions` ADD INDEX `actionsindex` (`module_id` , `date_time`)"); 
+mysql_query("ALTER TABLE `actions` ADD INDEX `actionsindex` (`module_id` , `date_time`)");
 
 ?>
