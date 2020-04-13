@@ -84,7 +84,11 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 	include 'include/shib_login.php';
 } else { // normal authentication
 	if (isset($_POST['uname'])) {
-		$uname = escapeSimple(preg_replace('/ +/', ' ', trim($_POST['uname'])));
+		//my code
+		//$uname = escapeSimple(preg_replace('/ +/', ' ', trim($_POST['uname'])));
+		$uname=htmlentities($_POST['uname']);
+		//nomizo oti afto boi8ai ke se sqlinjection (oxi mono xss)
+
 	} else {
 		$uname = '';
 	}

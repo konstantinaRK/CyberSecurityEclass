@@ -1,4 +1,4 @@
-<? 
+<?
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -27,7 +27,7 @@
 	ldapsearch.php
 	@authors list: Karatzidis Stratos <kstratos@uom.gr>
 		       Vagelis Pitsioygas <vagpits@uom.gr>
-==============================================================================        
+==============================================================================
   @Description: This script/file tries to authenticate the user, using
   his user/pass pair and the authentication method defined by the admin
 ==============================================================================
@@ -44,6 +44,9 @@ if (isset($_GET['auth']) or isset($_POST['auth']))
 if(!isset($_GET['auth']) or !isset($_POST['auth']))
 	$auth=$_SESSION['u_tmp'];
 
+//my code
+$auth=intval($auth);
+
 $nameTools = get_auth_info($auth);
 $navigation[]= array ("url"=>"registration.php", "name"=> "$langNewUser");
 $navigation[]= array ("url"=>"ldapnewuser.php?auth=$auth", "name"=> "$langConfirmUser");
@@ -52,6 +55,10 @@ $nameTools = $langUserData;
 $ldap_email = isset($_POST['ldap_email'])?$_POST['ldap_email']:'';
 $ldap_passwd = isset($_POST['ldap_passwd'])?$_POST['ldap_passwd']:'';
 $is_submit = isset($_POST['is_submit'])?$_POST['is_submit']:'';
+
+//my code
+$ldap_email=htmlentities($ldap_email);
+//mpori na 8eli to idio ke ston kodiko alla grami 105 mpori na pai la8os
 
 $lastpage = 'ldapnewuser.php?auth='.$auth.'&ldap_email='.$ldap_email;
 $errormessage = "<br/><p>$ldapback <a href=\"$lastpage\">$ldaplastpage</a></p>";
@@ -63,8 +70,8 @@ if(!empty($is_submit))
 		$tool_content .= "<table width=\"99%\"><tbody><tr>
 		  <td class=\"caution\" height='60'><p>$ldapempty  $errormessage</p></td>
 		</tr></tbody></table>";
-	} 
-	else 
+	}
+	else
 	{
 		// try to authenticate him
 		$auth_method_settings = get_auth_settings($auth);
@@ -94,7 +101,7 @@ if(!empty($is_submit))
 			default:
 				break;
 		}
-		
+
 		$is_valid = auth_user_login($auth,$ldap_email,$ldap_passwd);
 
 		if($is_valid) {  // Successfully connected
@@ -175,10 +182,10 @@ if (isset($_POST['submit'])) {
 		if (!empty($email) and !email_seems_valid($email)) {
 			$registration_errors[] = $langEmailWrong;
 		}
-	
+
 		$auth_method_settings = get_auth_settings($auth);
 		$password = $auth_method_settings['auth_name'];
-	
+
 	if (count($registration_errors) == 0) {
 		$emailsubject = "$langYourReg $siteName";
 		$emailbody = "$langDestination $prenom_form $nom_form\n" .
@@ -188,22 +195,22 @@ if (isset($_POST['submit'])) {
 			"$administratorName $administratorSurname" .
 			"$langManager $siteName \n$langTel $telephone \n" .
 			"$langEmail: $emailhelpdesk";
-	
+
 		send_mail('', '', '', $email, $emailsubject, $emailbody, $charset);
 		$registered_at = time();
 		$expires_at = time() + $durationAccount;
 		$authmethods = array("2","3","4","5");
 		$uname = escapeSimple($uname);
 		$lang = langname_to_code($language);
-	
-		$q1 = "INSERT INTO `$mysqlMainDb`.user 
-			SET nom = '$nom_form', prenom = '$prenom_form', 
+
+		$q1 = "INSERT INTO `$mysqlMainDb`.user
+			SET nom = '$nom_form', prenom = '$prenom_form',
 			username = '$uname', password = '$password', email = '$email',
 			statut = '5', department = '$department',
 			am = '$am', registered_at = ".$registered_at.",
 			expires_at = ".$expires_at. ",
 			lang = '$lang'";
-	
+
 		$inscr_user = db_query($q1);
 		$last_id = mysql_insert_id();
 		$result=mysql_query("SELECT user_id, nom, prenom FROM `$mysqlMainDb`.user WHERE user_id='$last_id'");
@@ -212,7 +219,7 @@ if (isset($_POST['submit'])) {
 			$nom=$myrow[1];
 			$prenom=$myrow[2];
 		}
-	
+
 		db_query("INSERT INTO loginout  SET id_user = '$uid',
 			ip = '".$REMOTE_ADDR."', `when` = NOW(), action = 'LOGIN'", $mysqlMainDb);
 		$_SESSION['uid'] = $uid;
@@ -220,7 +227,7 @@ if (isset($_POST['submit'])) {
 		$_SESSION['prenom'] = $prenom;
 		$_SESSION['nom'] = $nom;
 		$_SESSION['uname'] = $uname;
-	
+
 		$tool_content .= "<table width='99%'><tbody><tr>" .
 			"<td class='well-done' height='60'>" .
 			"<p>$langDear $prenom $nom,</p>" .

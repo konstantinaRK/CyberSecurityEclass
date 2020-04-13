@@ -30,7 +30,7 @@
 	@last update: 31-05-2006 by Stratos Karatzidis
 	@authors list: Karatzidis Stratos <kstratos@uom.gr>
 		       Vagelis Pitsioygas <vagpits@uom.gr>
-==============================================================================        
+==============================================================================
         @Description: Functions Library for authentication purposes
 
  	This library includes all the functions for authentication
@@ -145,9 +145,9 @@ function is_eclass_unique()
   {
 		$is_eclass_unique = 0;
 	}
-	
+
 	return $is_eclass_unique;
-	
+
 }
 
 /****************************************************************
@@ -198,7 +198,7 @@ function get_auth_settings($auth)
 			return $auth_row;
 		} else {
 			return 0;
-		}	
+		}
 	} else {
 		return 0;
 	}
@@ -227,7 +227,7 @@ function auth_user_login ($auth, $test_username, $test_password)  {
     {
 	case '1':
 	    // Returns true if the username and password work and false if they don't
-	    $sql = "SELECT user_id FROM user WHERE username='".mysql_real_escape_string($test_username)."' 
+	    $sql = "SELECT user_id FROM user WHERE username='".mysql_real_escape_string($test_username)."'
 		AND password='".mysql_real_escape_string($test_password)."'";
 	    $result = db_query($sql);
 	    if(mysql_num_rows($result)==1) {
@@ -269,7 +269,7 @@ function auth_user_login ($auth, $test_username, $test_password)  {
 		$testauth = false;
 	    }
 	    break;
-	
+
 	case '3':
 	    $imaphost = $GLOBALS['imaphost'];
 	    $imapauth = imap_auth($imaphost, $test_username, $test_password);
@@ -340,8 +340,8 @@ function auth_user_login ($auth, $test_username, $test_password)  {
 	    if($link) {
 		$db_ext = mysql_select_db($dbname,$link);
 		if($db_ext) {
-		    	$qry = "SELECT * FROM ".$dbname.".".$dbtable." 
-				WHERE ".$dbfielduser."='".mysql_real_escape_string($test_username)."' 
+		    	$qry = "SELECT * FROM ".$dbname.".".$dbtable."
+				WHERE ".$dbfielduser."='".mysql_real_escape_string($test_username)."'
 				AND ".$dbfieldpass."='".mysql_real_escape_string($test_password)."'";
 		    	$res = mysql_query($qry,$link);
 		    	if($res) {
@@ -359,7 +359,7 @@ function auth_user_login ($auth, $test_username, $test_password)  {
 		} else {
 		    	$testauth = false;
 			}
-	    } else { 
+	    } else {
 		$testauth = false;
 	    }
 	    break;
@@ -373,11 +373,17 @@ function auth_user_login ($auth, $test_username, $test_password)  {
 			// creation of secure/index.php file
 			$f = fopen("${path}index.php", "w");
 			$filecontents = '
-<? 
+<?
 session_start();
 $_SESSION[\'shib_email\'] = '.autounquote($_POST['shibemail']).';
 $_SESSION[\'shib_uname\'] = '.autounquote($_POST['shibuname']).';
 $_SESSION[\'shib_nom\'] = '.autounquote($_POST['shibcn']).';
+
+//my code
+$_SESSION[\'shib_email\'] =htmlentities($_SESSION[\'shib_email\']);
+$_SESSION[\'shib_uname\'] =htmlentities($_SESSION[\'shib_uname\']);
+$_SESSION[\'shib_nom\'] =htmlentities($_SESSION[\'shib_nom\']);
+
 header("Location: ../index.php");
 ?>
 ';

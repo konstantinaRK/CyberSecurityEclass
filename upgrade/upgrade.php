@@ -249,8 +249,8 @@ if (!isset($submit2)) {
 
 	echo "<p>$langUpgradeBase <b>$mysqlMainDb</b></p>";
 	flush();
-	
-	// creation of config table 
+
+	// creation of config table
 	if (!mysql_table_exists($mysqlMainDb, 'config')) {
 		db_query("CREATE TABLE `config` (
 			`id` MEDIUMINT NOT NULL AUTO_INCREMENT,
@@ -303,9 +303,9 @@ if (!isset($submit2)) {
 	}
 
         if ($oldversion < '2.2.1') {
-                db_query("ALTER TABLE `cours` CHANGE `doc_quota` `doc_quota` FLOAT NOT NULL DEFAULT '104857600'"); 
+                db_query("ALTER TABLE `cours` CHANGE `doc_quota` `doc_quota` FLOAT NOT NULL DEFAULT '104857600'");
                 db_query("ALTER TABLE `cours` CHANGE `video_quota` `video_quota` FLOAT NOT NULL DEFAULT '104857600'");
-                db_query("ALTER TABLE `cours` CHANGE `group_quota` `group_quota` FLOAT NOT NULL DEFAULT '104857600'"); 
+                db_query("ALTER TABLE `cours` CHANGE `group_quota` `group_quota` FLOAT NOT NULL DEFAULT '104857600'");
                 db_query("ALTER TABLE `cours` CHANGE `dropbox_quota` `dropbox_quota` FLOAT NOT NULL DEFAULT '104857600'");
                 db_query("CREATE TABLE IF NOT EXISTS `forum_notify` (
                         `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -315,7 +315,7 @@ if (!isset($submit2)) {
                         `topic_id` INT NULL ,
                         `notify_sent` BOOL NOT NULL DEFAULT '0',
                         `course_id` INT NOT NULL DEFAULT '0')");
-                
+
         	if (!mysql_field_exists($mysqlMainDb, 'cours_user', 'cours_id')) {
 	        	db_query('ALTER TABLE cours_user ADD cours_id int(11) DEFAULT 0 NOT NULL FIRST');
                         db_query('UPDATE cours_user SET cours_id =
@@ -360,7 +360,7 @@ if (!isset($submit2)) {
                 $i++;
         }
 	echo "<hr />";
-	
+
         if ($oldversion < '2.1.3') {
 	        echo "<p>$langChangeDBCharset <b>$mysqlMainDb</b> $langToUTF</p><br />";
                 convert_db_utf8($mysqlMainDb);

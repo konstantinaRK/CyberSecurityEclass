@@ -47,6 +47,10 @@ if (empty($userdata['email'])) {
 	}
 } elseif (isset($_POST['content'])) {
 	$content = trim($_POST['content']);
+
+	//my code
+	$content=htmlentities($content);
+
 	if (empty($content)) {
 		$tool_content .= "<p>$langEmptyMessage</p>";
 		$tool_content .= form();

@@ -45,11 +45,17 @@ $sqlLogin= "SELECT user_id, nom, username, password, prenom, statut, email, idus
 	FROM user LEFT JOIN admin
 	ON user.user_id = admin.iduser
 	WHERE username='".$shib_uname."'";
-$r = db_query($sqlLogin); 
-if (mysql_num_rows($r) > 0) { // if shibboleth user found 
+$r = db_query($sqlLogin);
+if (mysql_num_rows($r) > 0) { // if shibboleth user found
 	while ($myrow = mysql_fetch_array($r)) {
+
+		//my code
+		$shib_nom=htmlentities();
+		$shib_prenom=htmlentities($shib_prenom);
+		$shib_email=htmlentities($shib_email);
+
 		// update user information
-		db_query("UPDATE user SET nom = '$shib_nom', prenom = '$shib_prenom', email = '$shib_email' 
+		db_query("UPDATE user SET nom = '$shib_nom', prenom = '$shib_prenom', email = '$shib_email'
 			WHERE username = '$shib_uname'");
 
 		$r2 = db_query($sqlLogin);
@@ -65,9 +71,15 @@ if (mysql_num_rows($r) > 0) { // if shibboleth user found
 				$language = langcode_to_name($myrow["lang"]);
 			}
 		}
-	}	
+	}
 } else { // else create him
-	db_query("INSERT INTO user SET nom='$shib_nom', prenom='$shib_prenom', password='shibboleth', 
+	//my code
+	$shib_nom=htmlentities($shib_nom);
+	$shib_prenom=htmlentities($shib_prenom);
+	$shib_uname=htmlentities($shib_uname);
+	$shib_email=htmlentities($shib_email);
+
+	db_query("INSERT INTO user SET nom='$shib_nom', prenom='$shib_prenom', password='shibboleth',
 		username='$shib_uname',email='$shib_email', statut=5, lang='el'");
 	$uid = mysql_insert_id();
 	$userPerso = 'yes';

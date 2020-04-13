@@ -27,6 +27,10 @@
 // if we come from the home page
 if (isset($from_home) and ($from_home == TRUE) and isset($_GET['cid'])) {
         session_start();
+
+        //my code
+        $cid=htmlentities($cid);
+
         $_SESSION['dbname'] = $cid;
 }
 $require_current_course = TRUE;

@@ -46,7 +46,7 @@ $navigation[]= array ("url"=>"registration.php", "name"=> "$langNewUser");
 // Initialise $tool_content
 $tool_content = "";
 
-// for security
+// for security xaxaxaxa afto ton efage
 $auth = isset($_GET['auth'])?intval($_GET['auth']):0;
 
 if (isset($_GET['auth']) or isset($_POST['auth']))

@@ -37,6 +37,9 @@ if (file_exists("../lang/$language/help.inc.php")) {
 	die('No such help topic');
 }
 
+//my code
+//$_GET['topic'] den to kani sanitize alla den fenete na iparxi problima
+
 // Default topic
 if (!isset($_GET['topic']) || empty($GLOBALS["lang$_GET[topic]Content"])) {
 	$_GET['topic'] = 'Default';

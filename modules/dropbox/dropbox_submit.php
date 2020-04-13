@@ -90,6 +90,8 @@ if (isset($_POST["submitWork"]))
 	$error = FALSE;
 	$errormsg = '';
 
+	//my code
+	$_POST['description']=htmlentities($_POST['description']);
 
 if (!isset( $_POST['authors']) || !isset( $_POST['description']))
 	{

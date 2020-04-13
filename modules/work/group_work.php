@@ -83,6 +83,10 @@ if (isset($_GET['submit'])) {
 	show_assignments();
 	draw($tool_content, 2, 'work');
 } elseif (isset($_POST['assign'])) {
+
+	//my code
+	//prepi na kano sanitize ta $_POST['assign'], $_POST['file'] ???
+
 	submit_work($uid, $_POST['assign'], $_POST['file']);
 	draw($tool_content, 2, 'work');
 } else {
@@ -232,4 +236,3 @@ function submit_work($uid, $id, $file) {
 		$tool_content .="<p class=\"caution_small\">$langUploadError<br /><a href='work.php'>$langBack</a></p><br />";
 	}
 }
-

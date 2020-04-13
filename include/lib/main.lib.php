@@ -1274,6 +1274,9 @@ function register_posted_variables($var_array)
         $all_set = true;
         foreach ($var_array as $varname => $required) {
                 if (isset($_POST[$varname])) {
+												//my code
+												//den 3ero an ine ok alla nomio oti ine
+
                         $GLOBALS[$varname] = preg_replace('/ +/', ' ', trim($_POST[$varname]));
                         if ($required and empty($GLOBALS[$varname])) {
                                 $all_set = false;

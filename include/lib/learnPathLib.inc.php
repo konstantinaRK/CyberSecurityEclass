@@ -1870,8 +1870,11 @@ function get_limited_page_links($sql, $limiter, $stringPreviousPage, $stringNext
 	$lastpage = ceil($totalnum / $limiter);
 
 	if (isset( $_GET['page'] ) && is_numeric( $_GET['page'] )) {
-		$currentpage = (int) $_GET['page'];
-		if ($currentpage < $firstpage || $currentpage > $lastpage) {
+
+    //my code
+		$currentpage = intval($_GET['page']);
+
+    if ($currentpage < $firstpage || $currentpage > $lastpage) {
 			$currentpage = $firstpage;
 		}
 	}
