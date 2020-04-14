@@ -28,7 +28,7 @@ if (!defined('INDEX_START')) {
 	die ("Action not allowed!");
 }
 
-// authenticate user via alternate defined methods 
+// authenticate user via alternate defined methods
 switch($myrow["password"])
 {
 	case 'eclass': $auth = 1; break;
@@ -38,6 +38,10 @@ switch($myrow["password"])
 	case 'db': $auth = 5; break;
 	default: break;
 }
+
+//my code
+$auth=intval($auth);
+
 $auth_method_settings = get_auth_settings($auth);
 if($myrow['password'] == $auth_method_settings['auth_name']) {
 	switch($auth) {

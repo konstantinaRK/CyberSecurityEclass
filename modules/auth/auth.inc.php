@@ -221,6 +221,9 @@ email (LDAP attribute: mail)
 ****************************************************************/
 function auth_user_login ($auth, $test_username, $test_password)  {
 
+	//my code
+	$test_username=htmlentities($test_username);
+
 	global $mysqlMainDb, $webDir;
 
     switch($auth)

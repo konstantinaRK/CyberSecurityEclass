@@ -361,6 +361,10 @@ function group_secret($gid)
 // Changed by vagpits
 function selection($entries, $name, $default = '', $extra = '')
 {
+
+	//my code
+	$name=htmlentities($name);
+
 	$retString = "";
 	$retString .= "\n<select name='$name' $extra class='auth_input'>\n";
 	foreach ($entries as $value => $label) {

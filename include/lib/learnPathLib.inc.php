@@ -100,6 +100,9 @@ function commentBox($type, $mode)
             $tbl_name = $tbl_lp_module;
             if ( isset($_REQUEST['module_id'] ) )
             {
+                //my code
+                $_REQUEST['module_id']=intval($_REQUEST['module_id']);
+
                 $module_id = $_REQUEST['module_id'];
             }
             else
@@ -1669,6 +1672,10 @@ function disp_html_area($name, $content = '', $rows=5, $cols=50, $optAttrib='')
 
     if (isset($_REQUEST['areaContent'])) $content = stripslashes($_REQUEST['areaContent']);
 
+    //my code
+    $content=htmlentities($content);
+
+
     if (is_javascript_enabled())
     {
         if ( isset($_SESSION['htmlArea']) && $_SESSION['htmlArea'] != 'disabled' )
@@ -1907,6 +1914,9 @@ function get_limited_page_links($sql, $limiter, $stringPreviousPage, $stringNext
 	}
 
 if (isset($_REQUEST['path_id'])) {
+  //my code
+  $_REQUEST['path_id']=htmlentities($_REQUEST['path_id']);
+
 	$prevstring = "<a href=\"".$url.$prevpage."&path_id=$_REQUEST[path_id]\">".$stringPreviousPage."</a> | ";
 	$nextstring = "<a href=\"".$url.$nextpage."&path_id=$_REQUEST[path_id]\">".$stringNextPage."</a>";
 } else {

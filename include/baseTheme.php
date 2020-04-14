@@ -187,10 +187,10 @@ function draw($toolContent, $menuTypeID, $tool_css = null, $head_content = null,
 
 		$t->set_var ( 'TOOL_CONTENT', $toolContent );
 
-		// If we are on the login page we can define two optional variables 
+		// If we are on the login page we can define two optional variables
 		// in common.inc.php (to allow internationalizing messages)
 		// for extra content on the left and right bar.
-		
+
 		if ($homePage  && !isset($_SESSION['uid'])) {
 			$t->set_var ( 'ECLASS_HOME_EXTRAS_LEFT', $langExtrasLeft );
 			$t->set_var ( 'ECLASS_HOME_EXTRAS_RIGHT', $langExtrasRight );
@@ -504,10 +504,9 @@ function lang_selections() {
  */
 function lang_select_options($name, $onchange_js = '', $default_langcode = false) {
 	global $language, $native_language_names;
-
+	
         if ($default_langcode === false) {
                 $default_langcode = langname_to_code($language);
         }
 	return selection($native_language_names, $name, $default_langcode, $onchange_js);
 }
-

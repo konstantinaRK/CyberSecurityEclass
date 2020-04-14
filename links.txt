@@ -4,4 +4,6 @@ https://stackoverflow.com/questions/17740918/get-magic-quotes-gpc-and-mysql-real
 
 https://hotexamples.com/examples/-/-/quote_smart/php-quote_smart-function-examples.html
 
+https://www.sitepoint.com/htaccess-for-all/
 
+https://www.tutorialspoint.com/http/http_requests.htm?fbclid=IwAR375bVg5rpXdwFxgHg2ZYa6WLH32WV--6O2sXVsnvDs8VpsFuZ5gIyJ2nc

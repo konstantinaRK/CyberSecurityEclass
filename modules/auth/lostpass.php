@@ -25,11 +25,11 @@
 * =========================================================================*/
 /*
  * Password reset component
- * 
+ *
  * @author Evelthon Prodromou <eprodromou@upnet.gr>
  * @version $Id: lostpass.php,v 1.22 2009-07-30 14:45:14 adia Exp $
- * 
- * @abstract This component resets the user's password after verifying 
+ *
+ * @abstract This component resets the user's password after verifying
  * his/hers  information through a challenge/response system.
  *
  */
@@ -65,6 +65,12 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 
 	if (mysql_num_rows($res) == 1) {
 		$myrow = mysql_fetch_array($res);
+
+		//my code
+		//mpori na ine parapanisio
+		$myrow['user_id']=htmlentities($myrow['user_id']);
+
+
 		//copy pass hash (md5) from reset_pass to user table
 		$sql = "UPDATE `user` SET `password` = '".$myrow['hash']."' WHERE `user_id` = ".$myrow['user_id']."";
 		if(db_query($sql, $mysqlMainDb)) {
@@ -80,7 +86,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 				</tr></tbody></table>";
 			db_query("DELETE FROM `passwd_reset` WHERE `user_id` = '$myrow[user_id]'", $mysqlMainDb);
 			// delete passws_reset entries older from 2 days
-			db_query("DELETE FROM `passwd_reset` 
+			db_query("DELETE FROM `passwd_reset`
 				WHERE DATE_SUB(CURDATE(),INTERVAL 2 DAY) > `datetime`", $mysqlMainDb);
 		}
 		//advice him to change his pass once logged in
@@ -129,6 +135,10 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 	</form>";
 
 } elseif (!isset($_REQUEST['do'])) {
+	//my code
+	$userName=htmlentities($userName);
+	$email=htmlentities($email);
+
 	/***** If valid e-mail address was entered, find user and send email *****/
 	$res = db_query("SELECT user_id, nom, prenom, username, password, statut FROM user
 			WHERE email = '" . mysql_escape_string($email) . "'

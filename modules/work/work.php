@@ -748,7 +748,15 @@ function sort_link($title, $opt, $attrib = '')
 {
 	global $tool_content;
 	$i = '';
+
+  //my code
+  $title=htmlentities($title);
+
 	if (isset($_REQUEST['id'])) {
+
+    //my code
+    $_REQUEST['id']=htmlentities($_REQUEST['id']);
+
 		$i = "&id=$_REQUEST[id]";
 	}
 	if (@($_REQUEST['sort'] == $opt)) {

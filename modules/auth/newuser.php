@@ -174,9 +174,12 @@ if (!isset($submit)) {
 			}
 	}
 	if (count($registration_errors) == 0) {
-	$emailsubject = "$langYourReg $siteName";
-			$uname = unescapeSimple($uname); // un-escape the characters: simple and double quote
-			$password = unescapeSimple($password);
+			$emailsubject = "$langYourReg $siteName";
+
+			//my code
+			// $uname = unescapeSimple($uname); // un-escape the characters: simple and double quote
+			// $password = unescapeSimple($password);
+
 			if((!empty($auth_method_settings)) && ($auth!=1)) {
 				$emailbody = "$langDestination $prenom_form $nom_form\n" .
 					"$langYouAreReg $siteName $langSettings $uname\n" .

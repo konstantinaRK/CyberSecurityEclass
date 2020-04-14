@@ -1,4 +1,4 @@
-ME fta ti ginete ? ta diagrafoume ? ti pai la8os eki ?
+ME afta ti ginete ? ta diagrafoume ? ti pai la8os eki ? pai kati la8os eki ?
 http://192.168.1.6/modules/auth/newuser.php?prenom_form=%27/%3E%3C/td%3E%3C/tr%3E%3Cscript%3Ealert(1);%3C/script%3E%3C!--&nom_form=&uname=&email=&am=
 http://192.168.1.6/modules/auth/ldapsearch.php?auth=%22aaa%22%20%3C/a%3E%20%3Cscript%3Ealert(1);%3C/script%3E
 http://192.168.1.6/modules/conference/refresh_chat.php?chatLine=%3Cscript%3E&_=
@@ -11,6 +11,7 @@ http://192.168.1.6/modules/auth/methods/pop3form.php
 http://192.168.1.6/modules/units/insert.php?submit_doc=../&id=1
 http://192.168.1.6/modules/usage/results.php
 http://192.168.1.6/modules/work/group_work.php
+http://192.168.1.6/modules/profile/password.php     line 151-175
 
 edo den bgazi to minima oti prepi na ime ka8igitis (opos edo http://192.168.1.6/modules/course_info/infocours.php) ke den 3ero gt
 http://192.168.1.6/modules/course_info/infocours.php?from_home=TRUE&cid=TMA106
@@ -26,3 +27,11 @@ http://192.168.1.6/modules/units/index.php?del=1
 (den 3ero an prepi na to diagrapsoume. ego leo na to afisoume)
 http://192.168.1.6/modules/units/insert.php?type=%22exercise%22
 http://192.168.1.6/modules/latexrender/latexrender_test.php
+
+gt na ine anixto afto ?!
+http://192.168.1.6/include/xinha/plugins/SuperClean/tidy.php?content=assdasda
+
+afto gt xrisimopiite ?
+http://192.168.1.6/modules/units/index.php
+na afiso to proto if i oxi ?!?! xalai tin litourgikotita ?
+http://192.168.1.6/modules/units/index.php?id=5&resource_id=3&vis=2

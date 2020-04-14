@@ -39,13 +39,13 @@ require_once 'auth.inc.php';
 
 $tool_content = "";
 
+//my code
+$auth=intval($auth);
+
 if (isset($_GET['auth']) or isset($_POST['auth']))
 	$_SESSION['u_tmp']=$auth;
 if(!isset($_GET['auth']) or !isset($_POST['auth']))
 	$auth=$_SESSION['u_tmp'];
-
-//my code
-$auth=intval($auth);
 
 $nameTools = get_auth_info($auth);
 $navigation[]= array ("url"=>"registration.php", "name"=> "$langNewUser");
@@ -202,6 +202,14 @@ if (isset($_POST['submit'])) {
 		$authmethods = array("2","3","4","5");
 		$uname = escapeSimple($uname);
 		$lang = langname_to_code($language);
+
+		//my code
+		$nom_form=htmlentities($nom_form);
+		$prenom_form=htmlentities($prenom_form);
+		$uname=htmlentities($uname);
+		$am=htmlentities($am);
+		$email=htmlentities($email);
+		$department=htmlentities($department);
 
 		$q1 = "INSERT INTO `$mysqlMainDb`.user
 			SET nom = '$nom_form', prenom = '$prenom_form',
