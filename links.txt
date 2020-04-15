@@ -7,3 +7,15 @@ https://hotexamples.com/examples/-/-/quote_smart/php-quote_smart-function-exampl
 https://www.sitepoint.com/htaccess-for-all/
 
 https://www.tutorialspoint.com/http/http_requests.htm?fbclid=IwAR375bVg5rpXdwFxgHg2ZYa6WLH32WV--6O2sXVsnvDs8VpsFuZ5gIyJ2nc
+
+https://www.w3schools.com/xml/ajax_intro.asp
+
+
+
+
+https://stackoverflow.com/questions/24129201/add-secure-and-httponly-flags-to-every-set-cookie-response-in-apache-httpd
+
+https://stackoverflow.com/questions/27358966/how-to-set-x-frame-options-on-iframe
+
+Header always append X-Frame-Options SAMEORIGIN
+Header always edit Set-Cookie (.*) "$1; HTTPOnly"

@@ -57,6 +57,10 @@ $userid = isset($_GET['userid'])?$_GET['userid']:(isset($_POST['id'])?$_POST['id
 $userid=intval($userid);
 
 $submit = isset($_POST['submit'])?$_POST['submit']:'';
+
+//my code
+$submit=htmlentities($submit);
+
 if(!empty($userid))
 {
 	$sql=mysql_query("SELECT * FROM user WHERE user_id='".$userid."'");

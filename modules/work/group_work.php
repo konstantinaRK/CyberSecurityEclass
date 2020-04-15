@@ -108,6 +108,8 @@ function show_assignments()
 	}
 
 
+//my code
+$_GET['submit']=htmlentities($_GET['submit']);
 
 $tool_content .= <<<cData
 	<form action="group_work.php" method="post">

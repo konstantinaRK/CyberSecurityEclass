@@ -35,6 +35,10 @@ $navigation[]= array ("url"=>"../admin/", "name"=> $langAdmin);
 // Initialise $tool_content
 $tool_content = "";
 $submit = isset($_POST['submit'])?$_POST['submit']:'';
+
+//my code
+$submit=htmlentities($submit);
+
 // ----------------------------
 // register user
 // ----------------------------
@@ -48,7 +52,7 @@ if($submit) {
   $email_form = isset($_POST['email_form'])?$_POST['email_form']:'';
   $department = isset($_POST['department'])?$_POST['department']:'';
   $localize = isset($_POST['localize'])?$_POST['localize']:'';
-  $lang = langname_to_code($localize);	
+  $lang = langname_to_code($localize);
 
       // check if user name exists
   $username_check=mysql_query("SELECT username FROM `$mysqlMainDb`.user WHERE username='$uname'");
@@ -164,13 +168,13 @@ $tool_content .= "<table width=\"99%\"><tbody>
 	$dep = array();
         $deps=db_query("SELECT name FROM faculte order by id");
 			while ($n = mysql_fetch_array($deps))
-				$dep[$n[0]] = $n['name'];  
+				$dep[$n[0]] = $n['name'];
 
 		if (isset($pt))
 			$tool_content .= selection ($dep, 'department', $pt);
-		else 
+		else
 			$tool_content .= selection ($dep, 'department');
- 
+
 	$tool_content .= "<tr><th class='left'>$langLanguage</th><td>";
 	$tool_content .= lang_select_options('localize');
 	$tool_content .= "</td></tr>";
@@ -183,7 +187,7 @@ $tool_content .= "<table width=\"99%\"><tbody>
 		</tbody></table></form>";
     $tool_content .= "<center><p><a href=\"../admin/index.php\">$langBack</p></center>";
 
-} // end of if 
+} // end of if
 
 draw($tool_content,3, 'auth');
 
@@ -201,11 +205,11 @@ function error_screen($message) {
 
 function end_tables() {
 	global $langBack;
-	
+
 	$retstring = "</td></tr><tr><td align=right valign=bottom height='180'>";
 	$retstring .= "<a href='../admin/index.php' class=mainpage>$langBack&nbsp;</a>";
 	$retstring .= "</td></tr></table>";
-	
+
 	return $retstring;
 }
 

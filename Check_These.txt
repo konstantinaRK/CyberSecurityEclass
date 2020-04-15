@@ -35,3 +35,5 @@ afto gt xrisimopiite ?
 http://192.168.1.6/modules/units/index.php
 na afiso to proto if i oxi ?!?! xalai tin litourgikotita ?
 http://192.168.1.6/modules/units/index.php?id=5&resource_id=3&vis=2
+
+ti paizi me xss meso csrf stis 2/3 formes tou admin otan ftiaxni ma8ima

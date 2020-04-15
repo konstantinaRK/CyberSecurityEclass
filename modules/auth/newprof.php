@@ -35,7 +35,9 @@ $tool_content = "";
 
 // security check
 if (isset($_POST['localize'])) {
-	$language = preg_replace('/[^a-z]/', '', $_POST['localize']);
+	//my code
+	//$language = preg_replace('/[^a-z]/', '', $_POST['localize']);
+	$language=htmlentities($_POST['localize']);
 }
 
 $auth = get_auth_id();
