@@ -66,6 +66,9 @@ if (isset($_POST['submit'])) {
                                   <a href='$_SERVER[PHP_SELF]'>$langAgain</a></p><br />";
         } else {
                 if (isset($_POST['localize'])) {
+                        //my code
+                        $_POST['localize']=my_htmlspecialchars($_POST['localize']);
+
                         $newlang = $language = langcode_to_name($_POST['localize']);
                         // include_messages
                         include("${webDir}modules/lang/$language/common.inc.php");

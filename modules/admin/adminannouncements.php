@@ -123,6 +123,10 @@ if (isset($message) && !empty($message)) {
 // display form
 if ($displayForm && (@$addAnnouce==1 || isset($modify))) {
         $displayAnnouncementList = false;
+
+        //my code
+        $localize=my_htmlspecialchars($localize);
+
         // display add announcement command
         $tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?localize=$localize'>";
         $tool_content .= "<table width='99%' class='FormData' align='left'><tbody>

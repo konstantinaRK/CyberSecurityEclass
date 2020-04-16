@@ -1065,6 +1065,9 @@ $language_codes = array(
 // Returns 'english' if code is not in array
 function langcode_to_name($langcode)
 {
+		//my code
+		$langcode=my_htmlspecialchars($langcode);
+
         global $language_codes;
         if (isset($language_codes[$langcode])) {
 		return $language_codes[$langcode];

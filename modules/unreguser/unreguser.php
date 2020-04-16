@@ -43,6 +43,10 @@ if (!isset($doit) or $doit != "yes") {
 		draw($tool_content,1);
 		exit;
 	} else {
+
+		//my code
+		$uid=my_htmlspecialchars($uid);
+
 		$q = db_query ("SELECT code FROM cours, cours_user WHERE cours.cours_id = cours_user.cours_id AND user_id = '$uid' LIMIT 1") ;
 		if (mysql_num_rows($q) == 0) {
 			$tool_content .=  "<p><b>$langConfirm</b></p>";
@@ -85,4 +89,3 @@ if (isset($_SESSION['uid'])) {
 	draw($tool_content, 0);
 }
 ?>
-

@@ -52,6 +52,10 @@ if($submit) {
   $email_form = isset($_POST['email_form'])?$_POST['email_form']:'';
   $department = isset($_POST['department'])?$_POST['department']:'';
   $localize = isset($_POST['localize'])?$_POST['localize']:'';
+
+  //my code
+  $localize=my_htmlspecialchars($localize);
+
   $lang = langname_to_code($localize);
 
       // check if user name exists
