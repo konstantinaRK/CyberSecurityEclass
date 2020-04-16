@@ -25,7 +25,7 @@
 * =========================================================================*/
 
 /*
-Units module	
+Units module
 */
 
 $require_current_course = true;
@@ -81,10 +81,10 @@ _editor_lang = '$lang_editor';
 <script type='text/javascript' src='$urlAppend/include/xinha/my_config.js'></script>";
 
 if (isset($_GET['edit'])) { // display form for editing course unit
-        $id = intval($_GET['edit']); 
+        $id = intval($_GET['edit']);
         $sql = db_query("SELECT id, title, comments FROM course_units WHERE id='$id'");
         $cu = mysql_fetch_array($sql);
-        $unittitle = " value='" . htmlspecialchars($cu['title'], ENT_QUOTES) . "'";
+        $unittitle = " value='" . my_htmlspecialchars($cu['title']) . "'";
         $unitdescr = $cu['comments'];
         $unit_id = $cu['id'];
         $button = $langEdit;
@@ -105,11 +105,10 @@ $tool_content .= "<table width='99%' class='FormData' align='center'><tbody>
         <tr><th width='150' class='left'>$langUnitTitle:</th>
             <td><input type='text' name='unittitle' size='50' maxlength='255' $unittitle class='FormData_InputText'></td></tr>
         <tr><th class='left'>$langUnitDescr:</th><td>
-        <table class='xinha_editor'><tr><td><textarea id='xinha' name='unitdescr'>". str_replace('{','&#123;',htmlspecialchars($unitdescr))."</textarea></td></tr>
+        <table class='xinha_editor'><tr><td><textarea id='xinha' name='unitdescr'>". str_replace('{','&#123;',my_htmlspecialchars($unitdescr))."</textarea></td></tr>
         </table></td></tr>
         <tr><th>&nbsp;</th>
             <td><input type='submit' name='edit_submit' value='$button'></td></tr>
 </tbody></table>
 </form>";
 draw($tool_content, 2, 'units', $head_content);
-

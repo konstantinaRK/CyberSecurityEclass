@@ -37,7 +37,7 @@ $tool_content = "";
 if (isset($_POST['localize'])) {
 	//my code
 	//$language = preg_replace('/[^a-z]/', '', $_POST['localize']);
-	$language=htmlentities($_POST['localize']);
+	$language=my_htmlspecialchars($_POST['localize']);
 }
 
 $auth = get_auth_id();

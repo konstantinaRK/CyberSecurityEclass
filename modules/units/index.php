@@ -131,7 +131,7 @@ if (!$q or mysql_num_rows($q) == 0) {
         exit;
 }
 $info = mysql_fetch_array($q);
-$nameTools = htmlspecialchars($info['title']);
+$nameTools = my_htmlspecialchars($info['title']);
 $comments = trim($info['comments']);
 
 // Links for next/previous unit
@@ -156,7 +156,7 @@ foreach (array('previous', 'next') as $i) {
                        LIMIT 1");
         if ($q and mysql_num_rows($q) > 0) {
                 list($q_id, $q_title) = mysql_fetch_row($q);
-                $q_title = htmlspecialchars($q_title);
+                $q_title = my_htmlspecialchars($q_title);
                 $link[$i] = "<a href='$_SERVER[PHP_SELF]?id=$q_id'>$arrow1$q_title$arrow2</a>";
         } else {
                 $link[$i] = '&nbsp;';
@@ -207,7 +207,7 @@ $q = db_query("SELECT id, title FROM course_units
 while ($info = mysql_fetch_array($q)) {
         $selected = ($info['id'] == $id)? ' selected="1" ': '';
         $tool_content .= "<option value='$info[id]'$selected>" .
-                         htmlspecialchars(ellipsize($info['title'], 40)) .
+                         my_htmlspecialchars(ellipsize($info['title'], 40)) .
                          '</option>';
 }
 $tool_content .= '</select></td></tr></tbody></table></form>';
@@ -301,7 +301,7 @@ function show_doc($title, $comments, $resource_id, $file_id)
         global $is_adminOfCourse, $currentCourseID, $langWasDeleted,
                $visibility_check, $urlServer, $id;
 
-        $title = htmlspecialchars($title);
+        $title = my_htmlspecialchars($title);
         $r = db_query("SELECT * FROM document
 	               WHERE id =" . intval($file_id) ." $visibility_check", $GLOBALS['currentCourseID']);
         if (mysql_num_rows($r) == 0) {
@@ -354,7 +354,7 @@ function show_lp($title, $comments, $resource_id, $lp_id)
                $langWasDeleted, $currentCourseID;
 
 	$comment_box = $class_vis = $imagelink = $link = '';
-        $title = htmlspecialchars($title);
+        $title = my_htmlspecialchars($title);
 	$r = db_query("SELECT * FROM lp_learnPath WHERE learnPath_id = $lp_id",
                       $currentCourseID);
 	if (mysql_num_rows($r) == 0) { // check if lp was deleted
@@ -398,7 +398,7 @@ function show_video($table, $title, $comments, $resource_id, $video_id, $visibil
                 $link = "<a href='" .
                              video_url($table, $row['url'], @$row['path']) .
                              "' target='_blank'>";
-                $videolink = $link . htmlspecialchars($title) . '</a>';
+                $videolink = $link . my_htmlspecialchars($title) . '</a>';
                 $imagelink = $link .
                              "<img src='../../template/classic/img/videos_" .
                              ($visibility == 'i'? 'off': 'on') . ".gif' /></a>";
@@ -429,7 +429,7 @@ function show_work($title, $comments, $resource_id, $work_id, $visibility)
                $langWasDeleted, $currentCourseID;
 
 	$comment_box = $class_vis = $imagelink = $link = '';
-        $title = htmlspecialchars($title);
+        $title = my_htmlspecialchars($title);
 	$r = db_query("SELECT * FROM assignments WHERE id = $work_id",
                       $currentCourseID);
 	if (mysql_num_rows($r) == 0) { // check if it was deleted
@@ -466,7 +466,7 @@ function show_exercise($title, $comments, $resource_id, $exercise_id, $visibilit
                $langWasDeleted, $currentCourseID;
 
 	$comment_box = $class_vis = $imagelink = $link = '';
-        $title = htmlspecialchars($title);
+        $title = my_htmlspecialchars($title);
 	$r = db_query("SELECT * FROM exercices WHERE id = $exercise_id",
                       $currentCourseID);
 	if (mysql_num_rows($r) == 0) { // check if it was deleted
@@ -502,7 +502,7 @@ function show_forum($type, $title, $comments, $resource_id, $ft_id, $visibility)
 	global $id, $tool_content, $mysqlMainDb, $urlServer, $is_adminOfCourse, $currentCourseID;
 	$comment_box = '';
 	$class_vis = ($visibility == 'i')? ' class="invisible"': '';
-        $title = htmlspecialchars($title);
+        $title = my_htmlspecialchars($title);
 	if ($type == 'forum') {
 		$link = "<a href='${urlServer}modules/phpbb/viewforum.php?forum=$ft_id&amp;unit=$id'>";
                 $forumlink = $link . "$title</a>";
@@ -532,7 +532,7 @@ function show_wiki($title, $comments, $resource_id, $wiki_id, $visibility)
 
 	$comment_box = $imagelink = $link = $class_vis = '';
 	$class_vis = ($visibility == 'i')? ' class="invisible"': '';
-        $title = htmlspecialchars($title);
+        $title = my_htmlspecialchars($title);
 	$r = db_query("SELECT * FROM wiki_properties WHERE id = $wiki_id",
                       $currentCourseID);
 	if (mysql_num_rows($r) == 0) { // check if it was deleted
@@ -620,7 +620,7 @@ function edit_res($resource_id)
 
         $sql = db_query("SELECT id, title, comments, type FROM unit_resources WHERE id='$resource_id'");
         $ru = mysql_fetch_array($sql);
-        $restitle = " value='" . htmlspecialchars($ru['title'], ENT_QUOTES) . "'";
+        $restitle = " value='" . my_htmlspecialchars($ru['title']) . "'";
         $rescomments = $ru['comments'];
         $resource_id = $ru['id'];
         $resource_type = $ru['type'];
@@ -636,7 +636,7 @@ function edit_res($resource_id)
 	} else {
 		$message = $langContents;
 	}
-	$rescomments = str_replace('{','&#123;',htmlspecialchars($rescomments));
+	$rescomments = str_replace('{','&#123;',my_htmlspecialchars($rescomments));
         $tool_content .= "<tr><th class='left'>$message:</th><td>
         <table class='xinha_editor'><tr><td><textarea id='xinha' name='rescomments'>$rescomments</textarea></td></tr>
         </table></td></tr>

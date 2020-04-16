@@ -38,7 +38,7 @@
  *
  * changed debug handling so set, get and internals can be tracked separately (rha)
  * added debug statements throughout to track most function calls (rha)
- * debug output contained raw HTML -- is now escaped with htmlentities (rha)
+ * debug output contained raw HTML -- is now escaped with my_htmlspecialchars (rha)
  * Alter regex in set_block to remove more whitespace around BEGIN/END tags to improve HTML layout (rha)
  * Add "append" option to set_var, works just like append in parse (dale at linuxwebpro.com, rha)
  * Altered parse so that append is honored if passed an array (Brian)
@@ -353,7 +353,7 @@ class Template
     if (!is_array($varname)) {
       if (!empty($varname)) {
         if ($this->debug & 1) {
-          printf("<b>set_var:</b> (with scalar) <b>%s</b> = '%s'<br>\n", $varname, htmlentities($value));
+          printf("<b>set_var:</b> (with scalar) <b>%s</b> = '%s'<br>\n", $varname, my_htmlspecialchars($value));
         }
         $this->varkeys[$varname] = "/".$this->varname($varname)."/";
         if ($append && isset($this->varvals[$varname])) {
@@ -367,7 +367,7 @@ class Template
       while(list($k, $v) = each($varname)) {
         if (!empty($k)) {
           if ($this->debug & 1) {
-            printf("<b>set_var:</b> (with array) <b>%s</b> = '%s'<br>\n", $k, htmlentities($v));
+            printf("<b>set_var:</b> (with array) <b>%s</b> = '%s'<br>\n", $k, my_htmlspecialchars($v));
           }
           $this->varkeys[$k] = "/".$this->varname($k)."/";
           if ($append && isset($this->varvals[$k])) {
@@ -677,7 +677,7 @@ class Template
         $str = "";
       }
       if ($this->debug & 2) {
-        printf ("<b>get_var</b> (with scalar) <b>%s</b> = '%s'<br>\n", $varname, htmlentities($str));
+        printf ("<b>get_var</b> (with scalar) <b>%s</b> = '%s'<br>\n", $varname, my_htmlspecialchars($str));
       }
       return $str;
     } else {
@@ -689,7 +689,7 @@ class Template
           $str = "";
         }
         if ($this->debug & 2) {
-          printf ("<b>get_var:</b> (with array) <b>%s</b> = '%s'<br>\n", $v, htmlentities($str));
+          printf ("<b>get_var:</b> (with array) <b>%s</b> = '%s'<br>\n", $v, my_htmlspecialchars($str));
         }
         $result[$v] = $str;
       }

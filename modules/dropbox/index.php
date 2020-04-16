@@ -111,7 +111,7 @@ $dropbox_unid = md5(uniqid(rand(), true));	//this var is used to give a unique v
  */
 if (isset($_GET['mailing']))  // RH: Mailing detail: no form upload
 {
-	$tool_content .= "<h3>". htmlspecialchars(getUserNameFromId($_GET['mailing'])). "</h3>";
+	$tool_content .= "<h3>". my_htmlspecialchars(getUserNameFromId($_GET['mailing'])). "</h3>";
 	$tool_content .= "<a href='index.php'>".$dropbox_lang["mailingBackToDropbox"].'</a><br><br>';
 }
 elseif(isset($_REQUEST['upload']) && $_REQUEST['upload'] == 1)

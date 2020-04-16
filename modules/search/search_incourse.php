@@ -48,7 +48,7 @@ $tool_content = "";
 if(isset($_POST['search_terms'])) $search_terms = $_POST['search_terms'];
 
 //my code
-$search_terms=htmlentities($search_terms);
+$search_terms=my_htmlspecialchars($search_terms);
 
 // ---------------------- Diasikasia domhshs tou query! -------------------------------
 // afto to kommati kwdika analyei tous orous anazhthshs kai tous metatrepei se gekimevmeno erwthma SQL

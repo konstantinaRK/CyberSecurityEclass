@@ -86,7 +86,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 	if (isset($_POST['uname'])) {
 		//my code
 		//$uname = escapeSimple(preg_replace('/ +/', ' ', trim($_POST['uname'])));
-		$uname=htmlentities($_POST['uname']);
+		$uname=my_htmlspecialchars($_POST['uname']);
 		//nomizo oti afto boi8ai ke se sqlinjection (oxi mono xss)
 
 	} else {

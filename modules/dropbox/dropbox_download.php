@@ -107,7 +107,7 @@ header("Pragma: \n");
 header("Cache-Control: \n");
 header("Cache-Control: public\n"); // IE cannot download from sessions without a cache
 
-header("Content-Description: " . trim(htmlentities($file)) . "\n");
+header("Content-Description: " . trim(my_htmlspecialchars($file)) . "\n");
 header("Content-Transfer-Encoding: binary\n");
 header("Content-Length: " . filesize( $path)."\n" );
 

@@ -56,9 +56,9 @@ function get_tabs()
         $GLOBALS['PMD_URL']['OWNER'][$i] = urlencode($GLOBALS['db']);
         $GLOBALS['PMD_URL']['TABLE_NAME_SMALL'][$i] = urlencode($one_table['TABLE_NAME']);
 
-        $GLOBALS['PMD_OUT']['TABLE_NAME'][$i] = htmlspecialchars($GLOBALS['db'] . "." . $one_table['TABLE_NAME'], ENT_QUOTES);
-        $GLOBALS['PMD_OUT']['OWNER'][$i] = htmlspecialchars($GLOBALS['db'], ENT_QUOTES);
-        $GLOBALS['PMD_OUT']['TABLE_NAME_SMALL'][$i] = htmlspecialchars($one_table['TABLE_NAME'], ENT_QUOTES);
+        $GLOBALS['PMD_OUT']['TABLE_NAME'][$i] = htmlspecialchars($GLOBALS['db'] . "." . $one_table['TABLE_NAME']);
+        $GLOBALS['PMD_OUT']['OWNER'][$i] = htmlspecialchars($GLOBALS['db']);
+        $GLOBALS['PMD_OUT']['TABLE_NAME_SMALL'][$i] = htmlspecialchars($one_table['TABLE_NAME']);
 
         $GLOBALS['PMD']['TABLE_TYPE'][$i] = strtoupper($one_table['ENGINE']);
 
@@ -210,7 +210,7 @@ function get_all_keys($unique_only = false)
     require_once './libraries/Index.class.php';
 
     $keys = array();
-        
+
     foreach ($GLOBALS['PMD']['TABLE_NAME_SMALL'] as $I => $table) {
         $schema = $GLOBALS['PMD']['OWNER'][$I];
         // for now, take into account only the first index segment

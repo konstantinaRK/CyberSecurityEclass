@@ -1,24 +1,24 @@
 <?php
 /*=============================================================================
-       	GUnet eClass 2.0 
-        E-learning and Course Management Program  
+       	GUnet eClass 2.0
+        E-learning and Course Management Program
 ================================================================================
        	Copyright(c) 2003-2010  Greek Universities Network - GUnet
         A full copyright notice can be read in "/info/copyright.txt".
-        
-       	Authors:    Costas Tsibanis <k.tsibanis@noc.uoa.gr>
-                     Yannis Exidaridis <jexi@noc.uoa.gr> 
-                     Alexandros Diamantidis <adia@noc.uoa.gr> 
 
-        For a full list of contributors, see "credits.txt".  
-     
-        This program is a free software under the terms of the GNU 
-        (General Public License) as published by the Free Software 
-        Foundation. See the GNU License for more details. 
+       	Authors:    Costas Tsibanis <k.tsibanis@noc.uoa.gr>
+                     Yannis Exidaridis <jexi@noc.uoa.gr>
+                     Alexandros Diamantidis <adia@noc.uoa.gr>
+
+        For a full list of contributors, see "credits.txt".
+
+        This program is a free software under the terms of the GNU
+        (General Public License) as published by the Free Software
+        Foundation. See the GNU License for more details.
         The full license can be read in "license.txt".
-     
-       	Contact address: GUnet Asynchronous Teleteaching Group, 
-        Network Operations Center, University of Athens, 
+
+       	Contact address: GUnet Asynchronous Teleteaching Group,
+        Network Operations Center, University of Athens,
         Panepistimiopolis Ilissia, 15784, Athens, Greece
         eMail: eclassadmin@gunet.gr
 ==============================================================================*/
@@ -27,21 +27,21 @@
 	fileDisplayLib.inc.php
 	@last update: 30-06-2006 by Thanos Kyritsis
 	@authors list: Thanos Kyritsis <atkyritsis@upnet.gr>
-	               
+
 	based on Claroline version 1.3 licensed under GPL
 	      copyright (c) 2001, 2006 Universite catholique de Louvain (UCL)
-	      
+
 	      original file: fileDisplayLib.inc.php Revision: 1.2
-	      
+
 	Claroline authors: Thomas Depraetere <depraetere@ipm.ucl.ac.be>
                       Hugues Peeters    <peeters@ipm.ucl.ac.be>
                       Christophe Gesche <gesche@ipm.ucl.ac.be>
-==============================================================================        
-    @Description: 
+==============================================================================
+    @Description:
 
     @Comments:
- 
-    @todo: 
+
+    @todo:
 ==============================================================================
 */
 
@@ -132,7 +132,7 @@ function choose_image($fileName)
 
 /*
  * Transform the file size in a human readable format
- * 
+ *
  * @author - ???
  * @param  - fileSize (int) - size of the file in bytes
  */
@@ -164,7 +164,7 @@ function format_file_size($fileSize)
  * Transform a UNIX time stamp in human readable format date
  *
  * @author - Hugues Peeters <peeters@ipm.ucl.ac.be>
- * @param - date - UNIX time stamp 
+ * @param - date - UNIX time stamp
  */
 
 function format_date($fileDate)
@@ -175,7 +175,7 @@ function format_date($fileDate)
 
 /*
  * Transform the file path in a url
- * 
+ *
  * @param - filePaht (string) - relative local path of the file on the Hard disk
  * @return - relative url
  */
@@ -227,5 +227,5 @@ function file_url($path, $filename = null)
                 $q = db_query("SELECT filename FROM document WHERE path = '$path'");
                 list($filename) = mysql_fetch_row($q);
         }
-	return htmlspecialchars($urlServer . "modules/document/file.php/$currentCourseID$dirname/" . file_url_escape($filename), ENT_QUOTES);
+	return my_htmlspecialchars($urlServer . "modules/document/file.php/$currentCourseID$dirname/" . file_url_escape($filename));
 }

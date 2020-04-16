@@ -145,7 +145,7 @@ if (isset($submit) && $submit) {
 	$poster_ip = $REMOTE_ADDR;
 	$is_html_disabled = false;
 	if ( (isset($allow_html) && $allow_html == 0) || isset($html)) {
-		$message = htmlspecialchars($message);
+		$message = my_htmlspecialchars($message);
 		$is_html_disabled = true;
 		if (isset($quote) && $quote) {
 			$edit_by = get_syslang_string($sys_lang, "l_editedby");
@@ -168,9 +168,9 @@ if (isset($submit) && $submit) {
 	}
 
   //my code
-  $topic=htmlentities($topic);
-  $nom=htmlentities($nom);
-  $prenom=htmlentities($prenom);
+  $topic=my_htmlspecialchars($topic);
+  $nom=my_htmlspecialchars($nom);
+  $prenom=my_htmlspecialchars($prenom);
 
 	$sql = "INSERT INTO posts (topic_id, forum_id, poster_id, post_time, poster_ip, nom, prenom)
 			VALUES ('$topic', '$forum', '$uid','$time', '$poster_ip', '$nom', '$prenom')";

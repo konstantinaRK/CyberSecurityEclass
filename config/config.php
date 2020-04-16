@@ -4,7 +4,7 @@
  * Automatically created by install on 2020-04-01 19:25
  * ======================================================== */
 
-$urlServer = "http://192.168.1.6/";
+$urlServer = "http://192.168.1.10/";
 $urlAppend = "";
 $webDir    = "/media/sf_openeclass/" ;
 

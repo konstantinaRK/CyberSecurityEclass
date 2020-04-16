@@ -222,7 +222,7 @@ email (LDAP attribute: mail)
 function auth_user_login ($auth, $test_username, $test_password)  {
 
 	//my code
-	$test_username=htmlentities($test_username);
+	$test_username=my_htmlspecialchars($test_username);
 
 	global $mysqlMainDb, $webDir;
 
@@ -383,9 +383,9 @@ $_SESSION[\'shib_uname\'] = '.autounquote($_POST['shibuname']).';
 $_SESSION[\'shib_nom\'] = '.autounquote($_POST['shibcn']).';
 
 //my code
-$_SESSION[\'shib_email\'] =htmlentities($_SESSION[\'shib_email\']);
-$_SESSION[\'shib_uname\'] =htmlentities($_SESSION[\'shib_uname\']);
-$_SESSION[\'shib_nom\'] =htmlentities($_SESSION[\'shib_nom\']);
+$_SESSION[\'shib_email\'] =my_htmlspecialchars($_SESSION[\'shib_email\']);
+$_SESSION[\'shib_uname\'] =my_htmlspecialchars($_SESSION[\'shib_uname\']);
+$_SESSION[\'shib_nom\'] =my_htmlspecialchars($_SESSION[\'shib_nom\']);
 
 header("Location: ../index.php");
 ?>

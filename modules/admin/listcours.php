@@ -159,8 +159,8 @@ for ($j = 0; $j < mysql_num_rows($sql); $j++) {
 
 	$tool_content .= "<td width='1'>
 	<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet' /></td>
-	<td><a href='{$urlServer}courses/$logs[code]/'><b>".htmlspecialchars($logs[2])."</b>
-	</a> (".htmlspecialchars($logs[1]).")<br /><i>".$logs[3]."</i>
+	<td><a href='{$urlServer}courses/$logs[code]/'><b>".my_htmlspecialchars($logs[2])."</b>
+	</a> (".my_htmlspecialchars($logs[1]).")<br /><i>".$logs[3]."</i>
 	</td>
 	<td align='center'>";
 	// Define course type
@@ -175,7 +175,7 @@ for ($j = 0; $j < mysql_num_rows($sql); $j++) {
 		$tool_content .= "<img src='../../template/classic/img/ClosedCourse.gif' title='$langClosedCourse'></img>";
 		break;
 	}
-	$tool_content .= "</td><td>".htmlspecialchars($logs[0])."</td>";
+	$tool_content .= "</td><td>".my_htmlspecialchars($logs[0])."</td>";
 	// Add links to course users, delete course and course edit
 	$tool_content .= "<td align='center'><a href='listusers.php?c=".$logs['cours_id']."'>
 		<img src='../../template/classic/img/user_list.gif' title='$langUsers' border='0'></img></a></td>

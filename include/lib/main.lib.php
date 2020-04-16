@@ -158,10 +158,10 @@ function autounquote($s) {
         }
 }
 
-// Shortcut for htmlspecialchars()
+// Shortcut for my_htmlspecialchars()
 function q($s)
 {
-	return htmlspecialchars($s, ENT_QUOTES);
+	return my_htmlspecialchars($s);
 }
 
 /*
@@ -363,17 +363,17 @@ function selection($entries, $name, $default = '', $extra = '')
 {
 
 	//my code
-	$name=htmlentities($name);
+	$name=my_htmlspecialchars($name);
 
 	$retString = "";
 	$retString .= "\n<select name='$name' $extra class='auth_input'>\n";
 	foreach ($entries as $value => $label) {
 		if ($value == $default) {
-			$retString .= "<option selected value='" . htmlspecialchars($value) . "'>" .
-			htmlspecialchars($label) . "</option>\n";
+			$retString .= "<option selected value='" . my_htmlspecialchars($value) . "'>" .
+			my_htmlspecialchars($label) . "</option>\n";
 		} else {
-			$retString .= "<option value='" . htmlspecialchars($value) . "'>" .
-			htmlspecialchars($label) . "</option>\n";
+			$retString .= "<option value='" . my_htmlspecialchars($value) . "'>" .
+			my_htmlspecialchars($label) . "</option>\n";
 		}
 	}
 	$retString .= "</select>\n";
@@ -392,11 +392,11 @@ function selection3($entries, $name, $default = '') {
 	$select_box = "<select name='$name'>\n";
 	foreach ($entries as $value => $label)  {
 	    if ($value == $default) {
-		$select_box .= "<option selected value='" . htmlspecialchars($value) . "'>" .
-				htmlspecialchars($label) . "</option>\n";
+		$select_box .= "<option selected value='" . my_htmlspecialchars($value) . "'>" .
+				my_htmlspecialchars($label) . "</option>\n";
 		}  else {
-		$select_box .= "<option value='" . htmlspecialchars($value) . "'>" .
-				htmlspecialchars($label) . "</option>\n";
+		$select_box .= "<option value='" . my_htmlspecialchars($value) . "'>" .
+				my_htmlspecialchars($label) . "</option>\n";
 		}
 	}
 	$select_box .= "</select>\n";
@@ -1190,7 +1190,7 @@ function add_units_navigation($entry_page = FALSE)
                        $visibility_check, $mysqlMainDb);
                 if ($q and mysql_num_rows($q) > 0) {
                         list($unit_name) = mysql_fetch_row($q);
-                        $navigation[] = array("url"=>"../units/index.php?id=$unit_id", "name"=> htmlspecialchars($unit_name));
+                        $navigation[] = array("url"=>"../units/index.php?id=$unit_id", "name"=> my_htmlspecialchars($unit_name));
                 }
 		return TRUE;
 	} else {

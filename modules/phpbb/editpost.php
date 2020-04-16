@@ -110,7 +110,7 @@ if ($is_adminOfCourse) { // course admin
 		// IF we made it this far we are allowed to edit this message, yay!
 		$is_html_disabled = false;
 		if ( (isset($allow_html) && $allow_html == 0) || isset($html) ) {
-			$message = htmlspecialchars($message);
+			$message = my_htmlspecialchars($message);
 			$is_html_disabled = true;
 		}
 		if ( isset($allow_bbcode) && $allow_bbcode == 1 && !isset($bbcode)) {
@@ -140,7 +140,7 @@ if ($is_adminOfCourse) { // course admin
 				}
 
         //my code
-				$subject = htmlentities($subject);
+				$subject = my_htmlspecialchars($subject);
 
         $sql = "UPDATE topics
 					SET topic_title = '$subject', topic_notify = '$notify'

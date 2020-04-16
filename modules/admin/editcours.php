@@ -116,7 +116,7 @@ if (isset($c)) {
   <tbody>
   <tr>
     <th width=\"220\">&nbsp;</th>
-    <td>".$langCourseInfo." (<a href=\"infocours.php?c=".htmlspecialchars($c)."".$searchurl."\">".$langModify."</a>)</td>
+    <td>".$langCourseInfo." (<a href=\"infocours.php?c=".my_htmlspecialchars($c)."".$searchurl."\">".$langModify."</a>)</td>
   </tr>";
 	$tool_content .= "
   <tr>
@@ -147,7 +147,7 @@ if (isset($c)) {
   </tr>
   <tr>
     <th width=\"220\" class=\"left\"><b>$langTheCourse <b>$row[intitule]</b> $langMaxQuota</b></th>
-    <td>".$langQuota." (<a href=\"quotacours.php?c=".htmlspecialchars($c).$searchurl."\">".$langModify."</a>)</td>
+    <td>".$langQuota." (<a href=\"quotacours.php?c=".my_htmlspecialchars($c).$searchurl."\">".$langModify."</a>)</td>
   </tr>";
 	// Get information about course quota
 	$q = mysql_fetch_array(mysql_query("SELECT code,intitule,doc_quota,video_quota,group_quota,dropbox_quota
@@ -190,7 +190,7 @@ if (isset($c)) {
   </tr>
   <tr>
     <th width=\"220\">&nbsp;</th>
-    <td>".$langCourseStatus." (<a href=\"statuscours.php?c=".htmlspecialchars($c)."".$searchurl."\">".$langModify."</a>)</td>
+    <td>".$langCourseStatus." (<a href=\"statuscours.php?c=".my_htmlspecialchars($c)."".$searchurl."\">".$langModify."</a>)</td>
   </tr>";
 	$tool_content .= "
   <tr>
@@ -232,17 +232,17 @@ if (isset($c)) {
   // Register unregister users
 	$tool_content .= "
   <tr>
-    <td><a href=\"addusertocours.php?c=".htmlspecialchars($c)."".$searchurl."\">".$langAdminUsers."</a></td>
+    <td><a href=\"addusertocours.php?c=".my_htmlspecialchars($c)."".$searchurl."\">".$langAdminUsers."</a></td>
   </tr>";
   // Backup course
 	$tool_content .= "
   <tr>
-    <td><a href=\"../course_info/archive_course.php?c=".htmlspecialchars($c)."".$searchurl."\">".$langTakeBackup."<a/></td>
+    <td><a href=\"../course_info/archive_course.php?c=".my_htmlspecialchars($c)."".$searchurl."\">".$langTakeBackup."<a/></td>
   </tr>";
   // Delete course
 	$tool_content .= "
   <tr>
-    <td><a href=\"delcours.php?c=".htmlspecialchars($c)."".$searchurl."\">".$langCourseDelFull."</a></td>
+    <td><a href=\"delcours.php?c=".my_htmlspecialchars($c)."".$searchurl."\">".$langCourseDelFull."</a></td>
   </tr>";
 	$tool_content .= "
   </tbody>

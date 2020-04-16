@@ -73,7 +73,7 @@ header('Content-Type: text/html; charset=UTF-8');
 // Set user desired language (Author: Evelthon Prodromou)
 if (isset($_REQUEST['localize'])) {
 	//my code
-	$_REQUEST['localize']=htmlentities($_REQUEST['localize']);
+	$_REQUEST['localize']=my_htmlspecialchars($_REQUEST['localize']);
 
 	$_SESSION['langswitch'] = $language = langcode_to_name($_REQUEST['localize']);
 }

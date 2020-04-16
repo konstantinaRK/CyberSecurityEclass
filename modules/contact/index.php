@@ -49,7 +49,7 @@ if (empty($userdata['email'])) {
 	$content = trim($_POST['content']);
 
 	//my code
-	$content=htmlentities($content);
+	$content=my_htmlspecialchars($content);
 
 	if (empty($content)) {
 		$tool_content .= "<p>$langEmptyMessage</p>";

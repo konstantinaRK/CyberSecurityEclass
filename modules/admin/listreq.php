@@ -117,17 +117,17 @@ if (!empty($show) && ($show=="closed")) {
 	            	}
 	        	$tool_content .= "<td width=\"1\">
 			<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
-			$tool_content .= "<td>".htmlspecialchars($req['profname'])."&nbsp;".htmlspecialchars($req['profsurname'])."";
-			$tool_content .= "<td>".htmlspecialchars($req['profuname'])."</td>";
+			$tool_content .= "<td>".my_htmlspecialchars($req['profname'])."&nbsp;".my_htmlspecialchars($req['profsurname'])."";
+			$tool_content .= "<td>".my_htmlspecialchars($req['profuname'])."</td>";
 			if ($req['profemail'] != "") {
 				$tool_content .= "<td>
-				<a href=\"mailto:".htmlspecialchars($req['profemail'])."\">".
-				htmlspecialchars($req['profemail'])."</a></td>";
+				<a href=\"mailto:".my_htmlspecialchars($req['profemail'])."\">".
+				my_htmlspecialchars($req['profemail'])."</a></td>";
 			} else {
-				htmlspecialchars($req['profemail'])."</td>";
+				my_htmlspecialchars($req['profemail'])."</td>";
 			}
-			$tool_content .= "<td>".htmlspecialchars($req['proftmima'])."</td>";
-			$tool_content .= "<td>".htmlspecialchars($req['profcomm'])."</td>";
+			$tool_content .= "<td>".my_htmlspecialchars($req['proftmima'])."</td>";
+			$tool_content .= "<td>".my_htmlspecialchars($req['profcomm'])."</td>";
 			$tool_content .= "<td align=\"center\">
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_open'])))."</small></td>";
             		$tool_content .= "<td align=\"center\">
@@ -168,17 +168,17 @@ if (!empty($show) && ($show=="closed")) {
 	            	}
 	    		$tool_content .= "<td width='1'>
 			<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
-			$tool_content .= "<td>".htmlspecialchars($req['profname'])."&nbsp;".htmlspecialchars($req['profsurname'])."";
-			$tool_content .= "<td>".htmlspecialchars($req['profuname'])."</td>";
+			$tool_content .= "<td>".my_htmlspecialchars($req['profname'])."&nbsp;".my_htmlspecialchars($req['profsurname'])."";
+			$tool_content .= "<td>".my_htmlspecialchars($req['profuname'])."</td>";
 			if ($req['profemail'] != "") {
 				$tool_content .= "<td><a href=\"mailto:".
-				htmlspecialchars($req['profemail'])."\">".
-				htmlspecialchars($req['profemail'])."</a></td>";
+				my_htmlspecialchars($req['profemail'])."\">".
+				my_htmlspecialchars($req['profemail'])."</a></td>";
 			} else {
-				$tool_content .= "<td>".htmlspecialchars($req['profemail'])."</td>";
+				$tool_content .= "<td>".my_htmlspecialchars($req['profemail'])."</td>";
 			}
-			$tool_content .= "<td>".htmlspecialchars($req['proftmima'])."</td>";
-			$tool_content .= "<td>".htmlspecialchars($req['profcomm'])."</td>";
+			$tool_content .= "<td>".my_htmlspecialchars($req['proftmima'])."</td>";
+			$tool_content .= "<td>".my_htmlspecialchars($req['profcomm'])."</td>";
 			$tool_content .= "<td align=\"center\">
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_open'])))."</small></td>";
                 	$tool_content .= "<td align=\"center\">
@@ -214,15 +214,15 @@ if (!empty($show) && ($show=="closed")) {
 	              $tool_content .= "\n  <tr class=\"odd\">";
 	            }
 	    $tool_content .= "\n    <td width=\"1\"><img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
-		$tool_content .= "\n    <td>".htmlspecialchars($req[1])."&nbsp;".htmlspecialchars($req[2])."</td>";
+		$tool_content .= "\n    <td>".my_htmlspecialchars($req[1])."&nbsp;".my_htmlspecialchars($req[2])."</td>";
 		for ($i = 3; $i < mysql_num_fields($sql) - 3; $i++) {
 			if ($i == 4 and $req[$i] != "") {
 				$tool_content .= "\n    <td><a href=\"mailto:".
-				htmlspecialchars($req[$i])."\">".
-				htmlspecialchars($req[$i])."</a></td>";
+				my_htmlspecialchars($req[$i])."\">".
+				my_htmlspecialchars($req[$i])."</a></td>";
 			} else {
 				$tool_content .= "\n    <td>".
-				htmlspecialchars($req[$i])."</td>";
+				my_htmlspecialchars($req[$i])."</td>";
 			}
 		}
 		$tool_content .= "\n    <td align=\"center\"><small>".nice_format(date("Y-m-d", strtotime($req[7])))."</small></td>";
@@ -332,17 +332,17 @@ else
 	            }
 	    	$tool_content .= "<td align='right' width='1'>
 		<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
-	     	$tool_content .= "<td>".htmlspecialchars($req['profname'])."&nbsp;".htmlspecialchars($req['profsurname'])."</td>";
-		$tool_content .= "<td>".htmlspecialchars($req['profuname'])."</td>";
+	     	$tool_content .= "<td>".my_htmlspecialchars($req['profname'])."&nbsp;".my_htmlspecialchars($req['profsurname'])."</td>";
+		$tool_content .= "<td>".my_htmlspecialchars($req['profuname'])."</td>";
 		if ($req['profemail'] != "") {
 				$tool_content .= "\n<td><a href=\"mailto:".
-				htmlspecialchars($req['profemail'])."\">".
-				htmlspecialchars($req['profemail'])."</a></td>";
+				my_htmlspecialchars($req['profemail'])."\">".
+				my_htmlspecialchars($req['profemail'])."</a></td>";
 		} else {
-			$tool_content .= "\n<td>".htmlspecialchars($req['profemail'])."</td>";
+			$tool_content .= "\n<td>".my_htmlspecialchars($req['profemail'])."</td>";
 		}
-		$tool_content .= "<td>".htmlspecialchars(find_faculty_by_id($req['proftmima']))."</td>";
-		$tool_content .= "<td>".htmlspecialchars($req['profcomm'])."</td>";
+		$tool_content .= "<td>".my_htmlspecialchars(find_faculty_by_id($req['proftmima']))."</td>";
+		$tool_content .= "<td>".my_htmlspecialchars($req['profcomm'])."</td>";
 		$tool_content .= "<td align='center'>
 			<small>".nice_format(date("Y-m-d", strtotime($req['date_open'])))."</small></td>";
 		$tool_content .= "<td align='center'>$req[comment]</td>";

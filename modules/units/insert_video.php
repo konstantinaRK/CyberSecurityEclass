@@ -45,8 +45,8 @@ function display_video()
                         }
                         $videolink = "<a href='" .
                                 video_url($table, $row['url'], @$row['path']) .
-                                "'>" . htmlspecialchars($row['titre']) . '</a>';
-                        $tool_content .= '<tr><td>' . $videolink . '</td><td>' . htmlspecialchars($row['description']) . '</td><td>' . format_date(strtotime($row['date'])) . "</td><td class='center'><input type='checkbox' name='video[]' value='$table:$row[id]' /></td></tr>\n";
+                                "'>" . my_htmlspecialchars($row['titre']) . '</a>';
+                        $tool_content .= '<tr><td>' . $videolink . '</td><td>' . my_htmlspecialchars($row['description']) . '</td><td>' . format_date(strtotime($row['date'])) . "</td><td class='center'><input type='checkbox' name='video[]' value='$table:$row[id]' /></td></tr>\n";
                 }
         }
         if ($count > 0) {

@@ -538,7 +538,7 @@ function edit_assignment($id)
 		description=".mysql_escape_string($_POST['desc']).", group_submissions=".mysql_escape_string($_POST['group_submissions']).",
 		comments=".mysql_escape_string($_POST['comments']).", deadline=".mysql_escape_string($_POST['WorkEnd'])." WHERE id='$id'")) {
 
-      $title = htmlentities($_POST['title']);
+      $title = my_htmlspecialchars($_POST['title']);
 	    $tool_content .="<p class='success_small'>$langEditSuccess<br /><a href='work.php?id=$id'>$langBackAssignment '$title'</a></p><br />";
 	} else {
 	   $tool_content .="<p class='caution_small'>$langEditError<br /><a href='work.php?id=$id'>$langBackAssignment '$title'</a></p><br />";
@@ -750,12 +750,12 @@ function sort_link($title, $opt, $attrib = '')
 	$i = '';
 
   //my code
-  $title=htmlentities($title);
+  $title=my_htmlspecialchars($title);
 
 	if (isset($_REQUEST['id'])) {
 
     //my code
-    $_REQUEST['id']=htmlentities($_REQUEST['id']);
+    $_REQUEST['id']=my_htmlspecialchars($_REQUEST['id']);
 
 		$i = "&id=$_REQUEST[id]";
 	}
@@ -908,7 +908,7 @@ cData;
 
 			//professor comments
 			if (trim($row['grade_comments'] != '')) {
-				$prof_comment = "".htmlspecialchars($row['grade_comments']).
+				$prof_comment = "".my_htmlspecialchars($row['grade_comments']).
 				" (<a href='grade_edit.php?assignment=$id&submission=$row[id]'>".
 				"$m[edit]</a>)";
 			} else {
@@ -1044,7 +1044,7 @@ function show_student_assignments()
 cData;
         $k = 0;
 		while ($row = mysql_fetch_array($result)) {
-			$title_temp = htmlspecialchars($row['title']);
+			$title_temp = my_htmlspecialchars($row['title']);
 			if ($k%2==0) {
 	           $tool_content .= "\n      <tr>";
 	        } else {
@@ -1149,7 +1149,7 @@ cData;
       <td width='1%'><img style='border:0px; padding-top:3px;' src='$urlServer/template/classic/img/$visibility_image.gif' title='bullet' /></td>
       <td ".$visibility_css."><a href='work.php?id=${row['id']}' ";
 			$tool_content .= ">";
-			$tool_content .= $row_title = htmlspecialchars($row['title']);
+			$tool_content .= $row_title = my_htmlspecialchars($row['title']);
 			$tool_content .= "</a></td>
       <td align='center'>".nice_format($row['deadline'])."</td>
       <td align='right'>
@@ -1158,12 +1158,12 @@ cData;
          <a href='work.php?id=$row[id]&amp;choice=do_delete' onClick='return confirmation(\"".addslashes($row_title)."\");'><img src='../../template/classic/img/delete.gif' alt='$m[delete]' /></a>";
 
 			if ($row['active']) {
-				$deactivate_temp = htmlspecialchars($m['deactivate']);
-				$activate_temp = htmlspecialchars($m['activate']);
+				$deactivate_temp = my_htmlspecialchars($m['deactivate']);
+				$activate_temp = my_htmlspecialchars($m['activate']);
 				$tool_content .= "
          <a href='work.php?choice=disable&amp;id=$row[id]'><img src='../../template/classic/img/visible.gif' title='$deactivate_temp' /></a>";
 			} else {
-				$activate_temp = htmlspecialchars($m['activate']);
+				$activate_temp = my_htmlspecialchars($m['activate']);
 				$tool_content .= "
          <a href='work.php?choice=enable&amp;id=$row[id]'><img src='../../template/classic/img/invisible.gif' title='$activate_temp' /></a>";
 			}
@@ -1309,7 +1309,7 @@ function create_zip_index($path, $id, $online = FALSE)
 				<td>'.uid_to_name($row['uid']).'</td>
 				<td>'.uid_to_am($row['uid']).'</td>
 				<td align="center"><a href="'.$filename.'">'.
-		htmlspecialchars($filename).'</a></td>
+		my_htmlspecialchars($filename).'</a></td>
 				<td align="center">'.$row['submission_date'].'</td>
 				<td align="center">'.$row['grade'].'</td>
 			</tr>');

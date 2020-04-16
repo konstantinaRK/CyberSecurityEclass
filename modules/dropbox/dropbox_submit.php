@@ -91,7 +91,7 @@ if (isset($_POST["submitWork"]))
 	$errormsg = '';
 
 	//my code
-	$_POST['description']=htmlentities($_POST['description']);
+	$_POST['description']=my_htmlspecialchars($_POST['description']);
 
 if (!isset( $_POST['authors']) || !isset( $_POST['description']))
 	{
@@ -351,10 +351,10 @@ if (isset($_GET['mailingIndex']))  // examine or send
 			$students = array();  // collect all recipients in this course
 			foreach($goodFiles as $thisFile => $thisRecip)
 			{
-				$errormsg .= htmlspecialchars($thisFile) . ': ';
+				$errormsg .= my_htmlspecialchars($thisFile) . ': ';
 				if (is_string($thisRecip))  // see findRecipient
 				{
-					$errormsg .= '<font color="#FF0000">' . htmlspecialchars($thisRecip) . '</font><br>';
+					$errormsg .= '<font color="#FF0000">' . my_htmlspecialchars($thisRecip) . '</font><br>';
 				}
 				else
 				{
@@ -366,7 +366,7 @@ if (isset($_GET['mailingIndex']))  // examine or send
 					{
 						$errormsg .= $dropbox_lang["mailingFileIsFor"];
 					}
-					$errormsg .= htmlspecialchars($thisRecip[1].' '.$thisRecip[2]);
+					$errormsg .= my_htmlspecialchars($thisRecip[1].' '.$thisRecip[2]);
 
 					if ( is_null($thisRecip[3]))
 					{
@@ -396,7 +396,7 @@ if (isset($_GET['mailingIndex']))  // examine or send
 				$remainingUsers = '';
 				while ( ($res = mysql_fetch_array($result)))
 				{
-					$remainingUsers .= ', ' . htmlspecialchars($res[0].' '.$res[1]);
+					$remainingUsers .= ', ' . my_htmlspecialchars($res[0].' '.$res[1]);
 				}
 				$errormsg .= '<br>' . $dropbox_lang["mailingNothingFor"] . substr($remainingUsers, 1) . '.<br>';
 			}

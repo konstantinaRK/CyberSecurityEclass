@@ -33,7 +33,7 @@ if(!isset($_GET['c'])) { die(); }
 $nameTools = $langAdminUsers;
 $navigation[] = array("url" => "index.php", "name" => $langAdmin);
 $navigation[] = array("url" => "listcours.php", "name" => $langListCours);
-$navigation[] = array("url" => "editcours.php?c=".htmlspecialchars($_GET['c']), "name" => $langCourseEdit);
+$navigation[] = array("url" => "editcours.php?c=".my_htmlspecialchars($_GET['c']), "name" => $langCourseEdit);
 // Initialise $tool_content
 $tool_content = "";
 
@@ -138,7 +138,7 @@ function reverseAll(cbList) {
 
 </script>';
 
-	$tool_content .= "<form action=".$_SERVER['PHP_SELF']."?c=".htmlspecialchars($_GET['c'])."".$searchurl." method='post'>";
+	$tool_content .= "<form action=".$_SERVER['PHP_SELF']."?c=".my_htmlspecialchars($_GET['c'])."".$searchurl." method='post'>";
 	$tool_content .= "<table class='FormData' width='99%' align='left'><tbody>
                           <tr><th colspan='3'>".$langFormUserManage."</th></tr>
                           <tr><th align=left>".$langListNotRegisteredUsers."<br />
@@ -223,7 +223,7 @@ function reverseAll(cbList) {
 // If course selected go back to editcours.php
 if (isset($_GET['c'])) {
 	$tool_content .= "<p align='right'>
-	<a href=\"editcours.php?c=".htmlspecialchars($_GET['c']).$searchurl."\">".$langBack."</a></p>";
+	<a href=\"editcours.php?c=".my_htmlspecialchars($_GET['c']).$searchurl."\">".$langBack."</a></p>";
 }
 // Else go back to index.php directly
 else {

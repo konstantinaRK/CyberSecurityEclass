@@ -57,7 +57,7 @@ $ldap_passwd = isset($_POST['ldap_passwd'])?$_POST['ldap_passwd']:'';
 $is_submit = isset($_POST['is_submit'])?$_POST['is_submit']:'';
 
 //my code
-$ldap_email=htmlentities($ldap_email);
+$ldap_email=my_htmlspecialchars($ldap_email);
 //mpori na 8eli to idio ke ston kodiko alla grami 105 mpori na pai la8os
 
 $lastpage = 'ldapnewuser.php?auth='.$auth.'&ldap_email='.$ldap_email;
@@ -204,12 +204,12 @@ if (isset($_POST['submit'])) {
 		$lang = langname_to_code($language);
 
 		//my code
-		$nom_form=htmlentities($nom_form);
-		$prenom_form=htmlentities($prenom_form);
-		$uname=htmlentities($uname);
-		$am=htmlentities($am);
-		$email=htmlentities($email);
-		$department=htmlentities($department);
+		$nom_form=my_htmlspecialchars($nom_form);
+		$prenom_form=my_htmlspecialchars($prenom_form);
+		$uname=my_htmlspecialchars($uname);
+		$am=my_htmlspecialchars($am);
+		$email=my_htmlspecialchars($email);
+		$department=my_htmlspecialchars($department);
 
 		$q1 = "INSERT INTO `$mysqlMainDb`.user
 			SET nom = '$nom_form', prenom = '$prenom_form',

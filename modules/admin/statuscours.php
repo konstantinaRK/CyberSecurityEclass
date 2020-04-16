@@ -59,7 +59,7 @@ if(!isset($_GET['c'])) { die(); }
 $nameTools = $langCourseStatus;
 $navigation[] = array("url" => "index.php", "name" => $langAdmin);
 $navigation[] = array("url" => "listcours.php", "name" => $langListCours);
-$navigation[] = array("url" => "editcours.php?c=".htmlspecialchars($_GET['c']), "name" => $langCourseEdit);
+$navigation[] = array("url" => "editcours.php?c=".my_htmlspecialchars($_GET['c']), "name" => $langCourseEdit);
 // Initialise $tool_content
 $tool_content = "";
 
@@ -94,7 +94,7 @@ else {
 	$visible = $row['visible'];
 	$visibleChecked[$visible]="checked";
 	// Constract edit form
-	$tool_content .= "<form action=".$_SERVER['PHP_SELF']."?c=".htmlspecialchars($_GET['c'])."".$searchurl." method=\"post\">
+	$tool_content .= "<form action=".$_SERVER['PHP_SELF']."?c=".my_htmlspecialchars($_GET['c'])."".$searchurl." method=\"post\">
 	<table class=\"FormData\" width=\"99%\" align=\"left\">
 	<tbody>
 	<tr><th width=\"220\">&nbsp;</th>
@@ -121,7 +121,7 @@ else {
 }
 // If course selected go back to editcours.php
 if (isset($_GET['c'])) {
-	$tool_content .= "<p align=\"right\"><a href=\"editcours.php?c=".htmlspecialchars($_GET['c'])."".$searchurl."\">".$langBack."</a></p>";
+	$tool_content .= "<p align=\"right\"><a href=\"editcours.php?c=".my_htmlspecialchars($_GET['c'])."".$searchurl."\">".$langBack."</a></p>";
 }
 // Else go back to index.php directly
 else {

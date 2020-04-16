@@ -83,12 +83,12 @@ else
 	if (!isset($_GET['fc'])) {
 		$_GET['fc'] = "";
 	}
-	$_GET['fc'] = htmlspecialchars($_GET['fc']);
+	$_GET['fc'] = my_htmlspecialchars($_GET['fc']);
 
 	if (!isset($_GET['cc'])) {
 		$_GET['cc'] = "";
 	}
-	$_GET['cc'] = htmlspecialchars($_GET['cc']);
+	$_GET['cc'] = my_htmlspecialchars($_GET['cc']);
 	$tool_content .= "<p><a href=\"courses.php?fc=".$_GET['fc']."\">$langReturn</a></p>";
 	$tool_content .= "<form action=\"".$_SERVER['PHP_SELF']."?fc=".$_GET['fc']."\" method=\"post\">
 <table width=\"99%\"><thead>";

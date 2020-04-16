@@ -85,7 +85,7 @@ function escape_if_exists($name) {
                 }
                 $GLOBALS[$name] = $tmp;
                 $GLOBALS[$name . '_html'] = '<input type="hidden" name="' . $name .
-                       '" value="' . htmlspecialchars($tmp) . '" />';
+                       '" value="' . my_htmlspecialchars($tmp) . '" />';
         } else {
                 $GLOBALS[$name . '_html'] = $GLOBALS[$name] = '';
         }

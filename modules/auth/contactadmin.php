@@ -59,7 +59,7 @@ $userid=intval($userid);
 $submit = isset($_POST['submit'])?$_POST['submit']:'';
 
 //my code
-$submit=htmlentities($submit);
+$submit=my_htmlspecialchars($submit);
 
 if(!empty($userid))
 {

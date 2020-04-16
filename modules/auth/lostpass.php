@@ -68,7 +68,7 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 
 		//my code
 		//mpori na ine parapanisio
-		$myrow['user_id']=htmlentities($myrow['user_id']);
+		$myrow['user_id']=my_htmlspecialchars($myrow['user_id']);
 
 
 		//copy pass hash (md5) from reset_pass to user table
@@ -136,8 +136,8 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 
 } elseif (!isset($_REQUEST['do'])) {
 	//my code
-	$userName=htmlentities($userName);
-	$email=htmlentities($email);
+	$userName=my_htmlspecialchars($userName);
+	$email=my_htmlspecialchars($email);
 
 	/***** If valid e-mail address was entered, find user and send email *****/
 	$res = db_query("SELECT user_id, nom, prenom, username, password, statut FROM user

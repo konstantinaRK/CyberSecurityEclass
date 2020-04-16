@@ -34,7 +34,7 @@ function update_field($table, $field, $field_name, $id_col, $id) {
 	$id = quote($id);
 
 	//my code
-	$field_name=htmlentities();
+	$field_name=my_htmlspecialchars();
 
 	$sql = "UPDATE `$table` SET `$field` = '$field_name' WHERE `$id_col` = $id;";
 	db_query($sql);
@@ -220,7 +220,7 @@ function update_assignment_submit()
 function is_admin($username, $password, $mysqlMainDb) {
 
 	//my code
-	$username=htmlentities($username);
+	$username=my_htmlspecialchars($username);
 
 	mysql_select_db($mysqlMainDb);
 	$r = mysql_query("SELECT * FROM user, admin WHERE admin.idUser = user.user_id
@@ -275,7 +275,7 @@ function encode_dropbox_documents($code, $id, $filename, $title) {
   $new_filename = safe_filename($format);
 
 	//my code
-	$new_filename=htmlentities($new_filename);
+	$new_filename=my_htmlspecialchars($new_filename);
 
 	$path_to_dropbox = $webDir.'courses/'.$code.'/dropbox/';
 

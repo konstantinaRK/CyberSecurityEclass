@@ -76,7 +76,7 @@ if (isset($_POST['submit_doc'])) {
 
 
 $info = mysql_fetch_array($q);
-$navigation[] = array("url"=>"index.php?id=$id", "name"=> htmlspecialchars($info['title']));
+$navigation[] = array("url"=>"index.php?id=$id", "name"=> my_htmlspecialchars($info['title']));
 
 switch ($_GET['type']) {
         case 'work': $nameTools = "$langAdd $langInsertWork";

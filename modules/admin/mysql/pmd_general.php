@@ -281,7 +281,7 @@ for ($i = 0; $i < count($GLOBALS['PMD']["TABLE_NAME"]); $i++) {
             <?php
         }
         echo htmlspecialchars($tab_column[$t_n]["COLUMN_NAME"][$j]
-            . " : " . $tab_column[$t_n]["TYPE"][$j], ENT_QUOTES);
+            . " : " . $tab_column[$t_n]["TYPE"][$j]);
         ?>
         </div>
    </td>

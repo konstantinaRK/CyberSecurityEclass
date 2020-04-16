@@ -85,11 +85,11 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
 		$username_form = escapeSimple($username_form);
 
     //my code
-    $nom_form=htmlentities($nom_form);
-    $prenom_form=htmlentities($prenom_form);
-    $username_form=htmlentities($username_form);
-    $email_form=htmlentities($email_form);
-    $am_form=htmlentities($am_form);
+    $nom_form=my_htmlspecialchars($nom_form);
+    $prenom_form=my_htmlspecialchars($prenom_form);
+    $username_form=my_htmlspecialchars($username_form);
+    $email_form=my_htmlspecialchars($email_form);
+    $am_form=my_htmlspecialchars($am_form);
 
 		if(mysql_query("UPDATE user
 	        SET nom='$nom_form', prenom='$prenom_form',

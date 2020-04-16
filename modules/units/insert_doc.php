@@ -49,7 +49,7 @@ function display_docs()
                         'is_dir' => is_dir($basedir . $row['path']),
                         'size' => filesize($basedir . $row['path']),
                         'title' => $row['title'],
-                        'name' => htmlspecialchars($row['filename']),
+                        'name' => my_htmlspecialchars($row['filename']),
                         'format' => $row['format'],
                         'path' => $row['path'],
                         'visible' => $row['visibility'],
@@ -68,7 +68,7 @@ function display_docs()
                         list($dirname) = mysql_fetch_row(db_query("SELECT filename FROM document
                                                                    WHERE path = '$path'"));
 			$parentpath = dirname($path);
-                        $dirname = "/".htmlspecialchars($dirname);
+                        $dirname = "/".my_htmlspecialchars($dirname);
                         $parentlink = $_SERVER['PHP_SELF'] . "?type=doc&amp;id=$id&amp;path=" . $parentpath;
                         $parenthtml = "<th class='right'><a href='$parentlink'>$langUp</a> <a href='$parentlink'>" .
                                       "<img src='../../template/classic/img/parent.gif' height='20' width='20' /></a></th>";
@@ -120,7 +120,7 @@ function display_docs()
 				/*** comments ***/
 				if (!empty($entry['comment'])) {
 					$tool_content .= "<br /><span class='comment'>" .
-						nl2br(htmlspecialchars($entry['comment'])) .
+						nl2br(my_htmlspecialchars($entry['comment'])) .
 						"</span>\n";
 				}
 				$tool_content .= "</div></td>";

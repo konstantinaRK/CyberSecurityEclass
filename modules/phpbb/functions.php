@@ -528,7 +528,7 @@ function bbencode_code($message, $is_html_disabled)
 					// at the lower level..
 					// also, don't escape them if HTML is disabled in this post. it'll already be done
 					// by the posting routines.
-					$after_replace = htmlspecialchars($after_replace);	
+					$after_replace = my_htmlspecialchars($after_replace);	
 				}
 				
 				$str_to_match = $start_tag . $before_replace . $end_tag;
@@ -751,7 +751,7 @@ function undo_make_clickable($text) {
 /**
  * Nathan Codding - August 24, 2000.
  * Takes a string, and does the reverse of the PHP standard function
- * htmlspecialchars().
+ * my_htmlspecialchars().
  */
 function undo_htmlspecialchars($input) {
 	$input = preg_replace("/&gt;/i", ">", $input);

@@ -50,9 +50,9 @@ if (mysql_num_rows($r) > 0) { // if shibboleth user found
 	while ($myrow = mysql_fetch_array($r)) {
 
 		//my code
-		$shib_nom=htmlentities();
-		$shib_prenom=htmlentities($shib_prenom);
-		$shib_email=htmlentities($shib_email);
+		$shib_nom=my_htmlspecialchars();
+		$shib_prenom=my_htmlspecialchars($shib_prenom);
+		$shib_email=my_htmlspecialchars($shib_email);
 
 		// update user information
 		db_query("UPDATE user SET nom = '$shib_nom', prenom = '$shib_prenom', email = '$shib_email'
@@ -74,10 +74,10 @@ if (mysql_num_rows($r) > 0) { // if shibboleth user found
 	}
 } else { // else create him
 	//my code
-	$shib_nom=htmlentities($shib_nom);
-	$shib_prenom=htmlentities($shib_prenom);
-	$shib_uname=htmlentities($shib_uname);
-	$shib_email=htmlentities($shib_email);
+	$shib_nom=my_htmlspecialchars($shib_nom);
+	$shib_prenom=my_htmlspecialchars($shib_prenom);
+	$shib_uname=my_htmlspecialchars($shib_uname);
+	$shib_email=my_htmlspecialchars($shib_email);
 
 	db_query("INSERT INTO user SET nom='$shib_nom', prenom='$shib_prenom', password='shibboleth',
 		username='$shib_uname',email='$shib_email', statut=5, lang='el'");

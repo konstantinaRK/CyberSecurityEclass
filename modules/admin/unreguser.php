@@ -60,12 +60,12 @@ $t = 0;
 if (!$doit) {
         $tool_content .= "<h4>$langConfirmDelete</h4><p>$langConfirmDeleteQuestion1 <em>$u_realname ($u_account)</em>";
         if($c) {
-                $tool_content .= " $langConfirmDeleteQuestion2 <em>".htmlspecialchars($c)."</em>";
+                $tool_content .= " $langConfirmDeleteQuestion2 <em>".my_htmlspecialchars($c)."</em>";
         }
         $tool_content .= ";</p>
                 <ul>
-                <li>$langYes: <a href=\"unreguser.php?u=".htmlspecialchars($u)."&c=".htmlspecialchars($c)."&doit=yes\">$langDelete</a><br>&nbsp;</li>
-                <li>$langNo: <a href=\"edituser.php?u=".htmlspecialchars($u)."\">$langBack</a></li>
+                <li>$langYes: <a href=\"unreguser.php?u=".my_htmlspecialchars($u)."&c=".my_htmlspecialchars($c)."&doit=yes\">$langDelete</a><br>&nbsp;</li>
+                <li>$langNo: <a href=\"edituser.php?u=".my_htmlspecialchars($u)."\">$langBack</a></li>
                 </ul>";
 } else {
         if (!$c) {
@@ -103,8 +103,8 @@ if (!$doit) {
                                                                 "<th>$langProperty</th><th>$langActions</th></tr>";
                                                         for ($j = 0; $j < mysql_num_rows($sql); $j++) {
                                                                 $logs = mysql_fetch_array($sql);
-                                                                $tool_content .= "<tr><td>".htmlspecialchars($logs[0])."</td><td>".
-                                                                        htmlspecialchars($logs[1])."</td><td align=\"center\">";
+                                                                $tool_content .= "<tr><td>".my_htmlspecialchars($logs[0])."</td><td>".
+                                                                        my_htmlspecialchars($logs[1])."</td><td align=\"center\">";
                                                                 switch ($logs[4])
                                                                 {
                                                                         case '1':
@@ -113,11 +113,11 @@ if (!$doit) {
                                                                                 break;
                                                                         case '0':
                                                                                 $tool_content .= $langStudent;
-                                                                                $tool_content .= "</td><td align=\"center\"><a href=\"unreguser.php?u=".htmlspecialchars($u)."&c=$logs[0]\">$langDelete</a></td></tr>\n";
+                                                                                $tool_content .= "</td><td align=\"center\"><a href=\"unreguser.php?u=".my_htmlspecialchars($u)."&c=$logs[0]\">$langDelete</a></td></tr>\n";
                                                                                 break;
                                                                         default:
                                                                                 $tool_content .= $langVisitor;
-                                                                                $tool_content .= "</td><td align=\"center\"><a href=\"unreguser.php?u=".htmlspecialchars($u)."&c=$logs[0]\">$langDelete</a></td></tr>\n";
+                                                                                $tool_content .= "</td><td align=\"center\"><a href=\"unreguser.php?u=".my_htmlspecialchars($u)."&c=$logs[0]\">$langDelete</a></td></tr>\n";
                                                                                 break;
                                                                 }
                                                         }
@@ -135,8 +135,8 @@ if (!$doit) {
                                                                 "<th>$langProperty</th><th>$langActions</th></tr>";
                                                         for ($j = 0; $j < mysql_num_rows($sql); $j++) {
                                                                 $logs = mysql_fetch_array($sql);
-                                                                $tool_content .= "<tr><td>".htmlspecialchars($logs[0])."</td><td>".
-                                                                        htmlspecialchars($logs[1])."</td><td align=\"center\">";
+                                                                $tool_content .= "<tr><td>".my_htmlspecialchars($logs[0])."</td><td>".
+                                                                        my_htmlspecialchars($logs[1])."</td><td align=\"center\">";
                                                                 $tool_content .= $langTeacher;
                                                                 $tool_content .= "</td><td align=\"center\">---</td></tr>\n";
                                                         }
@@ -157,8 +157,8 @@ if (!$doit) {
                                                         "<th>$langProperty</th><th>$langActions</th></tr>";
                                                 for ($j = 0; $j < mysql_num_rows($sql); $j++) {
                                                         $logs = mysql_fetch_array($sql);
-                                                        $tool_content .= "<tr><td>".htmlspecialchars($logs[0])."</td><td>".
-                                                                htmlspecialchars($logs[1])."</td><td align=\"center\">";
+                                                        $tool_content .= "<tr><td>".my_htmlspecialchars($logs[0])."</td><td>".
+                                                                my_htmlspecialchars($logs[1])."</td><td align=\"center\">";
                                                         switch ($logs[2]) {
                                                                 case 1:
                                                                         $tool_content .= $langTeacher;
@@ -201,7 +201,7 @@ if (!$doit) {
                                 db_query("DELETE from admin WHERE idUser = '".mysql_real_escape_string($u)."'");
                         }
                         if (mysql_affected_rows() > 0) {
-                                $tool_content .= "<p>$langUserWithId ".htmlspecialchars($u)." $langWasAdmin.</p>\n";
+                                $tool_content .= "<p>$langUserWithId ".my_htmlspecialchars($u)." $langWasAdmin.</p>\n";
                         }
 
                         // delete guest user from cours_user
@@ -224,7 +224,7 @@ if (!$doit) {
         }
         $tool_content .= "<br>&nbsp;";
         if((isset($m)) && (!empty($m))) {
-                $tool_content .= "<br><a href=\"edituser.php?u=".htmlspecialchars($u)."\">$langEditUser $u_account</a>&nbsp;&nbsp;&nbsp;";
+                $tool_content .= "<br><a href=\"edituser.php?u=".my_htmlspecialchars($u)."\">$langEditUser $u_account</a>&nbsp;&nbsp;&nbsp;";
         }
         $tool_content .= "<a href=\"./index.php\">$langBackAdmin</a>.<br />\n";
 }

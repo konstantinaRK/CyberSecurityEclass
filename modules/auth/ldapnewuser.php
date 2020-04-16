@@ -63,7 +63,7 @@ $settings = get_auth_settings($auth);
 if(!empty($msg)) $nameTools = "$langConfirmUser ($msg)";
 
 //my code
-$ldap_email=htmlentities($ldap_email);
+$ldap_email=my_htmlspecialchars($ldap_email);
 
 if (isset($p) and ($p)) {
 	$tool_content .= "<form method='post' action='ldapsearch_prof.php'>";

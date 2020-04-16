@@ -43,7 +43,7 @@ search.php
 include '../../include/baseTheme.php';
 
 //my code
-$_POST['search_terms']=htmlentities($_POST['search_terms']);
+$_POST['search_terms']=my_htmlspecialchars($_POST['search_terms']);
 
 if(isset($_POST['search_terms'])) {
 

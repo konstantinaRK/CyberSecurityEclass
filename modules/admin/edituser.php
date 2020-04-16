@@ -239,8 +239,8 @@ $tool_content .= "
 			{
 				$logs = mysql_fetch_array($sql);
 				$tool_content .= "<tr>
-						<td>".htmlspecialchars($logs[0])."</td>
-						<td>".htmlspecialchars($logs[1])."</td><td align='center'>";
+						<td>".my_htmlspecialchars($logs[0])."</td>
+						<td>".my_htmlspecialchars($logs[1])."</td><td align='center'>";
 				if ($logs[2] == '0000-00-00')
 					 $tool_content .= $langUnknownDate;
 				else

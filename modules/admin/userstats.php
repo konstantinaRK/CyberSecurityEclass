@@ -85,7 +85,7 @@ if((!empty($u)) && ctype_digit($u))	// validate the user id
 	                }
 			$tool_content .= "<td width=\"1\">
 			<img style='border:0px; padding-top:3px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>
-         		<td align=\"left\">".htmlspecialchars($logs[0])." (".htmlspecialchars($logs[1]).")</td>
+         		<td align=\"left\">".my_htmlspecialchars($logs[0])." (".my_htmlspecialchars($logs[1]).")</td>
          		<td><div align=\"center\">";
 			switch ($logs[2]) {
 				case 1:

@@ -56,11 +56,11 @@ if (isset($close_user_registration) and $close_user_registration == TRUE) {
 $lang = langname_to_code($language);
 
 //my code
-$prenom_form=htmlentities($prenom_form);
-$nom_form=htmlentities($nom_form);
-$uname=htmlentities($uname);
-$email=htmlentities($email);
-$am=htmlentities($am);
+$prenom_form=my_htmlspecialchars($prenom_form);
+$nom_form=my_htmlspecialchars($nom_form);
+$uname=my_htmlspecialchars($uname);
+$email=my_htmlspecialchars($email);
+$am=my_htmlspecialchars($am);
 
 // display form
 if (!isset($submit)) {
@@ -138,7 +138,7 @@ if (!isset($submit)) {
 	//my code
 	// trim white spaces in the end and in the beginning of the word
 	// $uname = preg_replace('/\ +/', ' ', trim(isset($_POST['uname'])?$_POST['uname']:''));
-	$uname=htmlentities($_POST['uname']);
+	$uname=my_htmlspecialchars($_POST['uname']);
 
 	// registration
 	$registration_errors = array();
@@ -212,12 +212,12 @@ if (!isset($submit)) {
 	}
 
 	//my code
-	$nom_form=htmlentities($nom_form);
-	$prenom_form=htmlentities($prenom_form);
-	$uname=htmlentities($uname);
-	$email=htmlentities($email);
-	$department=htmlentities($department);
-	$am=htmlentities($am);
+	$nom_form=my_htmlspecialchars($nom_form);
+	$prenom_form=my_htmlspecialchars($prenom_form);
+	$uname=my_htmlspecialchars($uname);
+	$email=my_htmlspecialchars($email);
+	$department=my_htmlspecialchars($department);
+	$am=my_htmlspecialchars($am);
 
 
 	//my code
@@ -258,11 +258,11 @@ if (!isset($submit)) {
 		}
 
 		//my code
-		$_POST['prenom_form']=htmlentities($_POST['prenom_form']);
-		$_POST['nom_form']=htmlentities($_POST['nom_form']);
-		$_POST['uname']=htmlentities($_POST['uname']);
-		$_POST['email']=htmlentities($_POST['email']);
-		$_POST['am']=htmlentities($_POST['am']);
+		$_POST['prenom_form']=my_htmlspecialchars($_POST['prenom_form']);
+		$_POST['nom_form']=my_htmlspecialchars($_POST['nom_form']);
+		$_POST['uname']=my_htmlspecialchars($_POST['uname']);
+		$_POST['email']=my_htmlspecialchars($_POST['email']);
+		$_POST['am']=my_htmlspecialchars($_POST['am']);
 
 
 		$tool_content .= "<p><a href='$_SERVER[PHP_SELF]?prenom_form=$_POST[prenom_form]&nom_form=$_POST[nom_form]&uname=$_POST[uname]&email=$_POST[email]&am=$_POST[am]'>$langAgain</a></p>" .

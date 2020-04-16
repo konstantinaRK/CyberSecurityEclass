@@ -49,7 +49,7 @@ $tool_content = "";
 $submit = isset($_POST['submit'])?$_POST['submit']:'';
 
 //my code
-$submit=htmlentities($submit);
+$submit=my_htmlspecialchars($submit);
 
 // professor registration
 if ($submit)  {

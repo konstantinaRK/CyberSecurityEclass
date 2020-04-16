@@ -65,7 +65,7 @@ $ldap_email = isset($_POST['ldap_email'])?$_POST['ldap_email']:'';
 $ldap_passwd = isset($_POST['ldap_passwd'])?$_POST['ldap_passwd']:'';
 
 //my code
-$ldap_email=htmlentities($ldap_email);
+$ldap_email=my_htmlspecialchars($ldap_email);
 
 $lastpage = 'ldapnewuser.php?p=TRUE&amp;auth='.$auth.'&amp;ldap_email='.$ldap_email;
 $errormessage = "<br/><p>$ldapback <a href='$lastpage'>$ldaplastpage</a></p>";
@@ -221,9 +221,9 @@ if (isset($submit))  {
 	$depid = intval($department);
 
   //my code
-  $usermail=htmlspecialchars($usermail);
-  $surname=htmlspecialchars($surname);
-  $name=htmlspecialchars($name);
+  $usermail=my_htmlspecialchars($usermail);
+  $surname=my_htmlspecialchars($surname);
+  $name=my_htmlspecialchars($name);
 
 	$sql = "INSERT INTO prof_request(profname, profsurname, profuname, profpassword,
 		profemail, proftmima, profcomm, status, date_open, comment, lang, statut) VALUES(

@@ -128,7 +128,7 @@ if (isset($submit) && $submit) {
 	}
 	$is_html_disabled = false;
 	if ((isset($allow_html) && $allow_html == 0) || isset($html)) {
-		$message = htmlspecialchars($message);
+		$message = my_htmlspecialchars($message);
 		$is_html_disabled = true;
 	}
 

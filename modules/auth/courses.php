@@ -127,7 +127,7 @@ if (isset($_POST["submit"])) {
 					$tool_content .= "\n        <tr class='odd'>";
 				}
 				$tool_content .= "\n<td>&nbsp;<img src='../../images/arrow_blue.gif' />&nbsp;
-					<a href='$_SERVER[PHP_SELF]?fc=$fac[id]'>" . htmlspecialchars($fac['name']) . "</a> <small><font color='#a33033'>($fac[code])</font></small>";
+					<a href='$_SERVER[PHP_SELF]?fc=$fac[id]'>" . my_htmlspecialchars($fac['name']) . "</a> <small><font color='#a33033'>($fac[code])</font></small>";
 				$n=db_query("SELECT COUNT(*) FROM cours_faculte WHERE facid='$fac[id]'");
 				$r=mysql_fetch_array($n);
 				$tool_content .= "&nbsp;<small><font color=#a5a5a5>($r[0]  ". ($r[0] == 1? $langAvCours: $langAvCourses) . ")</font><small></td></tr>";

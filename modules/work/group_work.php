@@ -109,7 +109,7 @@ function show_assignments()
 
 
 //my code
-$_GET['submit']=htmlentities($_GET['submit']);
+$_GET['submit']=my_htmlspecialchars($_GET['submit']);
 
 $tool_content .= <<<cData
 	<form action="group_work.php" method="post">
@@ -143,7 +143,7 @@ cData;
 $tool_content .= "
     <tr>
       <td width=\"1%\"><img style='border:0px; padding-top:2px;' src='../../template/classic/img/arrow_grey.gif' title='bullet'></td>
-      <td><div align=\"left\"><a href=\"work.php?id=".$row['id']."\">".htmlspecialchars($row['title'])."</a></td>
+      <td><div align=\"left\"><a href=\"work.php?id=".$row['id']."\">".my_htmlspecialchars($row['title'])."</a></td>
       <td align=\"center\">".nice_format($row['deadline']);
 
 				if ($row['days'] > 1) {

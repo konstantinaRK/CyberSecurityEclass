@@ -310,7 +310,7 @@ function nameBox($type, $mode, $formlabel = FALSE)
              if($formlabel != FALSE)
              	//$output .= '<label for="newLabel">'.$formlabel.'</label>&nbsp;&nbsp;';
 
-             $output .=  '<input type="text" name="newName" size="50" maxlength="255" value="'.htmlspecialchars($oldName).'" / class="FormData_InputText">' ."\n"
+             $output .=  '<input type="text" name="newName" size="50" maxlength="255" value="'.my_htmlspecialchars($oldName).'" / class="FormData_InputText">' ."\n"
              .    '        <input type="hidden" name="cmd" value="updateName" />' ."\n"
              .    '        <input type="submit" value="' . $langOk . '" />' . "\n"
              .    '      </form>';
@@ -788,7 +788,7 @@ function display_my_documents($dialogBox, $style)
      */
 
     $output .= '<!-- display_my_documents output -->' . "\n";
-    $dspCurDirName = htmlspecialchars($curDirName);
+    $dspCurDirName = my_htmlspecialchars($curDirName);
     $cmdCurDirPath = rawurlencode($curDirPath);
     $cmdParentDir  = rawurlencode($parentDir);
 
@@ -855,7 +855,7 @@ function display_my_documents($dialogBox, $style)
         $iterator = 0;
         while ( list( $fileKey, $fileName ) = each ( $fileList['name'] ) )
         {
-		$dspFileName = htmlspecialchars($fileList['filename'][$fileKey]);
+		$dspFileName = my_htmlspecialchars($fileList['filename'][$fileKey]);
             	$cmdFileName = str_replace("%2F","/",rawurlencode($curDirPath."/".$fileName));
 
             if ($fileList['visibility'][$fileKey] == "i")
@@ -919,7 +919,7 @@ function display_my_documents($dialogBox, $style)
 
             if ($fileList['comment'][$fileKey] != "" )
             {
-                $fileList['comment'][$fileKey] = htmlspecialchars($fileList['comment'][$fileKey]);
+                $fileList['comment'][$fileKey] = my_htmlspecialchars($fileList['comment'][$fileKey]);
                 $fileList['comment'][$fileKey] = parse_user_text($fileList['comment'][$fileKey]);
 
                 $output .= '
@@ -1446,7 +1446,7 @@ function clean_str_for_javascript( $str )
     // 3. replace "\n" by uninterpreted '\n'
     $output = str_replace("\n",'\n', $output);
     // 4. convert special chars into html entities
-    $output = htmlspecialchars($output);
+    $output = my_htmlspecialchars($output);
 
     return $output;
 }
@@ -1673,7 +1673,7 @@ function disp_html_area($name, $content = '', $rows=5, $cols=50, $optAttrib='')
     if (isset($_REQUEST['areaContent'])) $content = stripslashes($_REQUEST['areaContent']);
 
     //my code
-    $content=htmlentities($content);
+    $content=my_htmlspecialchars($content);
 
 
     if (is_javascript_enabled())
@@ -1915,7 +1915,7 @@ function get_limited_page_links($sql, $limiter, $stringPreviousPage, $stringNext
 
 if (isset($_REQUEST['path_id'])) {
   //my code
-  $_REQUEST['path_id']=htmlentities($_REQUEST['path_id']);
+  $_REQUEST['path_id']=my_htmlspecialchars($_REQUEST['path_id']);
 
 	$prevstring = "<a href=\"".$url.$prevpage."&path_id=$_REQUEST[path_id]\">".$stringPreviousPage."</a> | ";
 	$nextstring = "<a href=\"".$url.$nextpage."&path_id=$_REQUEST[path_id]\">".$stringNextPage."</a>";

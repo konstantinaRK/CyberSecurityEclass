@@ -121,8 +121,8 @@ if (!isset($a)) {
 		}
 		$tool_content .= "\n    <td width='1'>
 		<img style='border:0px; padding-top:3px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
-		$tool_content .= "\n    <td>".htmlspecialchars($logs[1])."</td>";
-		$tool_content .= "\n    <td align='center'>".htmlspecialchars($logs[0])."</td>";
+		$tool_content .= "\n    <td>".my_htmlspecialchars($logs[1])."</td>";
+		$tool_content .= "\n    <td align='center'>".my_htmlspecialchars($logs[0])."</td>";
 		// Give administrator a link to delete or edit a faculty
 		$tool_content .= "\n    <td width='15%' align='center' nowrap>
 		<a href='$_SERVER[PHP_SELF]?a=2&c=".$logs['id']."'>
@@ -255,7 +255,7 @@ elseif ($a == 3)  {
 		</tr>
 		<tr>
 		<th class='left'>".$langFaculte1.":</th>
-		<td><input type='text' name='faculte' value='".htmlspecialchars($myrow['name'], ENT_QUOTES)."' />&nbsp;<i>".$langFaculte2."</i></td>
+		<td><input type='text' name='faculte' value='".my_htmlspecialchars($myrow['name'])."' />&nbsp;<i>".$langFaculte2."</i></td>
 		</tr>
 		<tr>
 		<th>&nbsp;</th>
