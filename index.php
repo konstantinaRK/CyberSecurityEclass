@@ -100,21 +100,42 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 
 	if(!empty($submit)) {
 		unset($uid);
-		$sqlLogin= "SELECT user_id, nom, username, password, prenom, statut, email, perso, lang
-			FROM user WHERE username='".$uname."'";
-		$result = mysql_query($sqlLogin);
+
+        ///// mine
+        $servername = "localhost";
+        $username = "root";
+        $password = "csec";
+        $dbname = "eclass";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // prepare sql and bind parameters
+            $stmt = $conn->prepare("SELECT user_id, nom, username, password, prenom, statut, email, perso, lang
+			FROM user WHERE username = :uname");
+            $stmt->bindParam(':uname', $_POST['uname']);
+            $stmt->execute();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        /////////
+
 		$check_passwords = array("pop3","imap","ldap","db");
 		$warning = "";
 		$auth_allow = 0;
 		$exists = 0;
-                if (!isset($_COOKIE) or count($_COOKIE) == 0) {
-                        // Disallow login when cookies are disabled
-                        $auth_allow = 5;
-                } elseif (empty($pass)) {
-                        // Disallow login with empty password
+		if (!isset($_COOKIE) or count($_COOKIE) == 0) {
+            // Disallow login when cookies are disabled
+            $auth_allow = 5;
+		} elseif (empty($pass)) {
+		    // Disallow login with empty password
 			$auth_allow = 4;
+
 		} else {
-			while ($myrow = mysql_fetch_array($result)) {
+			while ($myrow = $stmt->fetch()) {
 				$exists = 1;
 				if(!empty($auth)) {
 					if(!in_array($myrow["password"],$check_passwords)) {
@@ -167,6 +188,9 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 			$_SESSION['user_perso_active'] = $userPerso;
 		}
 		##[END personalisation modification]############
+
+        // mine
+        $conn = null;
 	}  // end of user authentication
 }
 
