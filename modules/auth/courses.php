@@ -48,6 +48,10 @@ $_SESSION['fc_memo'] = $fc;
 $restrictedCourses = array();
 if (isset($_POST['changeCourse']) and is_array($_POST['changeCourse'])) {
         $changeCourse = $_POST['changeCourse'];
+
+        //my code
+        $changeCourse=my_htmlspecialchars($changeCourse);
+
 } else {
         $changeCourse = array();
 }

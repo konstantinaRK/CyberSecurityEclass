@@ -114,7 +114,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
             // prepare sql and bind parameters
             $stmt = $conn->prepare("SELECT user_id, nom, username, password, prenom, statut, email, perso, lang
 			FROM user WHERE username = :uname");
-            $stmt->bindParam(':uname', $_POST['uname']);
+            $stmt->bindParam(':uname', $uname);
             $stmt->execute();
         }
         catch(PDOException $e)

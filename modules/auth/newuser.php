@@ -138,7 +138,7 @@ if (!isset($submit)) {
 	//my code
 	// trim white spaces in the end and in the beginning of the word
 	// $uname = preg_replace('/\ +/', ' ', trim(isset($_POST['uname'])?$_POST['uname']:''));
-	$uname=my_htmlspecialchars($_POST['uname']);
+	$uname=autounquote(my_htmlspecialchars($_POST['uname']));
 
 	// registration
 	$registration_errors = array();
@@ -159,7 +159,7 @@ if (!isset($submit)) {
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// prepare sql and bind parameters
 			$stmt = $conn->prepare("SELECT username FROM `$mysqlMainDb`.user WHERE username= :uname");
-			$stmt->bindParam(':uname', $_POST['uname']);
+			$stmt->bindParam(':uname', $uname);
 			$stmt->execute();
 
 			if ( $myusername = $stmt->fetch()){
