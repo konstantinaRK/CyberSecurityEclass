@@ -66,36 +66,66 @@ $tool_content = "";
 /*****************************************************************************
 		MAIN BODY
 ******************************************************************************/
+
+//Show message if exists
+if(isset($msg))
+{
+	switch ($msg){
+		case 7: {//CSRF ATTACK
+			$message = "Form time expired. Refresh and try again.";
+			$urlText = "";
+			$type = "caution_small";
+			break;
+		}
+		case 8: {//CSRF ATTACK
+			$message = "Whiper, no swiping.";
+			$urlText = "";
+			$type = "caution_small";
+			break;
+		}
+		default:die("invalid message id");
+	}
+
+	$tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
+
 // Save new config.php
 if (isset($submit))  {
-	// Make config directory writable
-	@chmod( "../../config",777 );
-	@chmod( "../../config", 0777 );
-	// Create backup file
-	if ($backupfile=="on") {
-		// If a backup already exists delete it
-		if (file_exists("../../config/config_backup.php"))
-			unlink("../../config/config_backup.php");
-		// Create the backup
-		copy("../../config/config.php","../../config/config_backup.php");
-	}
-	// Open config.php empty
-	$fd=@fopen("../../config/config.php", "w");
-	if (!$fd) {
-		$tool_content .= $langFileError;
-	} else {
+	if ($_SESSION['token'] == $_POST['form_token']) {
+		if (time() >= $_SESSION['token-expire']) {
+			// EXPIRED - ASK USER TO RELOAD PAGE
+			header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+			exit();
+		}
+		else {
+			// Make config directory writable
+			@chmod( "../../config",777 );
+			@chmod( "../../config", 0777 );
+			// Create backup file
+			if ($backupfile=="on") {
+				// If a backup already exists delete it
+				if (file_exists("../../config/config_backup.php"))
+					unlink("../../config/config_backup.php");
+				// Create the backup
+				copy("../../config/config.php","../../config/config_backup.php");
+			}
+			// Open config.php empty
+			$fd=@fopen("../../config/config.php", "w");
+			if (!$fd) {
+				$tool_content .= $langFileError;
+			} else {
 
-                if ($_POST['formcloseuserregistration'] == 'false') {
-                        $user_reg = 'FALSE';
-                } else {
-                        $user_reg = 'TRUE';
-                }
-                if (defined('UTF8')) {
-                        $utf8define = "define('UTF8', true);";
-                }
+				if ($_POST['formcloseuserregistration'] == 'false') {
+					$user_reg = 'FALSE';
+				} else {
+					$user_reg = 'TRUE';
+				}
+				if (defined('UTF8')) {
+					$utf8define = "define('UTF8', true);";
+				}
 
-		// Prepare config.php content
-		$stringConfig='<?php
+				// Prepare config.php content
+				$stringConfig='<?php
 /*===========================================================================
  *   Open eClass 2.3
  *   E-learning and Course Management System
@@ -138,18 +168,36 @@ $persoIsActive = TRUE;
 
 $durationAccount = "'.$_POST['formdurationAccount'].'";
 ';
-	// Save new config.php
-	fwrite($fd, $stringConfig);
-	// Display result message
-	$tool_content .= "<p>".$langFileUpdatedSuccess."</p>";
+				// Save new config.php
+				fwrite($fd, $stringConfig);
+				// Display result message
+				$tool_content .= "<p>".$langFileUpdatedSuccess."</p>";
 
-}
-	// Display link to go back to index.php
-	$tool_content .= "<center><p><a href=\"index.php\">".$langBack."</a></p></center>";
+			}
+			// Display link to go back to index.php
+			$tool_content .= "<center><p><a href=\"index.php\">".$langBack."</a></p></center>";
+
+		}
+	} else {
+		// EXPIRED - ASK USER TO RELOAD PAGE
+		header("location:" . $_SERVER['PHP_SELF'] . "?msg=8");
+		exit();
+	}
 
 }
 // Display config.php edit form
 else {
+
+	// mine
+	// GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+	session_start();
+	$length = 32;
+	$ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+	$_SESSION['token'] = $ses_tok;
+	// 10 minutes = 60 seconds * 10 minutes = 600
+	$_SESSION['token-expire'] = time() + 600;
+	// end mine
+
 	$titleextra = "config.php";
 	// Check if restore has been selected
 	if (isset($restore) && $restore=="yes") {
@@ -303,6 +351,7 @@ $tool_content .= "
     <th class=\"left\">".$langReplaceBackupFile."</th>
     <td><input type=\"checkbox\" name=\"backupfile\" checked></td>
   </tr>
+  <tr> <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></tr>
   <tr>
     <th class=\"left\">&nbsp;</th>
     <td><input type='submit' name='submit' value='$langModify'></td>
