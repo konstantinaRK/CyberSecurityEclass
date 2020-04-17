@@ -76,24 +76,48 @@ if (isset($search) && ($search=="yes")) {
 }
 // Update cours basic information
 if (isset($submit))  {
-  // Get faculte ID and faculte name for $faculte
-  // $faculte example: 12--Tmima 1
-  list($facid, $facname) = explode("--", $faculte);
-  // Update query
-	$sql = mysql_query("UPDATE cours SET faculte='$facname', titulaires='$titulaires', intitule='$intitule', faculteid='$facid' WHERE code='".mysql_real_escape_string($_GET['c'])."'");
-	// Some changes happened
-	if (mysql_affected_rows() > 0) {
-		$sql = mysql_query("UPDATE cours_faculte SET faculte='$facname', facid='$facid' WHERE code='".mysql_real_escape_string($_GET['c'])."'");
-		$tool_content .= "<p class=\"alert1\">".$langCourseEditSuccess."</p>";
-	}
-	// Nothing updated
-	else {
-		$tool_content .= "<p class=\"alert1\">".$langNoChangeHappened."</p>";
+	if ($_SESSION['token'] == $_POST['form_token']) {
+		if (time() >= $_SESSION['token-expire']) {
+			// EXPIRED - ASK USER TO RELOAD PAGE
+			header("location: editcours.php?c=" .htmlspecialchars($_GET['c']). "&msg=7");
+			exit();
+		}
+		else {
+			// Get faculte ID and faculte name for $faculte
+			// $faculte example: 12--Tmima 1
+			list($facid, $facname) = explode("--", $faculte);
+			// Update query
+			$sql = mysql_query("UPDATE cours SET faculte='$facname', titulaires='$titulaires', intitule='$intitule', faculteid='$facid' WHERE code='".mysql_real_escape_string($_GET['c'])."'");
+			// Some changes happened
+			if (mysql_affected_rows() > 0) {
+				$sql = mysql_query("UPDATE cours_faculte SET faculte='$facname', facid='$facid' WHERE code='".mysql_real_escape_string($_GET['c'])."'");
+				$tool_content .= "<p class=\"alert1\">".$langCourseEditSuccess."</p>";
+			}
+			// Nothing updated
+			else {
+				$tool_content .= "<p class=\"alert1\">".$langNoChangeHappened."</p>";
+			}
+		}
+	} else {
+		// EXPIRED - ASK USER TO RELOAD PAGE
+		header("location: editcours.php?c=" .htmlspecialchars($_GET['c']). "&?msg=8");
+		exit();
 	}
 
 }
 // Display edit form for course basic information
 else {
+
+	// mine
+	// GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+	session_start();
+	$length = 32;
+	$ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+	$_SESSION['token'] = $ses_tok;
+	// 10 minutes = 60 seconds * 10 minutes = 600
+	$_SESSION['token-expire'] = time() + 600;
+	// end mine
+
 	// Get course information
 	$row = mysql_fetch_array(mysql_query("SELECT * FROM cours WHERE code='".mysql_real_escape_string($_GET['c'])."'"));
 	// Constract the edit form
@@ -135,7 +159,7 @@ else {
   </tr>
   <tr>
     <th>&nbsp;</th>
-    <td><input type='submit' name='submit' value='$langModify'></td>
+    <td><input type='submit' name='submit' value='$langModify'><input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></td>
   </tr>
   </tbody>
   </table>
