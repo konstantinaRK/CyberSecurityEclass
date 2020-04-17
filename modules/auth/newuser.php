@@ -146,12 +146,35 @@ if (!isset($submit)) {
 	if (empty($nom_form) or empty($prenom_form) or empty($password) or empty($uname)) {
 		$registration_errors[] = $langEmptyFields;
 	} else {
-	// check if the username is already in use
-		$q2 = "SELECT username FROM `$mysqlMainDb`.user WHERE username='".mysql_real_escape_string($uname)."'";
-		$username_check = mysql_query($q2);
-		if ($myusername = mysql_fetch_array($username_check)) {
-			$registration_errors[] = $langUserFree;
+
+		///// mine
+		$servername = "localhost";
+		$username = "root";
+		$password_db = "csec";
+		$dbname = "eclass";
+
+		try {
+			$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password_db);
+			// set the PDO error mode to exception
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			// prepare sql and bind parameters
+			$stmt = $conn->prepare("SELECT username FROM `$mysqlMainDb`.user WHERE username= :uname");
+			$stmt->bindParam(':uname', $_POST['uname']);
+			$stmt->execute();
+
+			if ( $myusername = $stmt->fetch()){
+				$registration_errors[] = $langUserFree;
+			}
 		}
+		catch(PDOException $e)
+		{
+			echo "Error: " . $e->getMessage();
+		}
+		/////////
+
+		// mine
+		$conn = null;
+
 	}
 	if (!empty($email) and !email_seems_valid($email)) {
 		$registration_errors[] = $langEmailWrong;
@@ -220,14 +243,44 @@ if (!isset($submit)) {
 	$am=my_htmlspecialchars($am);
 
 
-	//my code
-	$q1 = "INSERT INTO `$mysqlMainDb`.user
+		///// mine
+		$servername = "localhost";
+		$username = "root";
+		$password_db = "csec";
+		$dbname = "eclass";
+
+		try {
+			$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password_db);
+			// set the PDO error mode to exception
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			// prepare sql and bind parameters
+			$stmt = $conn->prepare("INSERT INTO `$mysqlMainDb`.user
 	(user_id, nom, prenom, username, password, email, statut, department, am, registered_at, expires_at, lang)
-	VALUES ('NULL', '.mysql_real_escape_string($nom_form).', '.mysql_real_escape_string($prenom_form).', '.mysql_real_escape_string($uname).',
-	'.mysql_real_escape_string($password_encrypted).', '.mysql_real_escape_string($email).','5',
-		'.mysql_real_escape_string($department).','.mysql_real_escape_string($am).',".$registered_at.",".$expires_at.",'$lang')";
-	$inscr_user = mysql_query($q1);
-	$last_id = mysql_insert_id();
+	VALUES ('NULL', :nom_form, :prenom_form, :uname, :password_encrypted, :email,'5',
+		:department,:am,:registered_at,:expires_at,:lang)");
+			$stmt->bindParam('nom_form', $nom_form);
+			$stmt->bindParam('prenom_form', $prenom_form);
+			$stmt->bindParam(':uname', $uname);
+			$stmt->bindParam(':password_encrypted', $password_encrypted);
+			$stmt->bindParam('email', $email);
+			$stmt->bindParam(':department', $department);
+			$stmt->bindParam(':am', $am);
+			$stmt->bindParam(':registered_at', $registered_at);
+			$stmt->bindParam(':expires_at', $expires_at);
+			$stmt->bindParam(':lang', $lang);
+			$stmt->execute();
+			$last_id = $conn->lastInsertId();
+		}
+		catch(PDOException $e)
+		{
+			echo "Error: " . $e->getMessage();
+		}
+		/////////
+
+		// mine
+		$conn = null;
+
+
 	$result=mysql_query("SELECT user_id, nom, prenom FROM `$mysqlMainDb`.user WHERE user_id='$last_id'");
 	while ($myrow = mysql_fetch_array($result)) {
 		$uid=$myrow[0];
