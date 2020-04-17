@@ -312,22 +312,45 @@ function submit_work($id) {
         $ext = get_file_extension($_FILES['userfile']['name']);
 	$filename = "$secret/$local_name" . (empty($ext)? '': '.' . $ext);
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], "$workPath/$filename")) {
+
+        //	    mine
+        $conn = new mysqli("localhost", "root", "csec", $currentCourseID);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        ///////
+
+
 		$msg2 = "$langUploadSuccess";//to message
 		$group_id = user_group($uid, FALSE);
 		if ($group_sub == 'yes' and !was_submitted(-1, $group_id, $id)) {
 			delete_submissions_by_uid(-1, $group_id, $id);
-			db_query("INSERT INTO assignment_submit
-				(uid, assignment_id, submission_date, submission_ip, file_path,
-				file_name, comments, group_id) VALUES ('$uid','$id', NOW(),
-				'$REMOTE_ADDR', '$filename','".$_FILES['userfile']['name'].
-				"', '$stud_comments', '$group_id')", $currentCourseID);
+
+            // mine
+            $stmt = $conn->prepare("INSERT INTO assignment_submit
+            (uid, assignment_id, submission_date, submission_ip, file_path,
+                file_name, comments, group_id) VALUES (?,?,NOW(),?,?,?,?,?)");
+            $stmt->bind_param("iiissssi",$uid, $id, $REMOTE_ADDR, $filename, $_FILES['userfile']['name'], $stud_comments, $group_id);
+            $stmt->execute();
+            $stmt->close();
+            /////////
+
 		} else {
-			db_query("INSERT INTO assignment_submit
-				(uid, assignment_id, submission_date, submission_ip, file_path,
-				file_name, comments) VALUES ('$uid','$id', NOW(), '$REMOTE_ADDR',
-				'$filename','".$_FILES['userfile']['name'].
-				"', '$stud_comments')", $currentCourseID);
+
+            // mine
+            $stmt = $conn->prepare("INSERT INTO assignment_submit
+            (uid, assignment_id, submission_date, submission_ip, file_path,
+                file_name, comments) VALUES (?,?, NOW(),?,?,?,?)");
+            $stmt->bind_param("iissss",$uid, $id, $REMOTE_ADDR, $filename, $_FILES['userfile']['name'], $stud_comments);
+            $stmt->execute();
+            $stmt->close();
+            /////////
+            ///
 		}
+
+        // mine
+        $conn->close();
+        //////
 
 		$tool_content .="<p class='success_small'>$msg2<br />$msg1<br /><a href='work.php'>$langBack</a></p><br />";
 	} else {
