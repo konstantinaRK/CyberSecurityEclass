@@ -52,6 +52,28 @@ xinha_editors = ['xinha', 'xinha_en'];
 </script>
 ";
 
+//Show message if exists
+if(isset($msg))
+{
+    switch ($msg){
+        case 7: {//CSRF ATTACK
+            $message = "Form time expired. Refresh and try again.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        case 8: {//CSRF ATTACK
+            $message = "Whiper, no swiping.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        default:die("invalid message id");
+    }
+
+    $tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
+
 
 // default language
 if (!isset($localize)) $localize='el';
@@ -71,10 +93,22 @@ foreach (array('title', 'title_en', 'newContent', 'newContent_en', 'comment', 'c
 $visible = isset($_POST['visible'])? 'V': 'I';
 
 if (isset($_GET['delete'])) {
-        // delete announcement command
-        $id = intval($_GET['delete']);
-        $result =  db_query("DELETE FROM admin_announcements WHERE id='$id'", $mysqlMainDb);
-        $message = $langAdminAnnDel;
+    if ($_SESSION['token'] == $_GET['form_cook']) {
+        if (time() >= $_SESSION['token-expire']) {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+            exit();
+        } else {
+            // delete announcement command
+            $id = intval($_GET['delete']);
+            $result = db_query("DELETE FROM admin_announcements WHERE id='$id'", $mysqlMainDb);
+            $message = $langAdminAnnDel;
+        }
+    } else {
+        // EXPIRED - ASK USER TO RELOAD PAGE
+        header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+        exit();
+    }
 } elseif (isset($_GET['modify'])) {
         // modify announcement command
         $id = intval($_GET['modify']);
@@ -93,8 +127,15 @@ if (isset($_GET['delete'])) {
                 $displayAnnouncementList = true;
         }
 } elseif (isset($_POST['submitAnnouncement'])) {
-	// submit announcement command
-        if (isset($_POST['id'])) {
+    if ($_SESSION['token'] == $_POST['form_token']) {
+        if (time() >= $_SESSION['token-expire']) {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+            exit();
+        }
+        else {
+            // submit announcement command
+            if (isset($_POST['id'])) {
                 // modify announcement
                 $id = intval($_POST['id']);
                 db_query("UPDATE admin_announcements
@@ -103,15 +144,31 @@ if (isset($_GET['delete'])) {
                         visible = '$visible', date = NOW()
                         WHERE id = $id", $mysqlMainDb);
                 $message = $langAdminAnnModify;
-        } else {
+            } else {
                 // add new announcement
                 db_query("INSERT INTO admin_announcements
                         SET gr_title = $title, gr_body = $newContent, gr_comment = $comment,
                         en_title = $title_en, en_body = $newContent_en, en_comment = $comment_en,
                         visible = '$visible', date = NOW()");
                 $message = $langAdminAnnAdd;
+            }
         }
+    } else {
+        // EXPIRED - ASK USER TO RELOAD PAGE
+        header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+        exit();
+    }
 }
+
+// mine
+// GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+session_start();
+$length = 32;
+$ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+$_SESSION['token'] = $ses_tok;
+// 10 minutes = 60 seconds * 10 minutes = 600
+$_SESSION['token-expire'] = time() + 600;
+// end mine
 
 // action message
 if (isset($message) && !empty($message)) {
@@ -169,6 +226,7 @@ if ($displayForm && (@$addAnnouce==1 || isset($modify))) {
                             <tr><td><textarea id='xinha_en' name='newContent_en'>$contentToModifyEn</textarea>
                                     </td></tr>
                          </table></td></tr>
+               <tr> <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></tr>
                <tr><th class='left'>$langAdminAnnCommEn</th>
                    <td><textarea name='comment_en' rows='2' cols='50' class='FormData_InputText'>$commentToModifyEn</textarea>
                        </td></tr>
@@ -210,7 +268,7 @@ if ($displayAnnouncementList == true) {
                 <a href='$_SERVER[PHP_SELF]?modify=$myrow[id]&amp;localize=$localize'>
                 <img src='../../template/classic/img/edit.gif' title='$langModify' style='vertical-align:middle;' />
                 </a>&nbsp;
-                <a href='$_SERVER[PHP_SELF]?delete=$myrow[id]&amp;localize=$localize' onClick='return confirmation();'>
+                <a href='$_SERVER[PHP_SELF]?delete=$myrow[id]&amp;localize=$localize&amp;form_cook=$ses_tok' onClick='return confirmation();'>
                 <img src='../../images/delete.gif' title='$langDelete' style='vertical-align:middle;' /></a>
                 </td></tr>";
                 $tool_content .= "<tr $stylerow>";
