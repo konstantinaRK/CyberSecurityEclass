@@ -36,14 +36,65 @@ $navigation[]= array ("url"=>"index.php", "name"=> $langAdmin);
 // Initialise $tool_content
 $tool_content = "";
 
+//Show message if exists
+if(isset($msg))
+{
+	switch ($msg){
+		case 7: {//CSRF ATTACK
+			$message = "Form time expired. Refresh and try again.";
+			$urlText = "";
+			$type = "caution_small";
+			break;
+		}
+		case 8: {//CSRF ATTACK
+			$message = "Whiper, no swiping.";
+			$urlText = "";
+			$type = "caution_small";
+			break;
+		}
+		default:die("invalid message id");
+	}
+
+	$tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
 
 if (isset($_POST['submit'])) {
-	foreach (array('temp' => 2, 'garbage' => 5, 'archive' => 1, 'tmpUnzipping' => 1) as $dir => $days) {
-		$tool_content .= sprintf("<p class=kk>$langCleaningUp</p>", $days,
-			($days == 1)? $langDaySing: $langDayPlur, $dir);
-		cleanup("${webDir}courses/$dir", $days);
+	if (!isset($_POST['form_token'])){
+		// EXPIRED - ASK USER TO RELOAD PAGE
+		header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+		exit();
+	}
+
+	if ($_SESSION['token'] == $_POST['form_token']) {
+		if (time() >= $_SESSION['token-expire']) {
+			// EXPIRED - ASK USER TO RELOAD PAGE
+			header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+			exit();
+		}
+		else {
+			foreach (array('temp' => 2, 'garbage' => 5, 'archive' => 1, 'tmpUnzipping' => 1) as $dir => $days) {
+				$tool_content .= sprintf("<p class=kk>$langCleaningUp</p>", $days,
+					($days == 1)? $langDaySing: $langDayPlur, $dir);
+				cleanup("${webDir}courses/$dir", $days);
+			}
+		}
+	} else {
+		// EXPIRED - ASK USER TO RELOAD PAGE
+		header("location:" . $_SERVER['PHP_SELF'] . "?msg=8");
+		exit();
 	}
 } else {
+
+	// mine
+	// GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+	session_start();
+	$length = 32;
+	$ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+	$_SESSION['token'] = $ses_tok;
+	// 10 minutes = 60 seconds  = 60
+	$_SESSION['token-expire'] = time() + 60;
+	// end mine
+
 	$tool_content .= "
     <table width='99%' class='FormData' align='left'>
     <tbody>
@@ -55,6 +106,7 @@ if (isset($_POST['submit'])) {
       <th width='220'>&nbsp;</th>
       <td>
          <form method='post' action='$_SERVER[PHP_SELF]'>
+         <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/>
 	     <input type='submit' name='submit' value='$langCleanup'>
          </form>
       </td>
