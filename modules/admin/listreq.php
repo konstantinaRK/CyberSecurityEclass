@@ -92,64 +92,136 @@ switch ($show) {
         </ul>
       </div>";
 
+//Show message if exists
+if(isset($msg))
+{
+    switch ($msg){
+        case 7: {//CSRF ATTACK
+            $message = "Form time expired. Refresh and try again.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        case 8: {//CSRF ATTACK
+            $message = "Whiper, no swiping.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        default:die("invalid message id");
+    }
+
+    $tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
+
 // -----------------------------------
 // display closed requests 
 // ----------------------------------
 if (!empty($show) && ($show=="closed")) {
-	if (!empty($id) && ($id>0)) {
-		// restore request
-		$sql = db_query("UPDATE prof_request set status='1', date_closed=NULL WHERE rid='$id'");
-		$tool_content = "<p class=\"success_small\">$langReintroductionApplication</p>";
-	} else {
-		$tool_content .= "<table class=\"FormData\" width=\"99%\" align=\"left\">";
-		$tool_content .= table_header(1, $langDateClosed_small);
-		$tool_content .= "<tbody>";
- 		$sql = db_query("SELECT rid,profname,profsurname,profuname,profemail,proftmima,
+    if (!empty($id) && ($id>0)) {
+
+        if ($_SESSION['token'] == $_GET['form_cook']) {
+            if (time() >= $_SESSION['token-expire']) {
+                // EXPIRED - ASK USER TO RELOAD PAGE
+                header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                exit();
+            }
+            else {
+                // restore request
+                $sql = db_query("UPDATE prof_request set status='1', date_closed=NULL WHERE rid='$id'");
+                $tool_content = "<p class=\"success_small\">$langReintroductionApplication</p>";
+            }
+        } else {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location:" . $_SERVER['PHP_SELF'] . "?msg=8");
+            exit();
+        }
+
+    } else {
+
+        // mine
+        // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+        session_start();
+        $length = 32;
+        $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+        $_SESSION['token'] = $ses_tok;
+        // 10 minutes = 60 seconds * 10 minutes = 600
+        $_SESSION['token-expire'] = time() + 600;
+        // end mine
+
+        $tool_content .= "<table class=\"FormData\" width=\"99%\" align=\"left\">";
+        $tool_content .= table_header(1, $langDateClosed_small);
+        $tool_content .= "<tbody>";
+        $sql = db_query("SELECT rid,profname,profsurname,profuname,profemail,proftmima,
 				profcomm,date_open,date_closed,comment
 				FROM prof_request
                                 WHERE (status = 2 AND statut = $list_statut)");
-        	$k = 0;
-		while ($req = mysql_fetch_array($sql)) {
-			if ($k%2 == 0) {
-	              		$tool_content .= "\n  <tr>";
-	            	} else {
-	              		$tool_content .= "\n  <tr class=\"odd\">";
-	            	}
-	        	$tool_content .= "<td width=\"1\">
+        $k = 0;
+        while ($req = mysql_fetch_array($sql)) {
+            if ($k%2 == 0) {
+                $tool_content .= "\n  <tr>";
+            } else {
+                $tool_content .= "\n  <tr class=\"odd\">";
+            }
+            $tool_content .= "<td width=\"1\">
 			<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
-			$tool_content .= "<td>".my_htmlspecialchars($req['profname'])."&nbsp;".my_htmlspecialchars($req['profsurname'])."";
-			$tool_content .= "<td>".my_htmlspecialchars($req['profuname'])."</td>";
-			if ($req['profemail'] != "") {
-				$tool_content .= "<td>
-				<a href=\"mailto:".my_htmlspecialchars($req['profemail'])."\">".
-				my_htmlspecialchars($req['profemail'])."</a></td>";
-			} else {
-				my_htmlspecialchars($req['profemail'])."</td>";
-			}
-			$tool_content .= "<td>".my_htmlspecialchars($req['proftmima'])."</td>";
-			$tool_content .= "<td>".my_htmlspecialchars($req['profcomm'])."</td>";
-			$tool_content .= "<td align=\"center\">
+            $tool_content .= "<td>".htmlspecialchars($req['profname'])."&nbsp;".htmlspecialchars($req['profsurname'])."";
+            $tool_content .= "<td>".htmlspecialchars($req['profuname'])."</td>";
+            if ($req['profemail'] != "") {
+                $tool_content .= "<td>
+				<a href=\"mailto:".htmlspecialchars($req['profemail'])."\">".
+                    htmlspecialchars($req['profemail'])."</a></td>";
+            } else {
+                htmlspecialchars($req['profemail'])."</td>";
+            }
+            $tool_content .= "<td>".htmlspecialchars($req['proftmima'])."</td>";
+            $tool_content .= "<td>".htmlspecialchars($req['profcomm'])."</td>";
+            $tool_content .= "<td align=\"center\">
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_open'])))."</small></td>";
-            		$tool_content .= "<td align=\"center\">
+            $tool_content .= "<td align=\"center\">
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_closed'])))."</small></td>";
-            		$tool_content .= "<td>".$req['comment']."</td>";
-			$tool_content .= "<td align=center>
-			<a href='$_SERVER[PHP_SELF]?id=$req[rid]&show=closed$reqtype'>$langRestore</a></td>\n  </tr>";
-		$k++;
-		}
-	}
-	$tool_content .= "\n  </tbody>\n  </table>\n";
+            $tool_content .= "<td>".$req['comment']."</td>";
+            $tool_content .= "<td align=center>
+			<a href='$_SERVER[PHP_SELF]?form_cook=$ses_tok&id=$req[rid]&show=closed$reqtype'>$langRestore</a></td>\n  </tr>";
+            $k++;
+        }
+    }
+    $tool_content .= "\n  </tbody>\n  </table>\n";
 
 // -----------------------------------
 // display rejected requests 
 // ----------------------------------
 } elseif (!empty($show) && ($show=="rejected")) {
 	if (!empty($id) && ($id>0)) {
-	// restore request
-		$sql = db_query("UPDATE prof_request set status='1', date_closed=NULL WHERE rid='$id'");
+        if ($_SESSION['token'] == $_GET['form_cook']) {
+            if (time() >= $_SESSION['token-expire']) {
+                // EXPIRED - ASK USER TO RELOAD PAGE
+                header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                exit();
+            }
+            else {
+                // restore request
+                $sql = db_query("UPDATE prof_request set status='1', date_closed=NULL WHERE rid='$id'");
+            }
+        } else {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location:" . $_SERVER['PHP_SELF'] . "?msg=8");
+            exit();
+        }
 		$tool_content = "<table><tbody><tr>
 		<td class=\"success\">$langReintroductionApplication</td></tr></tbody></table>";
 	} else {
+
+        // mine
+        // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+        session_start();
+        $length = 32;
+        $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+        $_SESSION['token'] = $ses_tok;
+        // 10 minutes = 60 seconds * 10 minutes = 600
+        $_SESSION['token-expire'] = time() + 600;
+        // end mine
+
 		$tool_content .= "<table class=\"FormData\" width=\"99%\" align=\"left\">";
 		$tool_content .= table_header(1, $langDateReject_small);
 		$tool_content .= "<tbody>";
@@ -185,7 +257,7 @@ if (!empty($show) && ($show=="closed")) {
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_closed'])))."</small></td>";
                 	$tool_content .= "<td>".$req['comment']."</td>";
 			$tool_content .= "<td align=center>
-			<a href='$_SERVER[PHP_SELF]?id=$req[rid]&show=closed$reqtype'>$langRestore</a>
+			<a href='$_SERVER[PHP_SELF]?form_cook=$ses_tok&id=$req[rid]&show=closed$reqtype'>$langRestore</a>
 			</td></tr>";
 			$k++;
 		}
@@ -236,47 +308,66 @@ if (!empty($show) && ($show=="closed")) {
 // close request
 // ------------------------------
 } elseif(!empty($close)) {
-	switch($close) {
-	case '1':
-		$sql = db_query("UPDATE prof_request set status='2', date_closed=NOW() WHERE rid='$id'");
-                if ($list_statut == 1) {
-        		$tool_content .= "<p><center>$langProfessorRequestClosed</p>";
-                } else {
-        		$tool_content .= "<p><center>$langRequestStudent</p>";
-                }
-		break;
-	case '2':
-		$submit = isset($_POST['submit'])?$_POST['submit']:'';
-		if(!empty($submit)) {
-			// post the comment and do the delete action
-			if (!empty($comment)) {
-				$sql = "UPDATE prof_request set status = '3',
+    if ($_SESSION['token'] == $_GET['form_cook'] || $_SESSION['token'] == $_POST['form_token']) {
+        if (time() >= $_SESSION['token-expire']) {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+            exit();
+        }
+        else {
+            switch($close) {
+                case '1':
+                    $sql = db_query("UPDATE prof_request set status='2', date_closed=NOW() WHERE rid='$id'");
+                    if ($list_statut == 1) {
+                        $tool_content .= "<p><center>$langProfessorRequestClosed</p>";
+                    } else {
+                        $tool_content .= "<p><center>$langRequestStudent</p>";
+                    }
+                    break;
+                case '2':
+                    $submit = isset($_POST['submit'])?$_POST['submit']:'';
+                    if(!empty($submit)) {
+                        // post the comment and do the delete action
+                        if (!empty($comment)) {
+                            $sql = "UPDATE prof_request set status = '3',
 						date_closed = NOW(),
 						comment = '".mysql_escape_string($comment)."'
 						WHERE rid = '$id'";
-				if (db_query($sql)) {
-					if (isset($sendmail) and ($sendmail == 1)) {
-						$emailsubject = $langemailsubjectBlocked;
-						$emailbody = "$langemailbodyBlocked
+                            if (db_query($sql)) {
+                                if (isset($sendmail) and ($sendmail == 1)) {
+                                    $emailsubject = $langemailsubjectBlocked;
+                                    $emailbody = "$langemailbodyBlocked
 $langComments:> $comment
 $langManager $siteName
 $administratorName $administratorSurname
 $langPhone: $telephone
 $langEmail: $emailhelpdesk";
-						send_mail('', '', "$prof_name $prof_surname", $prof_email, $emailsubject, $emailbody, $charset);
-					}
-					$tool_content .= "<p class='success_small'>" .  ($list_statut == 1)? $langTeacherRequestHasRejected: $langRequestReject;
-					$tool_content .= " $langRequestMessageHasSent <b>$prof_email</b></p>";
-					$tool_content .= "<br><p><b>$langComments:</b><br />$comment</p>\n";
-				}
-			}
-		} else {
-			// display the form
-			$r = db_query("SELECT comment, profname, profsurname, profemail, statut
+                                    send_mail('', '', "$prof_name $prof_surname", $prof_email, $emailsubject, $emailbody, $charset);
+                                }
+                                $tool_content .= "<p class='success_small'>" .  ($list_statut == 1)? $langTeacherRequestHasRejected: $langRequestReject;
+                                $tool_content .= " $langRequestMessageHasSent <b>$prof_email</b></p>";
+                                $tool_content .= "<br><p><b>$langComments:</b><br />$comment</p>\n";
+                            }
+                        }
+                    } else {
+
+                        // mine
+                        // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+                        session_start();
+                        $length = 32;
+                        $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+                        $_SESSION['token'] = $ses_tok;
+                        // 10 minutes = 60 seconds * 10 minutes = 600
+                        $_SESSION['token-expire'] = time() + 600;
+                        // end mine
+
+
+                        // display the form
+                        $r = db_query("SELECT comment, profname, profsurname, profemail, statut
 				FROM prof_request WHERE rid = '$id'");
-			$d = mysql_fetch_assoc($r);
+                        $d = mysql_fetch_assoc($r);
                         $warning = ($d['statut'] == 5)? $langWarnReject: $langGoingRejectRequest;
-			$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+                        $tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
 			<table width='99%' class='FormData'>
 			<tbody><tr>
 			<th width='220'>&nbsp;</th>
@@ -299,15 +390,22 @@ $langEmail: $emailhelpdesk";
 			<td>&nbsp;<input type='text' class='auth_input' name='prof_email' value='".$d['profemail']."'>
 			<input type='checkbox' name='sendmail' value='1' checked='yes'> <small>($langGroupValidate)</small>
 			</td></tr>
+			<tr> <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></tr>
 			<tr><th class='left'>&nbsp;</th>
 			<td><input type='submit' name='submit' value='$langRejectRequest'>&nbsp;&nbsp;<small>($langRequestDisplayMessage)</small></td>
 			</tr></tbody></table>
 			</form>";
-			}
-		break;
-	default:
-		break;
-	} // end of switch
+                    }
+                    break;
+                default:
+                    break;
+            } // end of switch
+        }
+    } else {
+        // EXPIRED - ASK USER TO RELOAD PAGE
+        header("location:" . $_SERVER['PHP_SELF'] . "?msg=8");
+        exit();
+    }
 }
 
 // -----------------------------------
@@ -316,6 +414,17 @@ $langEmail: $emailhelpdesk";
 
 else
 {
+
+    // mine
+    // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+    session_start();
+    $length = 32;
+    $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+    $_SESSION['token'] = $ses_tok;
+    // 10 minutes = 60 seconds * 10 minutes = 600
+    $_SESSION['token-expire'] = time() + 600;
+    // end mine
+
 	$tool_content .= "<table class=\"FormData\" width=\"99%\" align=\"left\">";
 	$tool_content .= table_header();
 	$tool_content .= "<tbody>";
@@ -347,8 +456,8 @@ else
 			<small>".nice_format(date("Y-m-d", strtotime($req['date_open'])))."</small></td>";
 		$tool_content .= "<td align='center'>$req[comment]</td>";
 		$tool_content .= "<td align='center'>
-		<a href='$_SERVER[PHP_SELF]?id=$req[rid]&amp;close=1$reqtype' onclick='return confirmation();'>$langClose</a><br />
-		<a href='$_SERVER[PHP_SELF]?id=$req[rid]&amp;close=2$reqtype'>$langRejectRequest</a>";
+		<a href='$_SERVER[PHP_SELF]?id=$req[rid]&amp;close=1$reqtype&amp;form_cook=$ses_tok' onclick='return confirmation();'>$langClose</a><br/>
+		<a href='$_SERVER[PHP_SELF]?id=$req[rid]&amp;close=2$reqtype&amp;form_cook=$ses_tok'>$langRejectRequest</a>";
 		switch($req['profpassword']) {
 			case 'ldap': $tool_content .= "<br />
 					<a href='../auth/ldapnewprofadmin.php?id=".urlencode($req['rid'])."&amp;auth=4'>
