@@ -89,13 +89,49 @@ $tool_content = "";
 	</ul>
 	</div>";
 
+//Show message if exists
+if(isset($msg))
+{
+    switch ($msg){
+        case 7: {//CSRF ATTACK
+            $message = "Form time expired. Refresh and try again.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        case 8: {//CSRF ATTACK
+            $message = "Swiper, no swiping.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        default:die("invalid message id");
+    }
+
+    $tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
+
 // Display all available faculties
 if (!isset($a)) {
+
+    // mine
+    // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+    session_start();
+    $length = 32;
+    $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+    $_SESSION['token'] = $ses_tok;
+    // 10 minutes = 60 seconds * 10 minutes = 600
+    $_SESSION['token-expire'] = time() + 600;
+    // end mine
+    $c = @intval($_REQUEST['c']);
+
+
 	// Count available faculties
 	$a=mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM faculte"));
 	// Construct a table
 	$tool_content .= "<table width='99%' class='FormData' align='left'>
 	<tbody>
+	<tr> <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></tr>
 	<tr>
 	<td class='odd'><b>".$langFaculteCatalog."</b>:
 	<div align='right'><i>".$langManyExist.": <b>$a[0]</b> ".$langFaculties."</i></div></td>
@@ -125,7 +161,7 @@ if (!isset($a)) {
 		$tool_content .= "\n    <td align='center'>".my_htmlspecialchars($logs[0])."</td>";
 		// Give administrator a link to delete or edit a faculty
 		$tool_content .= "\n    <td width='15%' align='center' nowrap>
-		<a href='$_SERVER[PHP_SELF]?a=2&c=".$logs['id']."'>
+		<a href='$_SERVER[PHP_SELF]?a=2&c=".$logs['id']."&form_cook=".$ses_tok."'>
 		<img src='../../images/delete.gif' border='0' title='$langDelete'></img></a>&nbsp;&nbsp;
 		<a href='$_SERVER[PHP_SELF]?a=3&c=".$logs['id']."'>
 		<img src='../../template/classic/img/edit.gif' border='0' title='$langEdit'></img></a></td>
@@ -160,12 +196,39 @@ elseif ($a == 1)  {
 			$tool_content .= "<p>".$langFaculteExists."</p><br />";
 			$tool_content .= "<center><p><a href=\"$_SERVER[PHP_SELF]?a=1\">".$langReturnToAddFaculte."</a></p></center>";
 		} else {
-		// OK Create the new faculty
-			mysql_query("INSERT into faculte(code,name,generator,number) VALUES(" . autoquote($codefaculte) . ',' . autoquote($faculte) . ",'100','1000')")
-				or die ($langNoSuccess);
-			$tool_content .= "<p>".$langAddSuccess."</p><br />";
-			}
+
+            if ($_SESSION['token'] == $_POST['form_token']) {
+                if (time() >= $_SESSION['token-expire']) {
+                    // EXPIRED - ASK USER TO RELOAD PAGE
+                    header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                    exit();
+                } else {
+                    // OK Create the new faculty
+                    mysql_query("INSERT into faculte(code,name,generator,number) VALUES(" . autoquote($codefaculte) . ',' . autoquote($faculte) . ",'100','1000')")
+                    or die ($langNoSuccess);
+                    $tool_content .= "<p>" . $langAddSuccess . "</p><br />";
+                }
+            } else {
+                // EXPIRED - ASK USER TO RELOAD PAGE
+                header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                exit();
+            }
+        }
+
+
 	} else {
+
+        // mine
+        // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+        session_start();
+        $length = 32;
+        $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+        $_SESSION['token'] = $ses_tok;
+        // 10 minutes = 60 seconds * 10 minutes = 600
+        $_SESSION['token-expire'] = time() + 600;
+        // end mine
+
+
 		// Display form for new faculte information
 		$tool_content .= "<form method=\"post\" action=\"".$_SERVER['PHP_SELF']."?a=1\">";
 		$tool_content .= "<table width='99%' class='FormData'>
@@ -180,6 +243,7 @@ elseif ($a == 1)  {
 		<th class='left'>".$langFaculty.":</th>
 		<td><input class='FormData_InputText' type='text' name='faculte' value='".@$faculte."' /></td><td><i>".$langFaculte2."</i></td>
 		</tr>
+		<tr> <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></tr>
 		<tr>
 		<th>&nbsp;</th>
 		<td><input type='submit' name='add' value='".$langAdd."' /></td>
@@ -200,9 +264,22 @@ elseif ($a == 2) {
 		$tool_content .= "<p>".$langProErase."</p><br />";
 		$tool_content .= "<p>".$langNoErase."</p><br />";
 	} else {
-		// The faculty can be deleted
-		mysql_query("DELETE from faculte WHERE id=$c");
-		$tool_content .= "<p>$langErase</p><br />";
+        if ($_SESSION['token'] == $_GET['form_cook']) {
+            if (time() >= $_SESSION['token-expire']) {
+                // EXPIRED - ASK USER TO RELOAD PAGE
+                header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                exit();
+            }
+            else {
+                // The faculty can be deleted
+                mysql_query("DELETE from faculte WHERE id=$c");
+                $tool_content .= "<p>$langErase</p><br />";
+            }
+        } else {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location:" . $_SERVER['PHP_SELF'] . "?msg=8");
+            exit();
+        }
 	}
 	$tool_content .= "<br><p align='right'><a href='$_SERVER[PHP_SELF]'>".$langBack."</a></p>";
 }
@@ -222,20 +299,45 @@ elseif ($a == 3)  {
 			$tool_content .= "<p>".$langFaculteExists."</p><br>";
 			$tool_content .= "<p align='right'><a href='$_SERVER[PHP_SELF]?a=3&amp;c=$c'>$langReturnToEditFaculte</a></p>";
 		} else {
-		// OK Update the faculte
-			mysql_query("UPDATE faculte SET name = " .
-                                    autoquote($faculte) . " WHERE id=$c")
-				or die ($langNoSuccess);
-		// For backwards compatibility update cours and cours_facult also
-			db_query("UPDATE cours SET faculte = " .
-                                    autoquote($faculte) . " WHERE faculteid=$c")
-				or die ($langNoSuccess);
-			db_query("UPDATE cours_faculte SET faculte = " .
-                                    autoquote($faculte) . " WHERE facid=$c")
-				or die ($langNoSuccess);
-			$tool_content .= "<p>$langEditFacSucces</p><br>";
-			}
+            if ($_SESSION['token'] == $_POST['form_token']) {
+                if (time() >= $_SESSION['token-expire']) {
+                    // EXPIRED - ASK USER TO RELOAD PAGE
+                    header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                    exit();
+                }
+                else {
+                    // OK Update the faculte
+                    mysql_query("UPDATE faculte SET name = " .
+                        autoquote($faculte) . " WHERE id=$c")
+                    or die ($langNoSuccess);
+                    // For backwards compatibility update cours and cours_facult also
+                    db_query("UPDATE cours SET faculte = " .
+                        autoquote($faculte) . " WHERE faculteid=$c")
+                    or die ($langNoSuccess);
+                    db_query("UPDATE cours_faculte SET faculte = " .
+                        autoquote($faculte) . " WHERE facid=$c")
+                    or die ($langNoSuccess);
+                    $tool_content .= "<p>$langEditFacSucces</p><br>";
+                }
+            } else {
+                // EXPIRED - ASK USER TO RELOAD PAGE
+                header("location:" . $_SERVER['PHP_SELF'] . "?msg=7");
+                exit();
+            }
+		}
 	} else {
+
+        // mine
+        // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+        session_start();
+        $length = 32;
+        $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+        $_SESSION['token'] = $ses_tok;
+        // 10 minutes = 60 seconds * 10 minutes = 600
+        $_SESSION['token-expire'] = time() + 600;
+        // end mine
+
+
 		// Get faculte information
                 $c = intval($_GET['c']);
 		$sql = "SELECT code, name FROM faculte WHERE id=$c";
@@ -257,6 +359,7 @@ elseif ($a == 3)  {
 		<th class='left'>".$langFaculte1.":</th>
 		<td><input type='text' name='faculte' value='".my_htmlspecialchars($myrow['name'])."' />&nbsp;<i>".$langFaculte2."</i></td>
 		</tr>
+		<tr> <input type=\"hidden\" name=\"form_token\" value=\"$ses_tok\"/></tr>
 		<tr>
 		<th>&nbsp;</th>
 		<td><input type='hidden' name='c' value='$c' />
