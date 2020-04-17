@@ -100,6 +100,29 @@ if (isset($ord)) {
 } else {
 	$order = "b.statut";
 }
+
+//Show message if exists
+if(isset($msg))
+{
+	switch ($msg){
+		case 7: {//CSRF ATTACK
+			$message = "Form time expired. Refresh and try again.";
+			$urlText = "";
+			$type = "caution_small";
+			break;
+		}
+		case 8: {//CSRF ATTACK
+			$message = "Whiper, no swiping.";
+			$urlText = "";
+			$type = "caution_small";
+			break;
+		}
+		default:die("invalid message id");
+	}
+
+	$tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
+
 // A course has been selected
 if (isset($c)) {
 	// Define $searchurl to go back to search results
