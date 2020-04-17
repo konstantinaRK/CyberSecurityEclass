@@ -68,27 +68,73 @@ $tool_content = "";
 // Initialize some variables
 $searchurl = "";
 
+//Show message if exists
+if(isset($msg))
+{
+    switch ($msg){
+        case 7: {//CSRF ATTACK
+            $message = "Form time expired. Refresh and try again.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        case 8: {//CSRF ATTACK
+            $message = "Whiper, no swiping.";
+            $urlText = "";
+            $type = "caution_small";
+            break;
+        }
+        default:die("invalid message id");
+    }
+
+    $tool_content .=  "<p class=\"$type\">$message<br><a href=\"../../index.php\">$urlText</a></p><br/>";
+}
+
 // Define $searchurl to go back to search results
 if (isset($search) && ($search=="yes")) {
 	$searchurl = "&search=yes";
 }
 // Delete course
 if (isset($_GET['delete']) && isset($_GET['c']))  {
-	db_query("DROP DATABASE `".mysql_real_escape_string($_GET['c'])."`");
-        mysql_select_db($mysqlMainDb);
-        $code = quote($_GET['c']);
-	db_query("DELETE FROM cours_faculte WHERE code = $code");
-	db_query("DELETE FROM cours_user WHERE cours_id =
+    if ($_SESSION['token'] == $_GET['form_cook']) {
+        if (time() >= $_SESSION['token-expire']) {
+            // EXPIRED - ASK USER TO RELOAD PAGE
+            header("location: listcours.php?msg=7");
+            exit();
+        }
+        else {
+            db_query("DROP DATABASE `".mysql_real_escape_string($_GET['c'])."`");
+            mysql_select_db($mysqlMainDb);
+            $code = quote($_GET['c']);
+            db_query("DELETE FROM cours_faculte WHERE code = $code");
+            db_query("DELETE FROM cours_user WHERE cours_id =
                         (SELECT cours_id FROM cours WHERE code = $code)");
-	db_query("DELETE FROM annonces WHERE cours_id =
+            db_query("DELETE FROM annonces WHERE cours_id =
                         (SELECT cours_id FROM cours WHERE code = $code)");
-	db_query("DELETE FROM cours WHERE code = $code");
-	@mkdir("../../courses/garbage");
-	rename("../../courses/".$_GET['c'], "../../courses/garbage/".$_GET['c']);
-	$tool_content .= "<p>".$langCourseDelSuccess."</p>";
+            db_query("DELETE FROM cours WHERE code = $code");
+            @mkdir("../../courses/garbage");
+            rename("../../courses/".$_GET['c'], "../../courses/garbage/".$_GET['c']);
+            $tool_content .= "<p>".$langCourseDelSuccess."</p>";
+        }
+    } else {
+        // EXPIRED - ASK USER TO RELOAD PAGE
+        header("location: listcours.php?msg=8");
+        exit();
+    }
 }
 // Display confirmatiom message for course deletion
 else {
+
+    // mine
+    // GENERATE THE TOKEN, ADD AN EXPIRY TIMESTAMP
+    session_start();
+    $length = 32;
+    $ses_tok = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $length);
+    $_SESSION['token'] = $ses_tok;
+    // 10 minutes = 60 seconds * 10 minutes = 600
+    $_SESSION['token-expire'] = time() + 600;
+    // end mine
+
 	$row = mysql_fetch_array(mysql_query("SELECT * FROM cours WHERE code='".mysql_real_escape_string($_GET['c'])."'"));
 
 	$tool_content .= "<table><caption>".$langCourseDelConfirm."</caption><tbody>";
@@ -96,7 +142,7 @@ else {
     <td><br />".$langCourseDelConfirm2." <em>".my_htmlspecialchars($_GET['c'])."</em>;<br /><br /><i>".$langNoticeDel."</i><br /><br /></td>
   </tr>";
 	$tool_content .= "  <tr>
-    <td><ul><li><a href=\"".$_SERVER['PHP_SELF']."?c=".my_htmlspecialchars($_GET['c'])."&amp;delete=yes".$searchurl."\"><b>$langYes</b></a><br />&nbsp;</li>
+    <td><ul><li><a href=\"".$_SERVER['PHP_SELF']."?c=".htmlspecialchars($_GET['c'])."&amp;delete=yes&amp;form_cook=$ses_tok".$searchurl."\"><b>$langYes</b></a><br />&nbsp;</li>
   <li><a href=\"listcours.php?c=".my_htmlspecialchars($_GET['c'])."".$searchurl."\"><b>$langNo</b></a></li></ul></td>
   </tr>";
 	$tool_content .= "</tbody></table><br />";
