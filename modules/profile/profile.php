@@ -84,24 +84,47 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
 
 		$username_form = escapeSimple($username_form);
 
-    //my code
-    $nom_form=my_htmlspecialchars($nom_form);
-    $prenom_form=my_htmlspecialchars($prenom_form);
-    $username_form=my_htmlspecialchars($username_form);
-    $email_form=my_htmlspecialchars($email_form);
-    $am_form=my_htmlspecialchars($am_form);
+        //my code
+        $nom_form=my_htmlspecialchars($nom_form);
+        $prenom_form=my_htmlspecialchars($prenom_form);
+        $username_form=my_htmlspecialchars($username_form);
+        $email_form=my_htmlspecialchars($email_form);
+        $am_form=my_htmlspecialchars($am_form);
 
-		if(mysql_query("UPDATE user
-	        SET nom='$nom_form', prenom='$prenom_form',
-	        username='$username_form', email='$email_form', am='$am_form',
-	            perso='$persoStatus', lang='$langcode'
-	        WHERE user_id='".$_SESSION["uid"]."'")) {
-			if (isset($_SESSION['user_perso_active']) and $persoStatus == "no") {
-                		unset($_SESSION['user_perso_active']);
-			}
-			header("location:". $_SERVER['PHP_SELF']."?msg=1");
-			exit();
-	        }
+
+        ///// mine
+        $servername = "localhost";
+        $username = "root";
+        $password = "csec";
+        $dbname = "eclass";
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // prepare sql and bind parameters
+            $stmt = $conn->prepare("UPDATE user
+                SET nom= :name, prenom= :prenom,
+                username= :uname, email= :email, am= :am,
+                    perso= :perso, lang= :lang
+                WHERE user_id= :us_id");
+            $stmt->bindParam(':name', $nom_form);
+            $stmt->bindParam(':prenom', $prenom_form);
+            $stmt->bindParam(':uname', $username_form);
+            $stmt->bindParam(':email', $email_form);
+            $stmt->bindParam(':am', $am_form);
+            $stmt->bindParam(':perso', $persoStatus);
+            $stmt->bindParam(':lang', $langcode);
+            $stmt->bindParam(':us_id', $_SESSION['uid']);
+            $stmt->execute();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        /////////
+        header("location:". $_SERVER['PHP_SELF']."?msg=1");
+        exit();
 	}
 }	// if submit
 
