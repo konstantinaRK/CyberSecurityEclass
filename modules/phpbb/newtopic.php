@@ -148,11 +148,35 @@ if (isset($submit) && $submit) {
 	if (isset($sig) && $sig) {
 		$message .= "\n[addsig]";
 	}
-	$sql = "INSERT INTO topics (topic_title, topic_poster, forum_id, topic_time, topic_notify, nom, prenom)
-			VALUES (" . autoquote($subject) . ", '$uid', '$forum', '$time', 1, '$nom', '$prenom')";
-	$result = db_query($sql, $currentCourseID);
 
-	$topic_id = mysql_insert_id();
+	///// mine
+	$servername = "localhost";
+	$username = "root";
+	$password = "csec";
+	$dbname = $currentCourseID;
+
+	try {
+		$conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+		// set the PDO error mode to exception
+		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		// prepare sql and bind parameters
+		$stmt = $conn->prepare("INSERT INTO topics (topic_title, topic_poster, forum_id, topic_time, topic_notify, nom, prenom)
+			VALUES (:topic, :uid, :forum, :topic_time, 1, :nom, :prenom)");
+		$stmt->bindParam(':topic', $subject);
+		$stmt->bindParam(':uid', $uid);
+		$stmt->bindParam(':forum', $forum);
+		$stmt->bindParam(':topic_time', $time);
+		$stmt->bindParam(':nom', $nom);
+		$stmt->bindParam(':prenom', $prenom);
+		$stmt->execute();
+		$topic_id = $conn->lastInsertId();
+	}
+	catch(PDOException $e)
+	{
+		echo "Error: " . $e->getMessage();
+	}
+	/////////
+
 	$sql = "INSERT INTO posts (topic_id, forum_id, poster_id, post_time, poster_ip, nom, prenom)
 			VALUES ('$topic_id', '$forum', '$uid', '$time', '$poster_ip', '$nom', '$prenom')";
 	if (!$result = db_query($sql, $currentCourseID)) {
