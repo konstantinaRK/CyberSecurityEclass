@@ -59,6 +59,9 @@ if (isset($_POST["dropbox_unid"])) {
 	die($dropbox_lang["badFormData"]);
 }
 
+// mine
+$dropbox_unid = my_htmlspecialchars($dropbox_unid);
+
 if (isset($_SESSION["dropbox_uniqueid"]) && isset($_GET["dropbox_unid"]) && $dropbox_unid == $_SESSION["dropbox_uniqueid"]) {
 
 	if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=="on") {
@@ -201,6 +204,12 @@ if (!isset( $_POST['authors']) || !isset( $_POST['description']))
 			{
 				move_uploaded_file($dropbox_filetmpname, $dropbox_cnf["sysPath"] . '/' . $dropbox_filename)
 				or die($dropbox_lang["uploadError"]);
+				$_POST['description'] = my_htmlspecialchars($_POST['description']);
+				$_POST['authors'] = my_htmlspecialchars($_POST['authors']);
+				// mine
+				foreach($newWorkRecipients as &$rec) {
+					$rec = my_htmlspecialchars($rec);
+				}
 				new Dropbox_SentWork($uid, $dropbox_title, $_POST['description'], $_POST['authors'], $dropbox_filename, $dropbox_filesize, $newWorkRecipients);
 			}
 		}
@@ -232,7 +241,8 @@ if (isset($_GET['mailingIndex']))  // examine or send
 	{
 		$dropbox_person->orderSentWork($_SESSION["sentOrder"]);
 	}
-	$i = $_GET['mailingIndex'];
+	// mine
+	$i = my_htmlspecialchars($_GET['mailingIndex']);
 	$mailing_item = $dropbox_person->sentWork[$i];
 	$mailing_title = $mailing_item->title;
 	$mailing_file = $dropbox_cnf["sysPath"] . '/' . $mailing_item->filename;
@@ -470,6 +480,8 @@ if (isset($_GET['mailingIndex']))  // examine or send
  */
 if (isset($_GET['deleteReceived']) || isset($_GET['deleteSent']))
 {
+	// mine
+	$_GET['mailing'] = my_htmlspecialchars($_GET['mailing']);
 
 	if (isset($_GET['mailing']))  // RH
 	{

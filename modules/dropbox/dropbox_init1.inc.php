@@ -216,6 +216,10 @@ function checkUserOwnsThisMailing($mailingPseudoId, $userId)
 
     global $dropbox_cnf, $dropbox_lang, $currentCourseID;
 
+
+//    mine
+    $mailingPseudoId = my_htmlspecialchars($mailingPseudoId);
+
     $sql = "SELECT f.uploaderId FROM `" . $dropbox_cnf["fileTbl"] . "` f
 			LEFT JOIN `" . $dropbox_cnf["postTbl"] . "` p ON f.id = p.fileId
 			WHERE p.recipientId = '" . $mailingPseudoId . "'";
