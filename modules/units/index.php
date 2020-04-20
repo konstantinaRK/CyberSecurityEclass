@@ -28,13 +28,6 @@
 Units display module
 */
 
-//my code
-if (!$is_adminOfCourse){
-	print("not owner of course :)");
-	exit;
-}
-
-
 $require_current_course = true;
 $require_help = TRUE;
 $helpTopic = 'AddCourseUnitscontent';

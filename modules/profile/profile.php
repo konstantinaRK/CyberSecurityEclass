@@ -82,14 +82,14 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
 		$_SESSION['langswitch'] = $language = langcode_to_name($_REQUEST['userLanguage']);
 		$langcode = langname_to_code($language);
 
-		$username_form = escapeSimple($username_form);
+		// $username_form = escapeSimple($username_form);
 
         //my code
-        $nom_form=my_htmlspecialchars($nom_form);
-        $prenom_form=my_htmlspecialchars($prenom_form);
-        $username_form=my_htmlspecialchars($username_form);
-        $email_form=my_htmlspecialchars($email_form);
-        $am_form=my_htmlspecialchars($am_form);
+        $nom_form=my_htmlspecialchars(preg_replace('/\s+/', '',$nom_form));
+        $prenom_form=my_htmlspecialchars(preg_replace('/\s+/', '',$prenom_form));
+        $username_form=my_htmlspecialchars(preg_replace('/\s+/', '',$username_form));
+        $email_form=my_htmlspecialchars(preg_replace('/\s+/', '',$email_form));
+        $am_form=my_htmlspecialchars(preg_replace('/\s+/', '',$am_form));
 
 
         ///// mine

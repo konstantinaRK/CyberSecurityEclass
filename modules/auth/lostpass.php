@@ -136,8 +136,8 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 
 } elseif (!isset($_REQUEST['do'])) {
 	//my code
-	$userName=my_htmlspecialchars($userName);
-	$email=my_htmlspecialchars($email);
+	$userName=my_htmlspecialchars(preg_replace('/\s+/', '',$userName));
+	$email=my_htmlspecialchars(preg_replace('/\s+/', '',$email));
 
 	/***** If valid e-mail address was entered, find user and send email *****/
 	$res = db_query("SELECT user_id, nom, prenom, username, password, statut FROM user

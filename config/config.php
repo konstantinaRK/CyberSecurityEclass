@@ -1,7 +1,7 @@
 <?php
 /* ========================================================
  * OpeneClass 2.2 configuration file
- * Automatically created by install on 2020-04-17 00:50
+ * Automatically created by install on 2020-04-20 05:15
  * ======================================================== */
 
 $urlServer = "http://192.168.1.10/";

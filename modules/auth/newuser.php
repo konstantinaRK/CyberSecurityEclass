@@ -56,11 +56,11 @@ if (isset($close_user_registration) and $close_user_registration == TRUE) {
 $lang = langname_to_code($language);
 
 //my code
-$prenom_form=my_htmlspecialchars($prenom_form);
-$nom_form=my_htmlspecialchars($nom_form);
-$uname=my_htmlspecialchars($uname);
-$email=my_htmlspecialchars($email);
-$am=my_htmlspecialchars($am);
+$prenom_form=my_htmlspecialchars(preg_replace('/\s+/', '',$prenom_form));
+$nom_form=my_htmlspecialchars(preg_replace('/\s+/', '',$nom_form));
+$uname=my_htmlspecialchars(preg_replace('/\s+/', '',$uname));
+$email=my_htmlspecialchars(preg_replace('/\s+/', '',$email));
+$am=my_htmlspecialchars(preg_replace('/\s+/', '',$am));
 
 // display form
 if (!isset($submit)) {
@@ -137,8 +137,8 @@ if (!isset($submit)) {
 
 	//my code
 	// trim white spaces in the end and in the beginning of the word
-	// $uname = preg_replace('/\ +/', ' ', trim(isset($_POST['uname'])?$_POST['uname']:''));
-	$uname=autounquote(my_htmlspecialchars($_POST['uname']));
+	// $uname = preg_replace('/\ +/', ' ', preg_replace('/\s+/', '',isset($_POST['uname'])?$_POST['uname']:''));
+	$uname=autounquote(my_htmlspecialchars(preg_replace('/\s+/', '',$_POST['uname'])));
 
 	// registration
 	$registration_errors = array();
@@ -235,12 +235,12 @@ if (!isset($submit)) {
 	}
 
 	//my code
-	$nom_form=my_htmlspecialchars($nom_form);
-	$prenom_form=my_htmlspecialchars($prenom_form);
-	$uname=my_htmlspecialchars($uname);
-	$email=my_htmlspecialchars($email);
-	$department=my_htmlspecialchars($department);
-	$am=my_htmlspecialchars($am);
+	$nom_form=my_htmlspecialchars(preg_replace('/\s+/', '',$nom_form));
+	$prenom_form=my_htmlspecialchars(preg_replace('/\s+/', '',$prenom_form));
+	$uname=my_htmlspecialchars(preg_replace('/\s+/', '',$uname));
+	$email=my_htmlspecialchars(preg_replace('/\s+/', '',$email));
+	$department=my_htmlspecialchars(preg_replace('/\s+/', '',$department));
+	$am=my_htmlspecialchars(preg_replace('/\s+/', '',$am));
 
 
 		///// mine
@@ -311,11 +311,11 @@ if (!isset($submit)) {
 		}
 
 		//my code
-		$_POST['prenom_form']=my_htmlspecialchars($_POST['prenom_form']);
-		$_POST['nom_form']=my_htmlspecialchars($_POST['nom_form']);
-		$_POST['uname']=my_htmlspecialchars($_POST['uname']);
-		$_POST['email']=my_htmlspecialchars($_POST['email']);
-		$_POST['am']=my_htmlspecialchars($_POST['am']);
+		$_POST['prenom_form']=my_htmlspecialchars(preg_replace('/\s+/', '',$_POST['prenom_form']));
+		$_POST['nom_form']=my_htmlspecialchars(preg_replace('/\s+/', '',$_POST['nom_form']));
+		$_POST['uname']=my_htmlspecialchars(preg_replace('/\s+/', '',$_POST['uname']));
+		$_POST['email']=my_htmlspecialchars(preg_replace('/\s+/', '',$_POST['email']));
+		$_POST['am']=my_htmlspecialchars(preg_replace('/\s+/', '',$_POST['am']));
 
 
 		$tool_content .= "<p><a href='$_SERVER[PHP_SELF]?prenom_form=$_POST[prenom_form]&nom_form=$_POST[nom_form]&uname=$_POST[uname]&email=$_POST[email]&am=$_POST[am]'>$langAgain</a></p>" .

@@ -33,7 +33,7 @@ include '../../include/baseTheme.php';
 <title>Chat messages</title>
 <style type="text/css">
 span { color: #727266; }
-div { font-size: 90%; } 
+div { font-size: 90%; }
 body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 </style>
 </head>

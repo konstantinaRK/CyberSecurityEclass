@@ -120,7 +120,7 @@ draw($tool_content, 2, 'units', $head_content);
 function insert_docs($id)
 {
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
-	
+
 	foreach ($_POST['document'] as $file_id) {
 		$order++;
 		$file = mysql_fetch_array(db_query("SELECT * FROM document
@@ -129,7 +129,7 @@ function insert_docs($id)
 		db_query("INSERT INTO unit_resources SET unit_id=$id, type='doc', title=" .
 			 autoquote($title) . ", comments=" . autoquote($file['comment']) .
 			 ", visibility='$file[visibility]', `order`=$order, `date`=NOW(), res_id=$file[id]",
-			 $GLOBALS['mysqlMainDb']); 
+			 $GLOBALS['mysqlMainDb']);
 	}
 	header('Location: index.php?id=' . $id);
 	exit;
@@ -139,13 +139,13 @@ function insert_docs($id)
 function insert_text($id)
 {
 	global $title, $comments;
-	
+
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
 	$order++;
-	db_query("INSERT INTO unit_resources SET unit_id=$id, type='text', title='', 
+	db_query("INSERT INTO unit_resources SET unit_id=$id, type='text', title='',
 		comments=" . autoquote($comments) . ", visibility='v', `order`=$order, `date`=NOW(), res_id=0",
 		$GLOBALS['mysqlMainDb']);
-			
+
 	header('Location: index.php?id=' . $id);
 	exit;
 }
@@ -155,7 +155,7 @@ function insert_text($id)
 function insert_lp($id)
 {
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
-	
+
 	foreach ($_POST['lp'] as $lp_id) {
 		$order++;
 		$lp = mysql_fetch_array(db_query("SELECT * FROM lp_learnPath
@@ -178,7 +178,7 @@ function insert_lp($id)
 function insert_video($id)
 {
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
-	
+
 	foreach ($_POST['video'] as $video_id) {
 		$order++;
                 list($table, $res_id) = explode(':', $video_id);
@@ -196,7 +196,7 @@ function insert_video($id)
 function insert_work($id)
 {
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
-	
+
 	foreach ($_POST['work'] as $work_id) {
 		$order++;
 		$work = mysql_fetch_array(db_query("SELECT * FROM assignments
@@ -215,7 +215,7 @@ function insert_work($id)
                                 `order` = $order,
                                 `date` = NOW(),
                                 res_id = $work[id]",
-			 $GLOBALS['mysqlMainDb']); 
+			 $GLOBALS['mysqlMainDb']);
 	}
 	header('Location: index.php?id=' . $id);
 	exit;
@@ -226,7 +226,7 @@ function insert_work($id)
 function insert_exercise($id)
 {
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
-	
+
 	foreach ($_POST['exercise'] as $exercise_id) {
 		$order++;
 		$exercise = mysql_fetch_array(db_query("SELECT * FROM exercices
@@ -239,7 +239,7 @@ function insert_exercise($id)
 		db_query("INSERT INTO unit_resources SET unit_id=$id, type='exercise', title=" .
 			quote($exercise['titre']) . ", comments=" . quote($exercise['description']) .
 			", visibility='$visibility', `order`=$order, `date`=NOW(), res_id=$exercise[id]",
-			$GLOBALS['mysqlMainDb']); 
+			$GLOBALS['mysqlMainDb']);
 	}
 	header('Location: index.php?id=' . $id);
 	exit;
@@ -258,7 +258,7 @@ function insert_forum($id)
 				WHERE topic_id =" . intval($topic_id) ." AND forum_id =" . intval($forum_id), $GLOBALS['currentCourseID']), MYSQL_ASSOC);
 			db_query("INSERT INTO unit_resources SET unit_id=$id, type='topic', title=" .
 				quote($topic['topic_title']) .", visibility='v', `order`=$order, `date`=NOW(), res_id=$topic[topic_id]",
-			$GLOBALS['mysqlMainDb']);		
+			$GLOBALS['mysqlMainDb']);
 		} else {
                         $forum_id = $ids[0];
 			$forum = mysql_fetch_array(db_query("SELECT * FROM forums
@@ -267,7 +267,7 @@ function insert_forum($id)
 				quote($forum['forum_name']) . ", comments=" . quote($forum['forum_desc']) .
 				", visibility='v', `order`=$order, `date`=NOW(), res_id=$forum[forum_id]",
 				$GLOBALS['mysqlMainDb']);
-		} 
+		}
 	}
 	header('Location: index.php?id=' . $id);
 	exit;
@@ -278,7 +278,7 @@ function insert_forum($id)
 function insert_wiki($id)
 {
 	list($order) = mysql_fetch_array(db_query("SELECT MAX(`order`) FROM unit_resources WHERE unit_id=$id"));
-	
+
 	foreach ($_POST['wiki'] as $wiki_id) {
 		$order++;
 		$wiki = mysql_fetch_array(db_query("SELECT * FROM wiki_properties
@@ -286,7 +286,7 @@ function insert_wiki($id)
 		db_query("INSERT INTO unit_resources SET unit_id=$id, type='wiki', title=" .
 			quote($wiki['title']) . ", comments=" . quote($wiki['description']) .
 			", visibility='v', `order`=$order, `date`=NOW(), res_id=$wiki[id]",
-			$GLOBALS['mysqlMainDb']); 
+			$GLOBALS['mysqlMainDb']);
 	}
 	header('Location: index.php?id=' . $id);
 	exit;

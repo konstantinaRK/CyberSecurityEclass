@@ -1,24 +1,3 @@
-afto gt xrisimopiite ?
-http://192.168.1.10/modules/units/index.php
-
-
-an 8es des ta
-http://192.168.1.10/modules/conference/pass_parameters.php
-http://192.168.1.10/modules/units/insert.php?submit_doc=../&id=1
-http://192.168.1.10/modules/latexrender/latexrender_test.php
-ti paizi me xss meso csrf stis 2/3 formes tou admin otan ftiaxni ma8ima
-
-
-kati mallon pai la8os me to dropbox_unid alla den 3ero ti. ego leo na min asxoli8oume allo me afto
-http://192.168.1.10/modules/dropbox/dropbox_submit.php?deleteSent=1&dropbox_unid=2
-ke me to parakato arxio isxii to idio
-modules/dropbox/index.php
-
-
-na to ftia3oume ! tous barame panefkola se afto
-http://192.168.1.10/modules/conference/refresh_chat.php?chatLine=%3Cscript%3E&_=
-
-
 afta ine ftiagmena.  tous barame panefkola se afto
 http://192.168.1.10/modules/units/index.php?del=1
 http://192.168.1.10/modules/units/index.php?id=5&resource_id=3&vis=2

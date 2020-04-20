@@ -1,3 +1,0 @@
-17-04-2020 16:32:14 - kona roka : <script>
-17-04-2020 16:32:28 - kona roka : <script>
-17-04-2020 16:32:40 - kona roka : <script>alert(1);</script>

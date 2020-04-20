@@ -1,4 +1,4 @@
-<?php  
+<?php
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -25,11 +25,11 @@
 * =========================================================================*/
 /**
  * conference
- * 
+ *
  * @author Dimitris Tsachalis <ditsa@ccf.auth.gr>
  * @version $Id: conference.orig.php,v 1.1 2008-09-11 09:38:39 jexi Exp $
- * 
- * @abstract 
+ *
+ * @abstract
  *
  */
 
@@ -50,13 +50,14 @@ $action->record('MODULE_ID_CHAT');
 
 $nameTools = $langConference;
 
-$browser = get_browser(null, true); 
-if($browser['browser']!="IE")   
+$browser = get_browser(null, true);
+if($browser['browser']!="IE")
 	$langTeleconference_content = $langTeleconference_content_noIE;
 else
  	$langTeleconference_content = $langTeleconference_content1;
 
 //HEADER
+
 $head_content='
 <script type="text/javascript" src="js/prototype-1.4.0.js"></script>
 <script type="text/javascript" src="js/media_player.js"></script>
@@ -73,10 +74,10 @@ function clear_chat()
 		return false;
 	}
 function save_chat()
-	{ 
+	{
 	var set_presantation = function(t) {
 	               alert(t.responseText);
-	}		
+	}
 	  	new Ajax.Request("refresh_chat.php", {method:"post", postBody:"store=true",onSuccess:set_presantation});
 		return false;
 	}
@@ -167,7 +168,7 @@ function refresh_student()
 	var target = "chat";
 	var myAjax = new Ajax.Updater(target, url);
 
-	
+
         var set_presantation = function(t) {
 		if(t.responseText==""){
 			presantation_URL="";
@@ -228,7 +229,7 @@ function refresh_student()
 
 /* refresh chat div for teacher*/
 function refresh_teacher()
-	{  
+	{
 	    var url = "refresh_chat.php";
 	    var target = "chat";
 	    var myAjax = new Ajax.Updater(target, url);
@@ -237,7 +238,7 @@ function refresh_teacher()
 
 /* teacher set netmeeting*/
 function netmeeting()
-	{       
+	{
 
 		if(document.getElementById("conference_control").checked)
 			{
@@ -258,7 +259,7 @@ function netmeeting()
 
 /* load media player or netmeeting */
 function play_video()
-	{	
+	{
 		mediaLink(document.getElementById("video"),document.getElementById("Video_URL").value);
 		new Ajax.Request("pass_parameters.php", {method:"post", postBody:"video_URL="+document.getElementById("Video_URL").value});
 return false;
@@ -266,7 +267,7 @@ return false;
 
 	}
 
-	
+
 /* load presantation in right iframe*/
 function show_presantation()
 	{
@@ -279,12 +280,12 @@ return false;
 function clean_presantation()
 	{	document.getElementById("presantation_window").innerHTML="'.$langPresantation_content.'";
 		new Ajax.Request("pass_parameters.php", {method:"post", postBody:"action=clean_presantation"});
-		
+
 	}
 function clean_video()
 	{	document.getElementById("video").innerHTML="'.$langVideo_content.'";
 		new Ajax.Request("pass_parameters.php", {method:"post", postBody:"action=clean_video"});
-		
+
 	}
 
 
