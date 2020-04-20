@@ -157,12 +157,14 @@ if (isset($submit) && $submit) {
 
 	try {
 		$conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+		// turn off emulated statements
+		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		// set the PDO error mode to exception
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		// prepare sql and bind parameters
 		$stmt = $conn->prepare("INSERT INTO topics (topic_title, topic_poster, forum_id, topic_time, topic_notify, nom, prenom)
 			VALUES (:topic, :uid, :forum, :topic_time, 1, :nom, :prenom)");
-		$stmt->bindParam(':topic', $subject);
+		$stmt->bindParam(':topic', autoquote($subject));
 		$stmt->bindParam(':uid', $uid);
 		$stmt->bindParam(':forum', $forum);
 		$stmt->bindParam(':topic_time', $time);
