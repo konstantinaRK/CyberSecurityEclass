@@ -123,7 +123,34 @@ if ($is_adminOfCourse) { // course admin
 			$forward = 1;
 			$topic = $topic_id;
 			$forum = $forum_id;
-			$sql = "UPDATE posts_text SET post_text = " . autoquote($message) . " WHERE (post_id = '$post_id')";
+
+            ///// mine
+            $servername = "localhost";
+            $username = "root";
+            $password = "csec";
+            $dbname = $currentCourseID;
+
+            try {
+                $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+                // turn off emulated statements
+                $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                // set the PDO error mode to exception
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                // prepare sql and bind parameters
+                $stmt = $conn->prepare("UPDATE posts_text SET post_text = :post_text WHERE (post_id = :post_id)");
+                $stmt->bindParam(':post_id', $post_id);
+                $stmt->bindParam(':post_text', autoquote($message));
+                $result = $stmt->execute();
+            }
+            catch(PDOException $e)
+            {
+                echo "Error: " . $e->getMessage();
+            }
+            /////////
+
+
+
+//			$sql = "UPDATE posts_text SET post_text = " . autoquote($message) . " WHERE (post_id = '$post_id')";
 			if (!$result = db_query($sql, $currentCourseID)) {
 				$tool_content .= $langUnableUpadatePost;
 				draw($tool_content, 2, 'phpbb', $head_content);
