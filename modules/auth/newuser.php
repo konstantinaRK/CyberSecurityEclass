@@ -155,6 +155,8 @@ if (!isset($submit)) {
 
 		try {
 			$conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password_db);
+			// turn off emulated statements
+			$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 			// set the PDO error mode to exception
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// prepare sql and bind parameters
