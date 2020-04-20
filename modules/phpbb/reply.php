@@ -177,9 +177,31 @@ if (isset($submit) && $submit) {
 	$result = db_query($sql, $currentCourseID);
 	$this_post = mysql_insert_id();
 	if ($this_post) {
-		$sql = "INSERT INTO posts_text (post_id, post_text) VALUES ($this_post, " .
-                        autoquote($message) . ")";
-		$result = db_query($sql, $currentCourseID);
+
+        ///// mine
+        $servername = "localhost";
+        $username = "root";
+        $password = "csec";
+        $dbname = $currentCourseID;
+
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+            // turn off emulated statements
+            $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // prepare sql and bind parameters
+            $stmt = $conn->prepare("INSERT INTO posts_text (post_id, post_text) VALUES (:post_id, :post_text)");
+            $stmt->bindParam(':post_id', $this_post);
+            $stmt->bindParam(':post_text', autoquote($message));
+            $result = $stmt->execute();
+        }
+        catch(PDOException $e)
+        {
+            echo "Error: " . $e->getMessage();
+        }
+        /////////
+
 	}
 	$sql = "UPDATE topics SET topic_replies = topic_replies+1, topic_last_post_id = $this_post, topic_time = '$time'
 		WHERE topic_id = '$topic'";
