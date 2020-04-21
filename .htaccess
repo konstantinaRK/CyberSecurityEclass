@@ -1,2 +1,2 @@
 Options -Indexes
-php_value auto_prepend_file "media/sf_openeclass/my_include.php"
+php_value auto_prepend_file "/var/www/html/my_include.php"
