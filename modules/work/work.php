@@ -250,7 +250,7 @@ function add_assignment($title, $comments, $desc, $deadline, $group_submissions)
 
 function submit_work($id) {
 
-    if (intval($id) == 0)
+    if (intval($id) <= 0)
     {
         die("Error: Invalid id");
     }
@@ -315,7 +315,7 @@ function submit_work($id) {
 		return;
 	}
 	$secret = work_secret(intval($id));
-        $ext = get_file_extension($_FILES['userfile']['name']);
+	$ext = get_file_extension($_FILES['userfile']['name']);
 	$filename = "$secret/$local_name" . (empty($ext)? '': '.' . $ext);
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], "$workPath/$filename")) {
 

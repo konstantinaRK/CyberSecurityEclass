@@ -75,7 +75,7 @@ function table_row($title, $content)
 // use the assignment's id instead. Also insures that secret subdir exists
 function work_secret($id)
 {
-    if (intval($id) == 0)
+    if (intval($id) <= 0)
     {
         die("Error: Invalid id");
     }
@@ -110,7 +110,7 @@ function work_secret($id)
 function is_group_assignment($id)
 {
 
-    if (intval($id) == 0)
+    if (intval($id) <= 0)
     {
         die("Error: Invalid id");
     }
