@@ -75,6 +75,12 @@ function table_row($title, $content)
 // use the assignment's id instead. Also insures that secret subdir exists
 function work_secret($id)
 {
+    if (intval($id) == 0)
+    {
+        die("Error: Invalid id");
+    }
+    $id = intval($id);
+
 	global $currentCourseID, $workPath, $tool_content, $coursePath;
 	
 	$res = db_query("SELECT secret_directory FROM assignments WHERE id = '$id'", $currentCourseID);
@@ -103,6 +109,13 @@ function work_secret($id)
 // Is this a group assignment?
 function is_group_assignment($id)
 {
+
+    if (intval($id) == 0)
+    {
+        die("Error: Invalid id");
+    }
+    $id = intval($id);
+
 	global $tool_content;
 	$res = db_query("SELECT group_submissions FROM assignments WHERE id = '$id'");
 	if ($res) {
@@ -280,6 +293,11 @@ function was_graded($uid, $id, $ret_val = FALSE)
 // Show details of a submission
 function show_submission_details($id)
 {
+    if (intval($id) == 0)
+    {
+        die("Error: Invalid id");
+    }
+
 	global $uid, $m, $currentCourseID, $langSubmittedAndGraded, $tool_content;
 
 	$sub = mysql_fetch_array(
@@ -332,6 +350,12 @@ function show_submission_details($id)
 // for assignment id. Returns 'user' if by user, 'group' if by group
 function was_submitted($uid, $gid, $id)
 {
+
+    if (intval($id) == 0)
+    {
+        die("Error: Invalid id");
+    }
+
 	global $tool_content;
 	if (mysql_num_rows(db_query(
 		"SELECT id FROM assignment_submit WHERE assignment_id = '$id'

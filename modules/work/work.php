@@ -250,6 +250,12 @@ function add_assignment($title, $comments, $desc, $deadline, $group_submissions)
 
 function submit_work($id) {
 
+    if (intval($id) == 0)
+    {
+        die("Error: Invalid id");
+    }
+    $id = intval($id);
+
 	global $tool_content, $workPath, $uid, $stud_comments, $group_sub, $REMOTE_ADDR, $langUploadSuccess,
 	$langBack, $langWorks, $langUploadError, $currentCourseID, $langExerciseNotPermit, $langUnwantedFiletype;
 
@@ -272,7 +278,7 @@ function submit_work($id) {
 			if(isset($status) && isset($status[$_SESSION["dbname"]])) {
 				//user is registered to this lesson
 				$res = db_query("SELECT (TO_DAYS(deadline) - TO_DAYS(NOW())) AS days
-					FROM assignments WHERE id = '$id'");
+					FROM assignments WHERE id = 'intval($id)'");
 				$row = mysql_fetch_array($res);
 				if ($row['days'] < 0) {
 					$submit_ok = FALSE; //after assignment deadline
@@ -287,7 +293,7 @@ function submit_work($id) {
 		}
 	} //checks for submission validity end here
 
-  	$res = db_query("SELECT title FROM assignments WHERE id = '$id'");
+  	$res = db_query("SELECT title FROM assignments WHERE id = 'intval($id)'");
 	$row = mysql_fetch_array($res);
 
 	$nav[] = array("url"=>"work.php", "name"=> $langWorks);
@@ -308,7 +314,7 @@ function submit_work($id) {
 		$tool_content .= "<a href=\"$_SERVER[PHP_SELF]?id=$id\">$langBack</a></p><br />";
 		return;
 	}
-	$secret = work_secret($id);
+	$secret = work_secret(intval($id));
         $ext = get_file_extension($_FILES['userfile']['name']);
 	$filename = "$secret/$local_name" . (empty($ext)? '': '.' . $ext);
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], "$workPath/$filename")) {
@@ -323,14 +329,14 @@ function submit_work($id) {
 
 		$msg2 = "$langUploadSuccess";//to message
 		$group_id = user_group($uid, FALSE);
-		if ($group_sub == 'yes' and !was_submitted(-1, $group_id, $id)) {
-			delete_submissions_by_uid(-1, $group_id, $id);
+		if ($group_sub == 'yes' and !was_submitted(-1, $group_id, intval($id))) {
+			delete_submissions_by_uid(-1, $group_id, intval($id));
 
             // mine
             $stmt = $conn->prepare("INSERT INTO assignment_submit
             (uid, assignment_id, submission_date, submission_ip, file_path,
                 file_name, comments, group_id) VALUES (?,?,NOW(),?,?,?,?,?)");
-            $stmt->bind_param("iiissssi",$uid, $id, $REMOTE_ADDR, $filename, $_FILES['userfile']['name'], $stud_comments, $group_id);
+            $stmt->bind_param("iiissssi",$uid, intval($id), $REMOTE_ADDR, $filename, $_FILES['userfile']['name'], $stud_comments, $group_id);
             $stmt->execute();
             $stmt->close();
             /////////
@@ -341,7 +347,7 @@ function submit_work($id) {
             $stmt = $conn->prepare("INSERT INTO assignment_submit
             (uid, assignment_id, submission_date, submission_ip, file_path,
                 file_name, comments) VALUES (?,?, NOW(),?,?,?,?)");
-            $stmt->bind_param("iissss",$uid, $id, $REMOTE_ADDR, $filename, $_FILES['userfile']['name'], $stud_comments);
+            $stmt->bind_param("iissss",$uid, intval($id), $REMOTE_ADDR, $filename, $_FILES['userfile']['name'], $stud_comments);
             $stmt->execute();
             $stmt->close();
             /////////
