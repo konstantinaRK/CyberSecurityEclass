@@ -377,6 +377,13 @@ if (isset($_POST['create_course'])) {
         // ---------------------------------------------------------
         require "create_course_db.php";
 
+        // mine
+        $access_file = "../../courses/$repertoire/work/.htaccess";
+        $access_file_contents = "Order Deny,Allow\ndeny from all";
+        file_put_contents($access_file, $access_file_contents);
+        $access_file = "../../courses/$repertoire/dropbox/.htaccess";
+        file_put_contents($access_file, $access_file_contents);
+
         // ------------- update main Db------------
         mysql_select_db("$mysqlMainDb");
 

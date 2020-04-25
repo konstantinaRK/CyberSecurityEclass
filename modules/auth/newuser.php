@@ -150,7 +150,7 @@ if (!isset($submit)) {
 		///// mine
 		$servername = "localhost";
 		$username = "root";
-		$password_db = "csec";
+		$password_db = "RbxyB6Gz3G";
 		$dbname = "eclass";
 
 		try {
@@ -248,7 +248,7 @@ if (!isset($submit)) {
 		///// mine
 		$servername = "localhost";
 		$username = "root";
-		$password_db = "csec";
+		$password_db = "RbxyB6Gz3G";
 		$dbname = "eclass";
 
 		try {

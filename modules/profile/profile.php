@@ -95,7 +95,7 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
         ///// mine
         $servername = "localhost";
         $username = "root";
-        $password = "csec";
+        $password = "RbxyB6Gz3G";
         $dbname = "eclass";
 
         try {

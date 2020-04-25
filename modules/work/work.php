@@ -320,7 +320,7 @@ function submit_work($id) {
 	if (move_uploaded_file($_FILES['userfile']['tmp_name'], "$workPath/$filename")) {
 
         //	    mine
-        $conn = new mysqli("localhost", "root", "csec", $currentCourseID);
+        $conn = new mysqli("localhost", "root", "RbxyB6Gz3G", $currentCourseID);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }

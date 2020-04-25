@@ -152,7 +152,7 @@ if (isset($submit) && $submit) {
 	///// mine
 	$servername = "localhost";
 	$username = "root";
-	$password = "csec";
+	$password = "RbxyB6Gz3G";
 	$dbname = $currentCourseID;
 
 	try {
@@ -192,7 +192,7 @@ if (isset($submit) && $submit) {
 			///// mine
 			$servername = "localhost";
 			$username = "root";
-			$password = "csec";
+			$password = "RbxyB6Gz3G";
 			$dbname = $currentCourseID;
 
 			try {

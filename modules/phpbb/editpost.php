@@ -127,7 +127,7 @@ if ($is_adminOfCourse) { // course admin
             ///// mine
             $servername = "localhost";
             $username = "root";
-            $password = "csec";
+            $password = "RbxyB6Gz3G";
             $dbname = $currentCourseID;
 
             try {
