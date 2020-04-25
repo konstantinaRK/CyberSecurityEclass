@@ -1,4 +1,4 @@
-<?php
+<?php  
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -25,15 +25,15 @@
 * =========================================================================*/
 /**
  * refresh_chat
- *
+ * 
  * @author Dimitris Tsachalis <ditsa@ccf.auth.gr>
  * @version $Id: refresh_chat.orig.php,v 1.1 2008-09-11 09:38:40 jexi Exp $
- *
- * @abstract
+ * 
+ * @abstract 
  *
  */
-
-header("Content-type: text/html; charset=UTF-8");
+	
+header("Content-type: text/html; charset=UTF-8"); 
 $require_current_course = TRUE;
 $require_help = TRUE;
 $helpTopic = 'User';
@@ -90,7 +90,7 @@ if (isset($_POST['store']) && $is_adminOfCourse) {
 
         buffer(implode('', file($fileChatName)), $tmpArchiveFile);
         if (copy($tmpArchiveFile, $pathToSaveChat.$saveIn) ) {
-                $alert_div=$langSaveMessage;
+                $alert_div=$langSaveMessage; 
         } else {
                 $alert_div= $langSaveErrorMessage;
         }
@@ -102,12 +102,9 @@ if (isset($_POST['store']) && $is_adminOfCourse) {
       'ADD NEW LINE' COMMAND
   -----------------------------*/
 if (isset($chatLine)) {
-
-	//my code
-	//$chatLine=uft8html2utf8(utf8RawUrlDecode($chatLine));
-	$chatLine=my_htmlspecialchars($chatLine);
-
-			  $fchat = fopen($fileChatName,'a');
+	$chatLine=uft8html2utf8(utf8RawUrlDecode($chatLine));
+    $chatLine=my_htmlspecialchars($chatLine);
+        $fchat = fopen($fileChatName,'a');
         fwrite($fchat,$timeNow.' - '.$nick.' : '.stripslashes($chatLine)."\n");
         fclose($fchat);
 }
@@ -205,6 +202,6 @@ function uft8html2utf8( $s ) {
            return $utf;
            }
        }
-       return preg_replace_callback('|&#([0-9]{1,});|', 'uft8html2utf8_callback', $s);
+       return preg_replace_callback('|&#([0-9]{1,});|', 'uft8html2utf8_callback', $s); 
 }
 ?>

@@ -33,7 +33,7 @@ include '../../include/baseTheme.php';
 <title>Chat messages</title>
 <style type="text/css">
 span { color: #727266; }
-div { font-size: 90%; }
+div { font-size: 90%; } 
 body { font-family: Verdana, Arial, Helvetica, sans-serif; }
 </style>
 </head>
@@ -99,6 +99,7 @@ if (isset($_GET['store']) && $is_adminOfCourse) {
 if (isset($chatLine) and trim($chatLine) != '') {
 	$fchat = fopen($fileChatName,'a');
 	$chatLine = mathfilter($chatLine, 12, '../../courses/mathimg/');
+    $chatLine=my_htmlspecialchars($chatLine);
 	fwrite($fchat,$timeNow.' - '.$nick.' : '.stripslashes($chatLine)."\n");
 	fclose($fchat);
 }
