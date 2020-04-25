@@ -104,7 +104,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
         ///// mine
         $servername = "localhost";
         $username = "root";
-        $password = "csec";
+        $password = "RbxyB6Gz3G";
         $dbname = "eclass";
 
         try {
