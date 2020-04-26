@@ -223,6 +223,9 @@ function submit_work($uid, $id, $file) {
 	$source = $groupPath.$file;
 	$destination = work_secret($id)."/$local_name";
 
+	//my code
+	$_POST['comments']=my_htmlspecialchars($_POST['comments']);
+
 
         delete_submissions_by_uid($uid, $group, $id, $destination);
 	if (copy($source, "$workPath/$destination")) {
