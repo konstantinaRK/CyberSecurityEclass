@@ -70,7 +70,7 @@
 
 ### Αποτελέσματα
 **Κωδικός βάσης:** C27PRnhyVjYL5Efb
-**Hash κωδικού admin:** cb17986e03d289c35abe1f212d0e25d8
-**Σελίδα defacement:** hack-n-roll.csec.chatzi.org/index2.html
-**Κρυφό defacement:** http://hack-n-roll.csec.chatzi.org/modules/conference/refresh_chat.php?fbclid=IwAR02TVNtgpPwujTLtrf0eiUWTVF1IzNED0Nx1QDQ97rkJKSb-DtAiprnFEk
-**Directory admin:** /modules/coach/
+**Hash κωδικού admin:** cb17986e03d289c35abe1f212d0e25d8   
+**Σελίδα defacement:** hack-n-roll.csec.chatzi.org/index2.html  
+**Κρυφό defacement:** http://hack-n-roll.csec.chatzi.org/modules/conference/refresh_chat.php?fbclid=IwAR02TVNtgpPwujTLtrf0eiUWTVF1IzNED0Nx1QDQ97rkJKSb-DtAiprnFEk   
+**Directory admin:** /modules/coach/   
